@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Tester.io — Human and Automated QA in One Place</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%; width: 100%;
+      font-family: 'Montserrat', sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #121419;
+      color: #E8E8ED;
+    }
+    html { overflow-x: hidden; overflow-y: auto; scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    /* ===== LOADING SCREEN ===== */
+    #loading-screen {
+      position: fixed; inset: 0; z-index: 1000;
+      background: #C6A559;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+      color: #4A3810;
+      transition: opacity 0.8s ease;
+    }
+    #loading-screen.fade-out { opacity: 0; pointer-events: none; }
+    #loading-logo {
+      width: 80px; height: 80px; object-fit: contain;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    #loading-text {
+      font-weight: 700; font-size: 14px; letter-spacing: 0.15em;
+      text-transform: uppercase; margin-top: 24px;
+    }
+    #loading-hint {
+      font-weight: 500; font-size: 13px; margin-top: 12px; opacity: 0.7;
+    }
+    .progress-track {
+      width: 200px; height: 6px; background: rgba(74,56,16,0.25);
+      border-radius: 3px; overflow: hidden; margin-top: 20px;
+    }
+    .progress-fill {
+      height: 100%; width: 0%; background: #4A3810;
+      border-radius: 3px; transition: width 0.3s ease;
+    }
+
+    /* ===== VERTICAL SCROLL CONTAINER ===== */
+    #scroll-container {
+      display: flex; flex-direction: column; width: 100%;
+    }
+
+    /* ===== SCENE / SECTION BASE ===== */
+    .scene {
+      position: relative; width: 100%; min-height: 100vh;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 0;
+    }
+
+    /* ===== PARALLAX LAYERS ===== */
+    .parallax-layer {
+      position: absolute; will-change: transform;
+      transition: transform 0.15s ease-out;
+    }
+
+    /* ===== FLOATING ELEMENTS ===== */
+    @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+    @keyframes floatMed { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes floatFast { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .float-slow { animation: floatSlow 6s ease-in-out infinite; }
+    .float-med { animation: floatMed 4.5s ease-in-out infinite; }
+    .float-fast { animation: floatFast 3.5s ease-in-out infinite; }
+
+    /* ===== NAVBAR ===== */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      height: 64px; padding: 0 32px;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(18,20,25,0.7);
+      border-bottom: 1px solid rgba(198,165,89,0.08);
+    }
+    #navbar a {
+      font-size: 13px; font-weight: 600; color: rgba(232,232,237,0.6);
+      text-decoration: none; letter-spacing: 0.03em;
+      padding: 8px 20px; border-radius: 8px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    #navbar a:hover { color: #E6B979; background: rgba(198,165,89,0.08); }
+    #navbar a:focus-visible { outline: 2px solid #E6B979; outline-offset: 2px; }
+    #navbar .nav-btn {
+      border: 1px solid rgba(198,165,89,0.4); color: #E6B979; margin-left: 4px;
+    }
+    #navbar .nav-btn:hover {
+      background: rgba(198,165,89,0.12); border-color: #C6A559;
+    }
+    #navbar .nav-btn-gold {
+      background: linear-gradient(135deg, #C6A559, #E6B979); color: #0A0A0F;
+      font-weight: 700; border: none; margin-left: 4px;
+    }
+    #navbar .nav-btn-gold:hover {
+      box-shadow: 0 4px 16px rgba(198,165,89,0.3);
+    }
+
+    /* ===== GRAIN OVERLAY ===== */
+    #grain {
+      position: fixed; inset: 0; z-index: 900; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== SCROLL INDICATOR ===== */
+    #scroll-indicator {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 50; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.6; transition: opacity 0.4s ease;
+    }
+    #scroll-indicator.hidden { opacity: 0; pointer-events: none; }
+    #scroll-indicator span { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: #C6A559; }
+    .scroll-arrow {
+      width: 20px; height: 20px; border-right: 2px solid #C6A559; border-bottom: 2px solid #C6A559;
+      transform: rotate(45deg); animation: scrollBounce 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.6; }
+      50% { transform: rotate(45deg) translate(0, 4px); opacity: 1; }
+    }
+
+    /* ===== PROGRESS BAR (top) ===== */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 100;
+      background: linear-gradient(90deg, #C6A559, #E6B979);
+      width: 0%; transition: width 0.1s linear;
+      box-shadow: 0 0 12px rgba(198,165,89,0.4);
+    }
+
+    /* ===== GOLD GRADIENT TEXT ===== */
+    .text-gold {
+      background: linear-gradient(135deg, #E6B979 0%, #C6A559 50%, #E6B979 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== DECORATIVE SHAPES ===== */
+    .deco-circle {
+      border-radius: 50%; position: absolute; pointer-events: none;
+    }
+    .deco-ring {
+      border-radius: 50%; border: 2px solid rgba(198,165,89,0.15);
+      position: absolute; pointer-events: none;
+    }
+    .deco-diamond {
+      width: 16px; height: 16px; background: rgba(198,165,89,0.2);
+      transform: rotate(45deg); position: absolute; pointer-events: none;
+    }
+    .deco-line {
+      height: 2px; background: linear-gradient(90deg, transparent, rgba(198,165,89,0.2), transparent);
+      position: absolute; pointer-events: none;
+    }
+    .deco-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: rgba(198,165,89,0.3);
+      position: absolute; pointer-events: none;
+    }
+
+    /* ===== INTERACTIVE CARD ===== */
+    .pop-card {
+      background: rgba(26,26,36,0.85); border: 1px solid rgba(198,165,89,0.15);
+      border-radius: 12px; padding: 40px;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease, border-color 0.35s ease;
+      cursor: pointer;
+    }
+    .pop-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 24px 60px rgba(198,165,89,0.12), 0 4px 20px rgba(0,0,0,0.4);
+      border-color: rgba(198,165,89,0.4);
+    }
+    .pop-card:focus-visible {
+      outline: 2px solid #E6B979; outline-offset: 4px;
+    }
+    .pop-card:active { transform: translateY(-4px) scale(1.01); }
+
+    /* ===== BUTTON (matches Brand Guidelines exactly) ===== */
+    .btn-gold {
+      display: inline-block;
+      background: linear-gradient(135deg, #B8952E 0%, #C6A559 30%, #E6B979 60%, #D4AB4C 100%);
+      color: #1A1206; font-weight: 700; font-size: 13px;
+      letter-spacing: 0.12em; text-decoration: none;
+      text-transform: uppercase;
+      padding: 14px 32px; border-radius: 8px;
+      border: 1px solid rgba(230,185,121,0.4);
+      box-shadow: 0 2px 12px rgba(198,165,89,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(198,165,89,0.35), 0 2px 8px rgba(198,165,89,0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .btn-gold:focus-visible { outline: 2px solid #E6B979; outline-offset: 4px; }
+    .btn-gold:active { transform: translateY(0); }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1.5px solid #C6A559; color: #E6B979;
+      font-weight: 700; font-size: 13px; letter-spacing: 0.12em; text-decoration: none;
+      text-transform: uppercase;
+      padding: 14px 32px; border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(198,165,89,0.06);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-outline:hover {
+      transform: translateY(-3px);
+      background: rgba(198,165,89,0.1); border-color: #E6B979;
+      box-shadow: 0 12px 30px rgba(198,165,89,0.15);
+    }
+    .btn-outline:focus-visible { outline: 2px solid #E6B979; outline-offset: 4px; }
+    .btn-outline:active { transform: translateY(0); }
+
+    /* ===== SPARKLE PARTICLES ===== */
+    .sparkle-field {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    }
+    .sparkle {
+      position: absolute; width: 3px; height: 3px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(230,185,121,0.9), rgba(198,165,89,0.3), transparent);
+      animation: sparkle 3s ease-in-out infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .sparkle-lg {
+      width: 5px; height: 5px;
+      background: radial-gradient(circle, rgba(230,185,121,1), rgba(198,165,89,0.4), transparent);
+      box-shadow: 0 0 8px rgba(230,185,121,0.4);
+    }
+
+    /* ===== SCENE BACKGROUNDS ===== */
+    .scene-hero {
+      background: radial-gradient(ellipse at 30% 40%, rgba(198,165,89,0.08) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 70%, rgba(230,185,121,0.05) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 20%, rgba(198,165,89,0.04) 0%, transparent 40%),
+                  #0A0A0F;
+    }
+    .scene-services {
+      background: radial-gradient(ellipse at 60% 30%, rgba(198,165,89,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 20% 80%, rgba(120,90,40,0.04) 0%, transparent 50%),
+                  #0E0E15;
+    }
+    .scene-about {
+      background: radial-gradient(ellipse at 40% 50%, rgba(198,165,89,0.07) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 20%, rgba(230,185,121,0.04) 0%, transparent 50%),
+                  #0A0A0F;
+    }
+    .scene-process {
+      background: radial-gradient(ellipse at 50% 60%, rgba(198,165,89,0.06) 0%, transparent 55%),
+                  #0C0C14;
+    }
+    .scene-cta {
+      background: radial-gradient(ellipse at 50% 50%, rgba(198,165,89,0.1) 0%, transparent 50%),
+                  #0A0A0F;
+    }
+
+    /* ===== BACKGROUND VIDEO ===== */
+    #bg-video-wrap {
+      position: fixed; inset: 0; z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(145deg, #1a1d24 0%, #121419 30%, #1c1f28 60%, #0f1014 100%);
+    }
+    #bg-video {
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+    #bg-video-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 30%, rgba(198,165,89,0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 70%, rgba(198,165,89,0.03) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(18,20,25,0.3) 0%, rgba(18,20,25,0.1) 50%, rgba(18,20,25,0.4) 100%);
+      pointer-events: none;
+    }
+
+    /* Make scene backgrounds transparent so video shows through */
+    .scene { background: transparent !important; }
+
+    /* ===== TESTIMONIAL CARD ===== */
+    .testimonial-card {
+      background: rgba(26,26,36,0.85); border: 1px solid rgba(198,165,89,0.12);
+      border-radius: 12px; padding: 32px; min-width: 300px; max-width: 340px;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(198,165,89,0.1), 0 4px 16px rgba(0,0,0,0.4);
+      border-color: rgba(198,165,89,0.3);
+    }
+    .testimonial-card:focus-visible { outline: 2px solid #E6B979; outline-offset: 4px; }
+
+    /* ===== PRICING CARD ===== */
+    .pricing-card {
+      background: rgba(26,26,36,0.85); border: 1px solid rgba(198,165,89,0.12);
+      border-radius: 12px; padding: 36px 32px; min-width: 260px; max-width: 280px;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease, border-color 0.35s ease;
+      display: flex; flex-direction: column;
+    }
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(198,165,89,0.1), 0 4px 16px rgba(0,0,0,0.4);
+      border-color: rgba(198,165,89,0.3);
+    }
+    .pricing-card:focus-visible { outline: 2px solid #E6B979; outline-offset: 4px; }
+    .pricing-card.featured {
+      border-color: rgba(198,165,89,0.4);
+      background: rgba(26,26,36,0.95);
+      box-shadow: 0 8px 40px rgba(198,165,89,0.1);
+      position: relative;
+    }
+    .pricing-card.featured::before {
+      content: 'MOST POPULAR';
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, #C6A559, #E6B979);
+      color: #0A0A0F; font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+      padding: 4px 16px; border-radius: 20px;
+    }
+    .pricing-feature {
+      display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;
+    }
+    .pricing-check {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+      background: rgba(198,165,89,0.15); display: flex; align-items: center; justify-content: center;
+    }
+    .pricing-check svg { width: 10px; height: 10px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .scene { width: 100vw; }
+      .pop-card { padding: 28px; }
+      .scene-content h1 { font-size: 36px !important; }
+      .scene-content h2 { font-size: 28px !important; }
+      .services-grid { flex-direction: column !important; gap: 20px !important; }
+      .process-steps { flex-direction: column !important; gap: 24px !important; }
+      .hide-mobile { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading-screen">
+  <img id="loading-logo" src="brand_assets/Tester Logo.png" alt="Tester.io" />
+  <div id="loading-text">Tester.io</div>
+  <div id="loading-hint">scroll down to explore</div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== BACKGROUND VIDEO ===== -->
+<div id="bg-video-wrap">
+  <video id="bg-video" muted playsinline autoplay loop preload="auto">
+    <source src="brand_assets/bg-video.mp4" type="video/mp4" />
+  </video>
+  <div id="bg-video-overlay"></div>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <a href="#about">Community</a>
+  <a href="#about">About</a>
+  <a href="#" class="nav-btn">Login</a>
+  <a href="#" class="nav-btn-gold">Sign Up</a>
+</nav>
+
+<!-- ===== GRAIN OVERLAY ===== -->
+<div id="grain"></div>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div id="progress-bar"></div>
+
+<!-- ===== SCROLL INDICATOR ===== -->
+<div id="scroll-indicator">
+  <span>Scroll</span>
+  <div class="scroll-arrow"></div>
+</div>
+
+<!-- ===== MAIN HORIZONTAL SCROLL ===== -->
+<div id="scroll-container">
+
+  <!-- ==================== SCENE 1: HERO ==================== -->
+  <section class="scene scene-hero" data-scene="hero">
+    <!-- Sparkle particles -->
+    <div class="sparkle-field">
+      <div class="sparkle" style="top:12%;left:18%;animation-delay:0s;"></div>
+      <div class="sparkle" style="top:25%;left:65%;animation-delay:0.5s;"></div>
+      <div class="sparkle sparkle-lg" style="top:8%;right:25%;animation-delay:1.2s;"></div>
+      <div class="sparkle" style="top:45%;left:35%;animation-delay:1.8s;"></div>
+      <div class="sparkle sparkle-lg" style="top:18%;left:45%;animation-delay:0.3s;"></div>
+      <div class="sparkle" style="top:35%;right:18%;animation-delay:2.1s;"></div>
+      <div class="sparkle" style="bottom:30%;left:22%;animation-delay:0.7s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:20%;right:35%;animation-delay:1.5s;"></div>
+      <div class="sparkle" style="top:55%;right:12%;animation-delay:2.5s;"></div>
+      <div class="sparkle" style="bottom:15%;left:55%;animation-delay:0.9s;"></div>
+      <div class="sparkle sparkle-lg" style="top:5%;left:30%;animation-delay:1.7s;"></div>
+      <div class="sparkle" style="bottom:40%;right:28%;animation-delay:2.3s;"></div>
+    </div>
+
+    <!-- Background decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:400px;height:400px;top:-80px;right:-100px;"></div>
+      <div class="deco-ring float-med" style="width:200px;height:200px;bottom:10%;left:5%;"></div>
+      <div class="deco-circle float-slow" style="width:8px;height:8px;background:rgba(198,165,89,0.3);top:20%;left:15%;"></div>
+      <div class="deco-circle float-fast" style="width:5px;height:5px;background:rgba(198,165,89,0.2);top:60%;right:20%;"></div>
+      <div class="deco-diamond float-med" style="top:30%;right:12%;"></div>
+      <div class="deco-diamond float-slow" style="bottom:25%;left:8%;"></div>
+      <div class="deco-dot float-fast" style="top:15%;right:30%;"></div>
+      <div class="deco-dot float-slow" style="bottom:35%;right:8%;"></div>
+      <div class="deco-line" style="width:120px;top:40%;left:-20px;"></div>
+      <div class="deco-line" style="width:80px;bottom:30%;right:10%;"></div>
+    </div>
+
+    <!-- Large background glow orb -->
+    <div class="parallax-layer" data-depth="0.01">
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(198,165,89,0.06),transparent 70%);"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="parallax-layer" data-depth="0.05" style="position:relative;z-index:10;padding:0 40px;max-width:800px;text-align:center;">
+      <div class="scene-content">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;justify-content:center;">
+          <img src="brand_assets/Tester Logo.png" alt="" style="width:44px;height:44px;object-fit:contain;" class="float-med" />
+          <span class="text-gold" style="font-weight:800;font-size:24px;letter-spacing:-0.02em;">Tester.io</span>
+        </div>
+        <h1 style="font-weight:900;font-size:clamp(36px,5vw,72px);line-height:1.05;letter-spacing:-0.03em;margin-bottom:24px;">
+          Human &amp; <span class="text-gold">Automated</span><br>QA in One Place
+        </h1>
+        <p style="font-weight:500;font-size:clamp(14px,1.4vw,18px);line-height:1.7;color:rgba(232,232,237,0.5);max-width:520px;margin:0 auto 40px;">
+          Ship with confidence. Tester.io combines expert human testers with powerful test automation to catch every bug before your users do.
+        </p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+          <a href="#" class="btn-gold">Get Started</a>
+          <a href="#" class="btn-outline">Learn More</a>
+        </div>
+        <!-- Stats -->
+        <div style="display:flex;gap:48px;justify-content:center;margin-top:60px;flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div class="text-gold" style="font-weight:900;font-size:36px;letter-spacing:-0.03em;">2M+</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:4px;">Tests Executed</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="text-gold" style="font-weight:900;font-size:36px;letter-spacing:-0.03em;">99.8%</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:4px;">Bug Detection Rate</div>
+          </div>
+          <div style="text-align:center;">
+            <div class="text-gold" style="font-weight:900;font-size:36px;letter-spacing:-0.03em;">500+</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:4px;">QA Experts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 2: SERVICES ==================== -->
+  <section class="scene scene-services" data-scene="services" style="">
+    <!-- Sparkles -->
+    <div class="sparkle-field">
+      <div class="sparkle" style="top:20%;left:10%;animation-delay:0.4s;"></div>
+      <div class="sparkle sparkle-lg" style="top:10%;right:20%;animation-delay:1.1s;"></div>
+      <div class="sparkle" style="bottom:25%;left:40%;animation-delay:1.9s;"></div>
+      <div class="sparkle" style="bottom:15%;right:15%;animation-delay:0.6s;"></div>
+      <div class="sparkle sparkle-lg" style="top:40%;right:35%;animation-delay:2.2s;"></div>
+    </div>
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:350px;height:350px;top:-60px;left:-80px;"></div>
+      <div class="deco-ring float-med" style="width:180px;height:180px;bottom:15%;right:10%;"></div>
+      <div class="deco-diamond float-fast" style="top:20%;left:15%;"></div>
+      <div class="deco-diamond float-slow" style="bottom:20%;right:25%;"></div>
+      <div class="deco-dot float-med" style="top:25%;right:15%;"></div>
+      <div class="deco-dot float-fast" style="bottom:40%;left:10%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
+      <div class="scene-content">
+        <div style="margin-bottom:48px;text-align:center;">
+          <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">What We Offer</span>
+          <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">QA <span class="text-gold">Solutions</span></h2>
+        </div>
+        <div class="services-grid" style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
+          <!-- Card 1 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:10px;">Manual Testing</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Expert human testers who think like real users. Exploratory, functional, and regression testing on demand.</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            </div>
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:10px;">Test Automation</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Scalable automated test suites that run 24/7. CI/CD integration, API testing, and end-to-end coverage.</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:10px;">Usability Testing</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Real users testing your product across devices and browsers. Get actionable UX feedback fast.</p>
+          </div>
+          <!-- Card 4 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
+              <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:10px;">Security Testing</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Penetration testing and vulnerability scanning to secure your app before launch. OWASP-aligned.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 3: ABOUT ==================== -->
+  <section class="scene scene-about" data-scene="about" style="">
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:300px;height:300px;bottom:-60px;right:-50px;"></div>
+      <div class="deco-circle float-fast" style="width:10px;height:10px;background:rgba(198,165,89,0.25);top:15%;left:10%;"></div>
+      <div class="deco-diamond float-med" style="top:25%;right:8%;"></div>
+      <div class="deco-dot float-slow" style="bottom:20%;left:20%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 100px;display:flex;align-items:center;justify-content:center;gap:80px;width:100%;height:100%;">
+      <!-- Left: Badge -->
+      <div style="flex:0 1 280px;min-width:200px;position:relative;display:flex;align-items:center;justify-content:center;">
+        <div class="pop-card float-slow" style="padding:28px 36px;text-align:center;" tabindex="0">
+          <div class="text-gold" style="font-weight:900;font-size:48px;letter-spacing:-0.03em;">24/7</div>
+          <div style="font-size:13px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:4px;">Testing Coverage</div>
+        </div>
+      </div>
+      <!-- Right: Content -->
+      <div style="flex:0 1 480px;min-width:280px;">
+        <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">Why Tester.io</span>
+        <h2 style="font-weight:900;font-size:clamp(28px,3vw,44px);letter-spacing:-0.03em;margin-bottom:20px;">
+          One Platform, <span class="text-gold">Zero Bugs</span>
+        </h2>
+        <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.5);margin-bottom:16px;">
+          Tester.io unifies human expertise and automated testing into a single platform. No more juggling tools — manage manual testers, automation scripts, and bug reports all in one place.
+        </p>
+        <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.5);margin-bottom:32px;">
+          Backed by 500+ certified QA professionals and battle-tested automation frameworks, we help teams ship faster without sacrificing quality.
+        </p>
+        <!-- Checkmarks -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span style="font-size:14px;font-weight:600;">Human + Automated in One Workflow</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span style="font-size:14px;font-weight:600;">CI/CD Pipeline Integration</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="16" height="16" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span style="font-size:14px;font-weight:600;">Real-Time Bug Tracking &amp; Reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 4: PROCESS ==================== -->
+  <section class="scene scene-process" data-scene="process" style="">
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:280px;height:280px;top:-40px;right:20%;"></div>
+      <div class="deco-diamond float-med" style="bottom:30%;left:5%;"></div>
+      <div class="deco-dot float-fast" style="top:20%;left:15%;"></div>
+      <div class="deco-dot float-slow" style="bottom:15%;right:15%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
+      <div class="scene-content">
+        <div style="text-align:center;margin-bottom:56px;">
+          <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">How It Works</span>
+          <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">Start Testing in <span class="text-gold">Minutes</span></h2>
+        </div>
+        <div class="process-steps" style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;">
+          <!-- Step 1 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+              <span class="text-gold" style="font-weight:900;font-size:22px;">01</span>
+            </div>
+            <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Connect</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Link your repo or upload your app. We integrate with GitHub, GitLab, Jira, and more.</p>
+          </div>
+          <!-- Step 2 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+              <span class="text-gold" style="font-weight:900;font-size:22px;">02</span>
+            </div>
+            <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Configure</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Define test plans, assign human testers, and set up automation pipelines.</p>
+          </div>
+          <!-- Step 3 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+              <span class="text-gold" style="font-weight:900;font-size:22px;">03</span>
+            </div>
+            <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Test</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Human testers and automated suites run in parallel. Bugs logged instantly with screenshots and steps.</p>
+          </div>
+          <!-- Step 4 -->
+          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+            <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+              <span class="text-gold" style="font-weight:900;font-size:22px;">04</span>
+            </div>
+            <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Ship</h3>
+            <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Get detailed reports, fix issues, and deploy with confidence. Continuous testing on every release.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 5: TESTIMONIALS ==================== -->
+  <section class="scene" data-scene="testimonials" style="">
+    <!-- Sparkles -->
+    <div class="sparkle-field">
+      <div class="sparkle" style="top:10%;left:12%;animation-delay:0.3s;"></div>
+      <div class="sparkle sparkle-lg" style="top:20%;right:18%;animation-delay:1.4s;"></div>
+      <div class="sparkle" style="bottom:25%;left:30%;animation-delay:0.9s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:15%;right:25%;animation-delay:2.1s;"></div>
+      <div class="sparkle" style="top:40%;left:50%;animation-delay:1.7s;"></div>
+    </div>
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:320px;height:320px;top:-50px;left:-60px;"></div>
+      <div class="deco-ring float-med" style="width:200px;height:200px;bottom:10%;right:5%;"></div>
+      <div class="deco-diamond float-fast" style="top:25%;right:12%;"></div>
+      <div class="deco-dot float-slow" style="bottom:30%;left:15%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
+      <div style="margin-bottom:48px;text-align:center;">
+        <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">Testimonials</span>
+        <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">What Teams Are <span class="text-gold">Saying</span></h2>
+      </div>
+
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:stretch;justify-content:center;">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"Tester.io helped us catch critical issues before launch without slowing down our sprint cycle. The mix of automated coverage and human feedback gave us confidence we didn't have before."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">Head of Product</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">B2B SaaS Startup</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"We used to rely only on automation, and too many usability issues slipped through. Tester.io added the human layer we were missing."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">CTO</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">Mobile App Company</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"The biggest value was having one place for both automated checks and exploratory testing. It made QA feel much less fragmented."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">Engineering Manager</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">E-commerce Platform</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"Tester.io gave our lean team enterprise-style QA without needing to hire a full in-house testing department."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">Founder</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">Early-stage Startup</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 5 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"We reduced release anxiety dramatically. Automated tests covered the basics, and human testers surfaced edge cases our scripts never would have found."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">VP of Engineering</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">Fintech Company</div>
+          </div>
+        </div>
+
+        <!-- Testimonial 6 -->
+        <div class="testimonial-card" tabindex="0">
+          <div style="margin-bottom:20px;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M11 7H7a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3m13 3h-4a4 4 0 00-4 4v0a2 2 0 002 2h2a2 2 0 002-2V7zm0 0c0-1-.5-3-3-3" stroke="#C6A559" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p style="font-size:14px;line-height:1.7;color:rgba(232,232,237,0.6);font-style:italic;margin-bottom:20px;">"The reporting was easy to understand, actionable, and fast. Our developers could reproduce issues quickly and fix them with less back-and-forth."</p>
+          <div style="margin-top:auto;">
+            <div style="font-weight:700;font-size:13px;color:#E8E8ED;">Product Lead</div>
+            <div style="font-size:12px;color:rgba(232,232,237,0.35);margin-top:2px;">SaaS Company</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Short review snippets -->
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:40px;justify-content:center;">
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"A smarter way to handle QA."</span>
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"Automation plus human insight is a game changer."</span>
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"Fast, reliable, and practical for growing teams."</span>
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"Exactly what modern release teams need."</span>
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"One platform, better testing coverage."</span>
+        <span style="padding:8px 20px;border-radius:20px;border:1px solid rgba(198,165,89,0.2);font-size:12px;font-weight:600;color:rgba(232,232,237,0.5);">"Great fit for teams shipping often."</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 6: PRICING ==================== -->
+  <section class="scene" data-scene="pricing" style="">
+    <!-- Sparkles -->
+    <div class="sparkle-field">
+      <div class="sparkle sparkle-lg" style="top:8%;left:25%;animation-delay:0.5s;"></div>
+      <div class="sparkle" style="top:35%;right:10%;animation-delay:1.8s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:20%;left:15%;animation-delay:1.2s;"></div>
+      <div class="sparkle" style="bottom:30%;right:30%;animation-delay:2.4s;"></div>
+    </div>
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+      <div class="deco-diamond float-med" style="top:15%;left:8%;"></div>
+      <div class="deco-diamond float-fast" style="bottom:20%;right:10%;"></div>
+      <div class="deco-dot float-slow" style="top:30%;right:20%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">Pricing</span>
+        <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">Human Insight. Automated Speed.<br><span class="text-gold">One QA Platform.</span></h2>
+      </div>
+
+      <div style="display:flex;gap:24px;justify-content:center;align-items:stretch;flex-wrap:wrap;">
+        <!-- Starter -->
+        <div class="pricing-card" tabindex="0">
+          <div style="margin-bottom:24px;">
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:4px;">Starter</h3>
+            <p style="font-size:12px;color:rgba(232,232,237,0.4);">For small teams getting started</p>
+          </div>
+          <div style="margin-bottom:24px;">
+            <span class="text-gold" style="font-weight:900;font-size:40px;letter-spacing:-0.03em;">$99</span>
+            <span style="font-size:13px;color:rgba(232,232,237,0.4);">/month</span>
+          </div>
+          <div style="flex:1;margin-bottom:24px;">
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Basic automated test runs</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Limited human QA requests</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Bug reporting dashboard</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Email support</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline" style="text-align:center;width:100%;padding:12px 0;">GET STARTED</a>
+        </div>
+
+        <!-- Growth (Featured) -->
+        <div class="pricing-card featured" tabindex="0">
+          <div style="margin-bottom:24px;">
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:4px;">Growth</h3>
+            <p style="font-size:12px;color:rgba(232,232,237,0.4);">For startups &amp; scaling teams</p>
+          </div>
+          <div style="margin-bottom:24px;">
+            <span class="text-gold" style="font-weight:900;font-size:40px;letter-spacing:-0.03em;">$399</span>
+            <span style="font-size:13px;color:rgba(232,232,237,0.4);">/month</span>
+          </div>
+          <div style="flex:1;margin-bottom:24px;">
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">More automated test coverage</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Monthly human QA credits</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Jira, Slack, GitHub integrations</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Shared team workspace</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Priority support</span>
+            </div>
+          </div>
+          <a href="#" class="btn-gold" style="text-align:center;width:100%;padding:12px 0;">GET STARTED</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card" tabindex="0">
+          <div style="margin-bottom:24px;">
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:4px;">Pro</h3>
+            <p style="font-size:12px;color:rgba(232,232,237,0.4);">For fast-moving companies</p>
+          </div>
+          <div style="margin-bottom:24px;">
+            <span class="text-gold" style="font-weight:900;font-size:40px;letter-spacing:-0.03em;">$999</span>
+            <span style="font-size:13px;color:rgba(232,232,237,0.4);">/month</span>
+          </div>
+          <div style="flex:1;margin-bottom:24px;">
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Advanced automation workflows</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Larger human QA session pool</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Cross-device/browser testing</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Detailed release reports</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">SLA support + custom onboarding</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline" style="text-align:center;width:100%;padding:12px 0;">GET STARTED</a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="pricing-card" tabindex="0">
+          <div style="margin-bottom:24px;">
+            <h3 style="font-weight:700;font-size:18px;margin-bottom:4px;">Enterprise</h3>
+            <p style="font-size:12px;color:rgba(232,232,237,0.4);">For larger organizations</p>
+          </div>
+          <div style="margin-bottom:24px;">
+            <span class="text-gold" style="font-weight:900;font-size:32px;letter-spacing:-0.03em;">Custom</span>
+            <span style="font-size:13px;color:rgba(232,232,237,0.4);display:block;margin-top:4px;">pricing</span>
+          </div>
+          <div style="flex:1;margin-bottom:24px;">
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Unlimited / high-volume testing</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Dedicated QA strategist</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Custom workflows</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Compliance &amp; security support</span>
+            </div>
+            <div class="pricing-feature">
+              <div class="pricing-check"><svg fill="none" stroke="#C6A559" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+              <span style="font-size:13px;color:rgba(232,232,237,0.55);">Private environments + account manager</span>
+            </div>
+          </div>
+          <a href="#" class="btn-outline" style="text-align:center;width:100%;padding:12px 0;">CONTACT SALES</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 7: CTA ==================== -->
+  <section class="scene scene-cta" data-scene="cta">
+    <!-- Sparkles -->
+    <div class="sparkle-field">
+      <div class="sparkle sparkle-lg" style="top:15%;left:20%;animation-delay:0.2s;"></div>
+      <div class="sparkle" style="top:30%;right:15%;animation-delay:1.3s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:20%;left:35%;animation-delay:0.8s;"></div>
+      <div class="sparkle" style="bottom:35%;right:30%;animation-delay:2.0s;"></div>
+      <div class="sparkle" style="top:10%;left:50%;animation-delay:1.6s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:10%;right:20%;animation-delay:0.5s;"></div>
+    </div>
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+      <div class="deco-ring float-med" style="width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+      <div class="deco-diamond float-fast" style="top:15%;left:20%;"></div>
+      <div class="deco-diamond float-slow" style="bottom:15%;right:20%;"></div>
+      <div class="deco-dot float-med" style="top:30%;right:25%;"></div>
+      <div class="deco-dot float-fast" style="bottom:30%;left:25%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.05" style="position:relative;z-index:10;text-align:center;max-width:600px;padding:0 40px;">
+      <img src="brand_assets/Tester Logo.png" alt="" style="width:72px;height:72px;object-fit:contain;margin:0 auto 32px;" class="float-slow" />
+      <h2 style="font-weight:900;font-size:clamp(28px,4vw,52px);letter-spacing:-0.03em;margin-bottom:20px;">
+        Ready to Ship <span class="text-gold">Bug-Free</span>?
+      </h2>
+      <p style="font-size:15px;line-height:1.7;color:rgba(232,232,237,0.5);max-width:440px;margin:0 auto 40px;">
+        Start your free trial today. No credit card required. Get human and automated QA running in minutes.
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="#" class="btn-gold">Start Free Trial</a>
+        <a href="#" class="btn-outline">Book a Demo</a>
+      </div>
+      <!-- Social Media -->
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:36px;">
+        <a href="#" aria-label="Facebook" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(198,165,89,0.3);display:flex;align-items:center;justify-content:center;color:#C6A559;text-decoration:none;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),border-color 0.25s ease,background 0.25s ease;" onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='#C6A559';this.style.background='rgba(198,165,89,0.1)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(198,165,89,0.3)';this.style.background=''">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="#" aria-label="X" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(198,165,89,0.3);display:flex;align-items:center;justify-content:center;color:#C6A559;text-decoration:none;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),border-color 0.25s ease,background 0.25s ease;" onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='#C6A559';this.style.background='rgba(198,165,89,0.1)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(198,165,89,0.3)';this.style.background=''">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(198,165,89,0.3);display:flex;align-items:center;justify-content:center;color:#C6A559;text-decoration:none;transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1),border-color 0.25s ease,background 0.25s ease;" onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='#C6A559';this.style.background='rgba(198,165,89,0.1)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(198,165,89,0.3)';this.style.background=''">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+      </div>
+      <p style="font-size:11px;color:rgba(232,232,237,0.25);margin-top:40px;font-weight:500;">&copy; 2026 Tester.io. All rights reserved.</p>
+    </div>
+  </section>
+
+</div><!-- /scroll-container -->
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+(function() {
+  // ===== Loading Screen =====
+  const loadingScreen = document.getElementById('loading-screen');
+  const progressFill = document.getElementById('progress-fill');
+  let loadProgress = 0;
+  const loadInterval = setInterval(() => {
+    loadProgress += Math.random() * 25 + 10;
+    if (loadProgress >= 100) {
+      loadProgress = 100;
+      clearInterval(loadInterval);
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        setTimeout(() => loadingScreen.style.display = 'none', 800);
+      }, 400);
+    }
+    progressFill.style.width = loadProgress + '%';
+  }, 200);
+
+  // ===== Vertical Scroll =====
+  const progressBar = document.getElementById('progress-bar');
+  const scrollIndicator = document.getElementById('scroll-indicator');
+
+  // ===== Scroll Reveal =====
+  const scenes = document.querySelectorAll('.scene');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+  scenes.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(40px)';
+    el.style.transition = 'opacity 0.7s cubic-bezier(0.34,1.56,0.64,1), transform 0.7s cubic-bezier(0.34,1.56,0.64,1)';
+    revealObserver.observe(el);
+  });
+  // Make hero visible immediately
+  if (scenes[0]) { scenes[0].style.opacity = '1'; scenes[0].style.transform = 'translateY(0)'; }
+
+  // ===== Mouse Parallax =====
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // ===== Animation Loop =====
+  function animate() {
+    // Progress bar
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+    progressBar.style.width = (progress * 100) + '%';
+
+    // Hide scroll indicator after scrolling
+    if (progress > 0.02) {
+      scrollIndicator.classList.add('hidden');
+    } else {
+      scrollIndicator.classList.remove('hidden');
+    }
+
+    // Parallax layers based on mouse
+    const layers = document.querySelectorAll('.parallax-layer');
+    layers.forEach(layer => {
+      const depth = parseFloat(layer.dataset.depth) || 0;
+      const offsetX = mouseX * depth * 40;
+      const offsetY = mouseY * depth * 30;
+      layer.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
+</body>
+</html>
