@@ -1,5 +1,11 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    hasSupabase: !!process.env.SUPABASE_URL,
+    hasResend: !!process.env.RESEND_API_KEY,
+    hasJwt: !!process.env.JWT_SECRET,
+  });
+});
 module.exports = app;
