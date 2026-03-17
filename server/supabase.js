@@ -3,10 +3,11 @@ const { createClient } = require('@supabase/supabase-js');
 let _client;
 const getClient = () => {
   if (!_client) {
-    const url = (process.env.SUPABASE_URL || '').trim();
+    let url = (process.env.SUPABASE_URL || '').trim();
     const key = (process.env.SUPABASE_ANON_KEY || '').trim();
-    if (!url.startsWith('http')) {
-      throw new Error(`SUPABASE_URL is invalid: "${url}" (len=${url.length})`);
+    // Auto-correct if only project ref ID was entered instead of full URL
+    if (url && !url.startsWith('http')) {
+      url = `https://${url}.supabase.co`;
     }
     _client = createClient(url, key);
   }
