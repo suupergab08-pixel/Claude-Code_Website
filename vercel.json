@@ -4,10 +4,20 @@
     {
       "src": "server/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "brand_assets/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "server/index.js" },
-    { "src": "/(.*)", "dest": "/$1" }
+    { "src": "/(.*\\.html)", "dest": "/$1" },
+    { "src": "/brand_assets/(.*)", "dest": "/brand_assets/$1" },
+    { "src": "/", "dest": "/index.html" }
   ]
 }
