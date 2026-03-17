@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     res.status(201).json({ status: 'success', id: data.id });
   } catch (err) {
     console.error('Contact error:', err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: err.message, stack: err.stack });
   }
 });
 
