@@ -1,11 +1,15 @@
 const { Resend } = require('resend');
 require('dotenv').config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resend;
+const getResend = () => {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
+  return _resend;
+};
 
 async function sendWelcomeEmail(user) {
   try {
-    const { data } = await resend.emails.send({
+    const { data } = await getResend().emails.send({
       from: 'Tester.io <onboarding@resend.dev>',
       to: user.email,
       subject: `Welcome to Tester.io, ${user.name.split(' ')[0]}! 🎉`,
@@ -61,7 +65,7 @@ async function sendWelcomeEmail(user) {
 
 async function sendContactConfirmation(contact) {
   try {
-    const { data } = await resend.emails.send({
+    const { data } = await getResend().emails.send({
       from: 'Tester.io <onboarding@resend.dev>',
       to: contact.email,
       subject: `We got your message, ${contact.name.split(' ')[0]}!`,

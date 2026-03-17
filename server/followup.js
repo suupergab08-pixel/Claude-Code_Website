@@ -2,8 +2,9 @@ const { Resend } = require('resend');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+let _resend, _supabase;
+const getResend = () => { if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY); return _resend; };
+const getSupabase = () => { if (!_supabase) _supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY); return _supabase; };
 const { trackInteraction } = require('./track');
 
 // ===== Follow-up Email Templates =====
@@ -188,7 +189,7 @@ async function runFollowups() {
     // Send the follow-up email
     const firstName = contact.name.split(' ')[0];
     try {
-      const { data: emailData } = await resend.emails.send({
+      const { data: emailData } = await getResend().emails.send({
         from: 'Tester.io <onboarding@resend.dev>',
         to: contact.email,
         subject: template.subject(firstName),
@@ -196,7 +197,7 @@ async function runFollowups() {
       });
 
       // Log the follow-up in Supabase
-      await supabase.from('followup_log').insert({
+      await getSupabase().from('followup_log').insert({
         contact_id: contact.id,
         email: contact.email,
         followup_day: template.day,
@@ -213,7 +214,7 @@ async function runFollowups() {
       console.error(`✗ Failed to send follow-up to ${contact.email}:`, err.message);
 
       // Log the failure
-      await supabase.from('followup_log').insert({
+      await getSupabase().from('followup_log').insert({
         contact_id: contact.id,
         email: contact.email,
         followup_day: template.day,
@@ -254,14 +255,14 @@ async function runFollowups() {
 
       const firstName = user.name.split(' ')[0];
       try {
-        const { data: emailData } = await resend.emails.send({
+        const { data: emailData } = await getResend().emails.send({
           from: 'Tester.io <onboarding@resend.dev>',
           to: user.email,
           subject: template.subject(firstName),
           html: template.html(firstName),
         });
 
-        await supabase.from('followup_log').insert({
+        await getSupabase().from('followup_log').insert({
           email: user.email,
           followup_day: template.day,
           email_id: emailData?.id || null,
