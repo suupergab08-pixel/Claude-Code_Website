@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tester.io — Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0a0f;
+      color: #e8e8ed;
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(10,10,15,0.95);
+      border-bottom: 1px solid rgba(198,165,89,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #C6A559;
+      letter-spacing: -0.02em;
+    }
+    .nav-brand img { height: 32px; }
+    .nav-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(198,165,89,0.6);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .btn-refresh {
+      background: linear-gradient(135deg, #C6A559, #E6B979);
+      color: #0a0a0f;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+    .btn-refresh:hover { opacity: 0.85; }
+    #last-updated { font-size: 11px; color: rgba(232,232,237,0.4); }
+
+    /* ── Layout ── */
+    main { padding: 36px 40px; max-width: 1400px; margin: 0 auto; }
+
+    /* ── Stat Cards ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(198,165,89,0.15);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: #E6B979;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(232,232,237,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section Headers ── */
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #C6A559;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(198,165,89,0.15);
+    }
+
+    /* ── Tables ── */
+    .table-wrap {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(198,165,89,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid rgba(198,165,89,0.1);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      background: rgba(198,165,89,0.06);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(198,165,89,0.7);
+      border-bottom: 1px solid rgba(198,165,89,0.1);
+    }
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(198,165,89,0.04); }
+    tbody td {
+      padding: 12px 16px;
+      font-size: 13px;
+      color: rgba(232,232,237,0.85);
+      vertical-align: middle;
+    }
+    .td-email { color: rgba(232,232,237,0.55); font-size: 12px; }
+    .td-msg {
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: rgba(232,232,237,0.5);
+      font-size: 12px;
+    }
+
+    /* ── Badges ── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge-green  { background: rgba(39,174,96,0.15);  color: #27ae60; border: 1px solid rgba(39,174,96,0.3); }
+    .badge-gold   { background: rgba(198,165,89,0.15); color: #E6B979; border: 1px solid rgba(198,165,89,0.3); }
+    .badge-gray   { background: rgba(255,255,255,0.05); color: rgba(232,232,237,0.4); border: 1px solid rgba(255,255,255,0.08); }
+    .badge-blue   { background: rgba(52,152,219,0.15);  color: #3498db; border: 1px solid rgba(52,152,219,0.3); }
+
+    /* ── Empty / Loading ── */
+    .empty-row td { text-align: center; color: rgba(232,232,237,0.25); padding: 32px; font-size: 13px; }
+    .loading { text-align: center; color: rgba(232,232,237,0.25); padding: 32px; font-size: 13px; }
+
+    /* ── Tabs ── */
+    .tabs { display: flex; gap: 4px; margin-bottom: 20px; }
+    .tab {
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      color: rgba(232,232,237,0.5);
+      background: transparent;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .tab.active {
+      background: rgba(198,165,89,0.12);
+      border-color: rgba(198,165,89,0.3);
+      color: #E6B979;
+    }
+    .tab:hover:not(.active) { color: rgba(232,232,237,0.8); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Search ── */
+    .search-input {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(198,165,89,0.2);
+      border-radius: 6px;
+      padding: 8px 14px;
+      color: #e8e8ed;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      width: 220px;
+      outline: none;
+    }
+    .search-input::placeholder { color: rgba(232,232,237,0.3); }
+    .search-input:focus { border-color: rgba(198,165,89,0.5); }
+
+    /* ── Scrollable table container ── */
+    .table-scroll { overflow-x: auto; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <img src="brand_assets/Tester Logo.png" alt="Tester.io" onerror="this.style.display='none'" />
+    Tester.io
+    <span class="nav-tag">Admin</span>
+  </div>
+  <div class="nav-right">
+    <span id="last-updated">—</span>
+    <button class="btn-refresh" onclick="loadAll()">↺ Refresh</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="stat-contacts">—</div>
+      <div class="stat-label">Total Contacts</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-users">—</div>
+      <div class="stat-label">Signed Up Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-opened">—</div>
+      <div class="stat-label">Emails Opened</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-replied">—</div>
+      <div class="stat-label">Replied</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-followups">—</div>
+      <div class="stat-label">Follow-ups Sent</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="stat-interactions">—</div>
+      <div class="stat-label">Interactions</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('contacts')">Contacts</button>
+    <button class="tab" onclick="switchTab('users')">Users</button>
+    <button class="tab" onclick="switchTab('followups')">Follow-ups</button>
+    <button class="tab" onclick="switchTab('interactions')">Interactions</button>
+  </div>
+
+  <!-- Contacts Tab -->
+  <div class="tab-panel active" id="tab-contacts">
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="section-title" style="margin:0;border:none;padding:0">Form Submissions</div>
+        <input class="search-input" id="search-contacts" placeholder="Search name or email…" oninput="filterTable('contacts-body', this.value)" />
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Submitted</th>
+              <th>Delivered</th>
+              <th>Opened</th>
+              <th>Reply</th>
+              <th>Newsletter</th>
+            </tr>
+          </thead>
+          <tbody id="contacts-body">
+            <tr class="empty-row"><td colspan="9">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Users Tab -->
+  <div class="tab-panel" id="tab-users">
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="section-title" style="margin:0;border:none;padding:0">Registered Users</div>
+        <input class="search-input" id="search-users" placeholder="Search email…" oninput="filterTable('users-body', this.value)" />
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Signed Up</th>
+            </tr>
+          </thead>
+          <tbody id="users-body">
+            <tr class="empty-row"><td colspan="3">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Follow-ups Tab -->
+  <div class="tab-panel" id="tab-followups">
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="section-title" style="margin:0;border:none;padding:0">Follow-up Log</div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Day</th>
+              <th>Status</th>
+              <th>Sent At</th>
+            </tr>
+          </thead>
+          <tbody id="followups-body">
+            <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactions Tab -->
+  <div class="tab-panel" id="tab-interactions">
+    <div class="table-wrap">
+      <div class="table-header">
+        <div class="section-title" style="margin:0;border:none;padding:0">All Interactions</div>
+        <input class="search-input" id="search-interactions" placeholder="Search email or event…" oninput="filterTable('interactions-body', this.value)" />
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Email</th>
+              <th>Event</th>
+              <th>Source</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="interactions-body">
+            <tr class="empty-row"><td colspan="5">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://rvgkaqjjogyjppbrwjdp.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ2Z2thcWpqb2d5anBwYnJ3amRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NzE0ODUsImV4cCI6MjA4OTM0NzQ4NX0.83JGPYe1odb-iYMqotpPI2hdmkR32LcTJDLKjNyTPpg';
+
+  const headers = { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` };
+
+  async function query(table, params = '') {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, { headers });
+    return res.json();
+  }
+
+  function fmt(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+           ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function badge(val, trueLabel, trueClass, falseLabel = 'No', falseClass = 'badge-gray') {
+    return val
+      ? `<span class="badge ${trueClass}">${trueLabel}</span>`
+      : `<span class="badge ${falseClass}">${falseLabel}</span>`;
+  }
+
+  async function loadContacts() {
+    const data = await query('contacts', 'select=*&order=submitted_at.desc&limit=200');
+    const tbody = document.getElementById('contacts-body');
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="9">No contacts yet.</td></tr>';
+      return 0;
+    }
+    tbody.innerHTML = data.map((r, i) => `
+      <tr data-search="${(r.name + ' ' + r.email).toLowerCase()}">
+        <td style="color:rgba(232,232,237,0.3);font-size:11px">${i + 1}</td>
+        <td><strong>${r.name || '—'}</strong></td>
+        <td class="td-email">${r.email || '—'}</td>
+        <td class="td-msg" title="${(r.message || '').replace(/"/g, '&quot;')}">${r.message || '—'}</td>
+        <td style="font-size:11px;color:rgba(232,232,237,0.45)">${fmt(r.submitted_at)}</td>
+        <td>${badge(r.email_delivered, 'Yes', 'badge-green')}</td>
+        <td>${badge(r.email_opened, 'Opened', 'badge-blue')}</td>
+        <td>${r.reply_status === 'replied' ? badge(true, 'Replied', 'badge-green') : badge(false, r.reply_status || 'Pending')}</td>
+        <td>${badge(r.newsletter_subscribed, 'Yes', 'badge-gold')}</td>
+      </tr>
+    `).join('');
+    return data.length;
+  }
+
+  async function loadUsers() {
+    const data = await query('users', 'select=id,email,created_at&order=created_at.desc&limit=200');
+    const tbody = document.getElementById('users-body');
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="3">No users yet.</td></tr>';
+      return 0;
+    }
+    tbody.innerHTML = data.map((r, i) => `
+      <tr data-search="${r.email.toLowerCase()}">
+        <td style="color:rgba(232,232,237,0.3);font-size:11px">${i + 1}</td>
+        <td>${r.email}</td>
+        <td style="font-size:11px;color:rgba(232,232,237,0.45)">${fmt(r.created_at)}</td>
+      </tr>
+    `).join('');
+    return data.length;
+  }
+
+  async function loadFollowups() {
+    const data = await query('followup_log', 'select=*&order=sent_at.desc&limit=200');
+    const tbody = document.getElementById('followups-body');
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No follow-ups sent yet.</td></tr>';
+      return 0;
+    }
+    tbody.innerHTML = data.map((r, i) => `
+      <tr>
+        <td style="color:rgba(232,232,237,0.3);font-size:11px">${i + 1}</td>
+        <td>${r.contact_email || '—'}</td>
+        <td><span class="badge badge-gold">Day ${r.followup_day}</span></td>
+        <td>${r.status === 'opened' ? badge(true, 'Opened', 'badge-blue') : badge(false, r.status || 'Sent', '', 'badge-green')}</td>
+        <td style="font-size:11px;color:rgba(232,232,237,0.45)">${fmt(r.sent_at)}</td>
+      </tr>
+    `).join('');
+    return data.length;
+  }
+
+  async function loadInteractions() {
+    const data = await query('interactions', 'select=*&order=created_at.desc&limit=200');
+    const tbody = document.getElementById('interactions-body');
+    if (!Array.isArray(data) || data.length === 0) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No interactions yet.</td></tr>';
+      return 0;
+    }
+    tbody.innerHTML = data.map((r, i) => `
+      <tr data-search="${(r.email + ' ' + r.event_type).toLowerCase()}">
+        <td style="color:rgba(232,232,237,0.3);font-size:11px">${i + 1}</td>
+        <td class="td-email">${r.email || '—'}</td>
+        <td><span class="badge badge-gold">${r.event_type}</span></td>
+        <td style="font-size:11px;color:rgba(232,232,237,0.45)">${r.source || '—'}</td>
+        <td style="font-size:11px;color:rgba(232,232,237,0.45)">${fmt(r.created_at)}</td>
+      </tr>
+    `).join('');
+    return data.length;
+  }
+
+  async function loadAll() {
+    const [contacts, users, followups, interactions] = await Promise.all([
+      loadContacts(), loadUsers(), loadFollowups(), loadInteractions()
+    ]);
+
+    // Stats from contacts
+    const contactsData = await query('contacts', 'select=email_opened,reply_status&limit=500');
+    const opened = Array.isArray(contactsData) ? contactsData.filter(c => c.email_opened).length : 0;
+    const replied = Array.isArray(contactsData) ? contactsData.filter(c => c.reply_status === 'replied').length : 0;
+
+    document.getElementById('stat-contacts').textContent = contacts;
+    document.getElementById('stat-users').textContent = users;
+    document.getElementById('stat-opened').textContent = opened;
+    document.getElementById('stat-replied').textContent = replied;
+    document.getElementById('stat-followups').textContent = followups;
+    document.getElementById('stat-interactions').textContent = interactions;
+
+    document.getElementById('last-updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function filterTable(tbodyId, query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll(`#${tbodyId} tr[data-search]`).forEach(row => {
+      row.style.display = row.dataset.search.includes(q) ? '' : 'none';
+    });
+  }
+
+  loadAll();
+</script>
+</body>
+</html>
