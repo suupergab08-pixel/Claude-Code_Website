@@ -47,13 +47,10 @@ router.post('/', async (req, res) => {
       await trackInteraction(email, 'newsletter_subscribed', { source: 'contact_form' });
     }
 
-    // Also send to Google Sheets (fire and forget)
+    // Also send to Google Sheets via GET (POST redirects lose body in serverless)
     const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_I5NLSjPX3y_hPEcmNN7wZkYsWdcYec5UD4amsQ0DBOnGbxLrR_KWF1dGFkBL7L0skA/exec';
-    fetch(GOOGLE_SHEET_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ name, email, message }),
-    }).catch(() => console.log('Google Sheets sync skipped'));
+    const params = new URLSearchParams({ name, email, message });
+    fetch(`${GOOGLE_SHEET_URL}?${params}`).catch(() => console.log('Google Sheets sync skipped'));
 
     res.status(201).json({ status: 'success', id: data.id });
   } catch (err) {
