@@ -70,14 +70,16 @@ app.get('/api/followups', async (req, res) => {
   res.json(data);
 });
 
-// Schedule follow-ups to run every 24 hours
-const { runFollowups } = require('./followup');
-setInterval(() => {
-  runFollowups().catch(err => console.error('Scheduled follow-up error:', err.message));
-}, 24 * 60 * 60 * 1000);
-// Also run once on startup (after 30s delay to let everything initialize)
-setTimeout(() => runFollowups().catch(() => {}), 30000);
+// Start server (local only — Vercel uses module.exports)
+if (require.main === module) {
+  const { runFollowups } = require('./followup');
+  setInterval(() => {
+    runFollowups().catch(err => console.error('Scheduled follow-up error:', err.message));
+  }, 24 * 60 * 60 * 1000);
+  setTimeout(() => runFollowups().catch(() => {}), 30000);
 
-// Start server
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+}
+
+module.exports = app;
