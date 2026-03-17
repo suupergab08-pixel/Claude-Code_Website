@@ -5,6 +5,9 @@ const getClient = () => {
   if (!_client) {
     const url = (process.env.SUPABASE_URL || '').trim();
     const key = (process.env.SUPABASE_ANON_KEY || '').trim();
+    if (!url.startsWith('http')) {
+      throw new Error(`SUPABASE_URL is invalid: "${url}" (len=${url.length})`);
+    }
     _client = createClient(url, key);
   }
   return _client;
