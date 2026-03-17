@@ -1,3 +1,2 @@
-module.exports = (req, res) => {
-  res.json({ status: 'ok', path: req.url });
-};
+const app = require('../server/index.js');
+module.exports = app;
