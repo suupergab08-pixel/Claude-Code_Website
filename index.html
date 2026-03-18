@@ -90,11 +90,11 @@
     /* ===== NAVBAR ===== */
     #navbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: center;
-      height: 64px; padding: 0 32px;
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      background: rgba(18,20,25,0.7);
-      border-bottom: 1px solid rgba(198,165,89,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; padding: 0 40px;
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.75);
+      border-bottom: 1px solid rgba(198,165,89,0.1);
     }
     #navbar a {
       font-size: 13px; font-weight: 600; color: rgba(232,232,237,0.6);
@@ -491,13 +491,20 @@
     #nav-hamburger.open span:nth-child(2) { opacity: 0; }
     #nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     #nav-logo-wrap {
-      display: none;
+      display: flex;
       align-items: center; gap: 10px;
-      position: absolute; left: 20px;
-      text-decoration: none;
+      text-decoration: none; flex-shrink: 0;
+      transition: opacity 0.2s ease;
     }
-    #nav-logo-wrap img { width: 28px; height: 28px; object-fit: contain; }
-    #nav-logo-wrap span { font-weight: 800; font-size: 15px; color: #E6B979; letter-spacing: -0.01em; }
+    #nav-logo-wrap:hover { opacity: 0.85; }
+    #nav-logo-wrap img { width: 32px; height: 32px; object-fit: contain; }
+    #nav-logo-wrap span {
+      font-weight: 800; font-size: 16px; color: #E6B979;
+      letter-spacing: -0.01em;
+      background: linear-gradient(135deg, #E6B979, #C6A559);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
     #nav-links { display: flex; align-items: center; gap: 4px; }
 
     /* ===== SECTION DIVIDERS ===== */
@@ -564,8 +571,7 @@
       .services-grid { flex-direction: column !important; gap: 20px !important; }
       .process-steps { flex-direction: column !important; gap: 24px !important; }
       .hide-mobile { display: none !important; }
-      #navbar { justify-content: center; position: relative; }
-      #nav-logo-wrap { display: flex; }
+      #navbar { padding: 0 20px; }
       #nav-hamburger { display: flex; }
       #nav-links { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(18,20,25,0.97); backdrop-filter: blur(16px); padding: 20px 24px; border-bottom: 1px solid rgba(198,165,89,0.1); z-index: 99; }
       #nav-links.open { display: flex; }
@@ -759,10 +765,6 @@
     <!-- Content -->
     <div class="parallax-layer" data-depth="0.05" style="position:relative;z-index:10;padding:0 40px;max-width:800px;text-align:center;">
       <div class="scene-content">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px;justify-content:center;">
-          <img src="brand_assets/Tester Logo.png" alt="" style="width:44px;height:44px;object-fit:contain;" class="float-med" />
-          <span class="text-gold" style="font-weight:800;font-size:24px;letter-spacing:-0.02em;">Tester.io</span>
-        </div>
         <h1 style="font-weight:700;font-size:clamp(48px,7vw,96px);line-height:1.0;letter-spacing:-0.02em;margin-bottom:24px;">
           Human &amp; <span class="text-gold">Automated</span><br>QA in One Place
         </h1>
