@@ -6,7 +6,7 @@
   <title>Tester.io — Human and Automated QA in One Place</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <style>
     /* ===== RESET ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -411,7 +411,139 @@
     }
     .pricing-check svg { width: 10px; height: 10px; }
 
+    /* ===== DISPLAY FONT (Cormorant Garamond) ===== */
+    h1, .display-font {
+      font-family: 'Cormorant Garamond', 'Montserrat', serif;
+      font-weight: 700;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', 'Montserrat', serif;
+      font-weight: 600;
+    }
+    /* Keep certain h3s in Montserrat */
+    h3 { font-family: 'Montserrat', sans-serif; }
+
+    /* ===== STAGGERED REVEAL ===== */
+    .stagger-child {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34,1.2,0.64,1);
+    }
+    .stagger-child.revealed { opacity: 1; transform: translateY(0); }
+
+    /* ===== INTEGRATION STRIP ===== */
+    #integrations-strip {
+      width: 100%;
+      padding: 28px 80px;
+      border-top: 1px solid rgba(198,165,89,0.08);
+      border-bottom: 1px solid rgba(198,165,89,0.08);
+      display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+      background: rgba(10,10,15,0.5);
+    }
+    #integrations-strip .int-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(232,232,237,0.25); margin-right: 24px;
+    }
+    .int-badge {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 8px;
+      border: 1px solid rgba(198,165,89,0.12);
+      background: rgba(255,255,255,0.03);
+      font-size: 12px; font-weight: 600; color: rgba(232,232,237,0.4);
+      letter-spacing: 0.04em;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .int-badge:hover { border-color: rgba(198,165,89,0.3); color: rgba(232,232,237,0.7); background: rgba(198,165,89,0.05); }
+    .int-badge svg { opacity: 0.5; transition: opacity 0.2s ease; }
+    .int-badge:hover svg { opacity: 0.9; }
+
+    /* ===== PROCESS CONNECTING LINE ===== */
+    .process-connector {
+      display: flex; align-items: center; flex-shrink: 0;
+      padding-bottom: 40px; /* align with card top */
+    }
+    .process-connector-line {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, rgba(198,165,89,0.3), rgba(198,165,89,0.1));
+    }
+    .process-connector-arrow {
+      width: 0; height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 7px solid rgba(198,165,89,0.3);
+    }
+
+    /* ===== MOBILE NAVBAR ===== */
+    #nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 8px;
+      position: absolute; right: 20px;
+    }
+    #nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #C6A559;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    #nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    #nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #nav-logo-wrap {
+      display: none;
+      align-items: center; gap: 10px;
+      position: absolute; left: 20px;
+      text-decoration: none;
+    }
+    #nav-logo-wrap img { width: 28px; height: 28px; object-fit: contain; }
+    #nav-logo-wrap span { font-weight: 800; font-size: 15px; color: #E6B979; letter-spacing: -0.01em; }
+    #nav-links { display: flex; align-items: center; gap: 4px; }
+
+    /* ===== SECTION LABEL STYLE ===== */
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #C6A559; display: block; margin-bottom: 12px;
+    }
+
+    /* ===== FOOTER ===== */
+    #site-footer {
+      width: 100%;
+      background: rgba(8,8,12,0.8);
+      border-top: 1px solid rgba(198,165,89,0.1);
+      padding: 60px 80px 40px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 48px;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 16px; }
+    .footer-brand-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-brand-logo img { width: 32px; height: 32px; object-fit: contain; }
+    .footer-brand-logo span { font-weight: 800; font-size: 18px; color: #E6B979; letter-spacing: -0.02em; }
+    .footer-desc { font-size: 13px; line-height: 1.7; color: rgba(232,232,237,0.35); max-width: 260px; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,232,237,0.25); margin-bottom: 20px; }
+    .footer-col a { display: block; font-size: 13px; font-weight: 500; color: rgba(232,232,237,0.45); text-decoration: none; margin-bottom: 12px; transition: color 0.2s ease; }
+    .footer-col a:hover { color: #E6B979; }
+    .footer-bottom {
+      border-top: 1px solid rgba(198,165,89,0.06);
+      padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { font-size: 11px; color: rgba(232,232,237,0.2); font-weight: 500; }
+    .footer-social { display: flex; gap: 12px; }
+    .footer-social a {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(198,165,89,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(198,165,89,0.5); text-decoration: none;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .footer-social a:hover { border-color: #C6A559; color: #E6B979; background: rgba(198,165,89,0.08); }
+
     /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
       .scene { width: 100vw; }
       .pop-card { padding: 28px; }
@@ -420,6 +552,17 @@
       .services-grid { flex-direction: column !important; gap: 20px !important; }
       .process-steps { flex-direction: column !important; gap: 24px !important; }
       .hide-mobile { display: none !important; }
+      #navbar { justify-content: center; position: relative; }
+      #nav-logo-wrap { display: flex; }
+      #nav-hamburger { display: flex; }
+      #nav-links { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: rgba(18,20,25,0.97); backdrop-filter: blur(16px); padding: 20px 24px; border-bottom: 1px solid rgba(198,165,89,0.1); z-index: 99; }
+      #nav-links.open { display: flex; }
+      #nav-links a { padding: 12px 16px; border-radius: 8px; }
+      #integrations-strip { padding: 20px 24px; }
+      #integrations-strip .int-label { margin-right: 0; width: 100%; text-align: center; margin-bottom: 8px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      #site-footer { padding: 48px 24px 32px; }
+      .process-connector { display: none !important; }
     }
   </style>
 </head>
@@ -445,11 +588,20 @@
 
 <!-- ===== NAVBAR ===== -->
 <nav id="navbar">
-  <a href="#about">Community</a>
-  <a href="#about">About</a>
-  <a href="#" id="nav-login" class="nav-btn" onclick="openAuthModal(event,'login')">Login</a>
-  <a href="#" id="nav-signup" class="nav-btn-gold" onclick="openAuthModal(event,'signup')">Sign Up</a>
-  <a href="#" id="nav-user" class="nav-btn-gold" style="display:none;" onclick="logout(event)">User</a>
+  <a href="#" id="nav-logo-wrap">
+    <img src="brand_assets/Tester Logo.png" alt="Tester.io" />
+    <span>Tester.io</span>
+  </a>
+  <div id="nav-links">
+    <a href="#about">Community</a>
+    <a href="#about">About</a>
+    <a href="#" id="nav-login" class="nav-btn" onclick="openAuthModal(event,'login')">Login</a>
+    <a href="#" id="nav-signup" class="nav-btn-gold" onclick="openAuthModal(event,'signup')">Sign Up</a>
+    <a href="#" id="nav-user" class="nav-btn-gold" style="display:none;" onclick="logout(event)">User</a>
+  </div>
+  <button id="nav-hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ===== CONTACT MODAL ===== -->
@@ -595,7 +747,7 @@
           <img src="brand_assets/Tester Logo.png" alt="" style="width:44px;height:44px;object-fit:contain;" class="float-med" />
           <span class="text-gold" style="font-weight:800;font-size:24px;letter-spacing:-0.02em;">Tester.io</span>
         </div>
-        <h1 style="font-weight:900;font-size:clamp(36px,5vw,72px);line-height:1.05;letter-spacing:-0.03em;margin-bottom:24px;">
+        <h1 style="font-weight:700;font-size:clamp(48px,7vw,96px);line-height:1.0;letter-spacing:-0.02em;margin-bottom:24px;">
           Human &amp; <span class="text-gold">Automated</span><br>QA in One Place
         </h1>
         <p style="font-weight:500;font-size:clamp(14px,1.4vw,18px);line-height:1.7;color:rgba(232,232,237,0.5);max-width:520px;margin:0 auto 40px;">
@@ -623,6 +775,35 @@
       </div>
     </div>
   </section>
+
+  <!-- ==================== INTEGRATIONS STRIP ==================== -->
+  <div id="integrations-strip">
+    <span class="int-label">Integrates with</span>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      GitHub
+    </div>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M11.571 11.513H0a5.218 5.218 0 005.232 5.215h2.13v2.057A5.215 5.215 0 0012.575 24V12.518a1.005 1.005 0 00-1.004-1.005zm5.723-5.756H5.757a5.215 5.215 0 005.214 5.214h2.129v2.058a5.218 5.218 0 005.215 5.214V6.762a1.005 1.005 0 00-1.021-1.005zM17.3 0H5.752a5.215 5.215 0 005.215 5.215h2.129v2.057A5.215 5.215 0 0018.31 12.47V1.005A1.005 1.005 0 0017.3 0z"/></svg>
+      Figma
+    </div>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M5.042 15.165a2.528 2.528 0 01-2.52 2.523A2.528 2.528 0 010 15.165a2.527 2.527 0 012.522-2.52h2.52v2.52zm1.271 0a2.527 2.527 0 012.521-2.52 2.527 2.527 0 012.521 2.52v6.313A2.528 2.528 0 018.834 24a2.528 2.528 0 01-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 01-2.521-2.52A2.528 2.528 0 018.834 0a2.527 2.527 0 012.521 2.522v2.52H8.834zm0 1.271a2.527 2.527 0 012.521 2.521 2.527 2.527 0 01-2.521 2.521H2.522A2.528 2.528 0 010 8.834a2.528 2.528 0 012.522-2.521h6.312zm10.123 2.521a2.528 2.528 0 012.521-2.521A2.528 2.528 0 0124 8.834a2.527 2.527 0 01-2.522 2.521h-2.521V8.834zm-1.268 0a2.527 2.527 0 01-2.524 2.521 2.527 2.527 0 01-2.521-2.521V2.522A2.527 2.527 0 0115.165 0a2.528 2.528 0 012.524 2.522v6.312zm-2.524 10.123a2.528 2.528 0 012.524 2.522A2.528 2.528 0 0115.165 24a2.527 2.527 0 01-2.521-2.522v-2.52h2.521zm0-1.268a2.527 2.527 0 01-2.521-2.524 2.527 2.527 0 012.521-2.521h6.312A2.528 2.528 0 0124 15.165a2.528 2.528 0 01-2.522 2.524h-6.312z"/></svg>
+      Slack
+    </div>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M.188 24L1.5 18.75 6 21.188 2.438 24zM3 17.25L.75 8.25 9 6l6.75 11.25zM9.75 4.5L12 0l11.25 6L18 8.25zM12 9.75l6-2.25 4.5 9-6.75 5.25z"/></svg>
+      Jira
+    </div>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M12 0C5.352 0 0 5.352 0 12c0 5.352 3.456 9.888 8.208 11.52.6.096.816-.264.816-.576 0-.288-.024-1.248-.024-2.28-3.024.552-3.816-.744-4.056-1.416-.144-.36-.744-1.44-1.248-1.728-.432-.24-1.032-.792-.024-.816.96-.024 1.632.888 1.872 1.248 1.08 1.824 2.808 1.296 3.504.984.096-.792.432-1.32.768-1.632-2.664-.312-5.448-1.344-5.448-5.952 0-1.32.48-2.4 1.248-3.24-.12-.312-.552-1.536.12-3.192 0 0 1.008-.312 3.312 1.248a11.08 11.08 0 013-.408c1.032 0 2.04.12 3 .408C18.696 6.24 19.68 6.6 19.68 6.6c.648 1.656.24 2.88.12 3.192.768.84 1.248 1.896 1.248 3.24 0 4.608-2.808 5.64-5.472 5.952.432.384.816 1.104.816 2.256 0 1.632-.024 2.928-.024 3.336 0 .312.216.696.816.576C20.544 21.888 24 17.376 24 12c0-6.648-5.352-12-12-12z"/></svg>
+      GitHub Actions
+    </div>
+    <div class="int-badge">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#C6A559"><path d="M21.86 5.17l-9.08-5a1.7 1.7 0 00-1.56 0l-9.08 5A1.67 1.67 0 001.25 6.6v10.8a1.67 1.67 0 00.89 1.43l9.08 5a1.7 1.7 0 001.56 0l9.08-5a1.67 1.67 0 00.89-1.43V6.6a1.67 1.67 0 00-.89-1.43zm-5.5 12.28l-4.36 2.38-4.36-2.38V6.55l4.36-2.38 4.36 2.38z"/></svg>
+      GitLab
+    </div>
+  </div>
 
   <!-- ==================== SCENE 2: SERVICES ==================== -->
   <section class="scene scene-services" data-scene="services" style="">
@@ -652,7 +833,7 @@
         </div>
         <div class="services-grid" style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
           <!-- Card 1 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
             <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
               <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
@@ -660,7 +841,7 @@
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Expert human testers who think like real users. Exploratory, functional, and regression testing on demand.</p>
           </div>
           <!-- Card 2 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
             <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
               <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
             </div>
@@ -668,7 +849,7 @@
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Scalable automated test suites that run 24/7. CI/CD integration, API testing, and end-to-end coverage.</p>
           </div>
           <!-- Card 3 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
             <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
               <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
@@ -676,7 +857,7 @@
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);font-weight:500;">Real users testing your product across devices and browsers. Get actionable UX feedback fast.</p>
           </div>
           <!-- Card 4 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:240px;max-width:320px;">
             <div style="width:52px;height:52px;border-radius:50%;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
               <svg width="26" height="26" fill="none" stroke="#C6A559" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
             </div>
@@ -759,33 +940,48 @@
           <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">How It Works</span>
           <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">Start Testing in <span class="text-gold">Minutes</span></h2>
         </div>
-        <div class="process-steps" style="display:flex;gap:32px;justify-content:center;flex-wrap:wrap;">
+        <div class="process-steps" style="display:flex;gap:0;justify-content:center;flex-wrap:wrap;align-items:flex-start;">
           <!-- Step 1 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:200px;max-width:240px;text-align:center;margin:0 8px;">
             <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
               <span class="text-gold" style="font-weight:900;font-size:22px;">01</span>
             </div>
             <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Connect</h3>
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Link your repo or upload your app. We integrate with GitHub, GitLab, Jira, and more.</p>
           </div>
+          <!-- Connector 1→2 -->
+          <div class="process-connector hide-mobile">
+            <div class="process-connector-line"></div>
+            <div class="process-connector-arrow"></div>
+          </div>
           <!-- Step 2 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:200px;max-width:240px;text-align:center;margin:0 8px;">
             <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
               <span class="text-gold" style="font-weight:900;font-size:22px;">02</span>
             </div>
             <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Configure</h3>
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Define test plans, assign human testers, and set up automation pipelines.</p>
           </div>
+          <!-- Connector 2→3 -->
+          <div class="process-connector hide-mobile">
+            <div class="process-connector-line"></div>
+            <div class="process-connector-arrow"></div>
+          </div>
           <!-- Step 3 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:200px;max-width:240px;text-align:center;margin:0 8px;">
             <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
               <span class="text-gold" style="font-weight:900;font-size:22px;">03</span>
             </div>
             <h3 style="font-weight:700;font-size:17px;margin-bottom:10px;">Test</h3>
             <p style="font-size:13px;line-height:1.7;color:rgba(232,232,237,0.45);">Human testers and automated suites run in parallel. Bugs logged instantly with screenshots and steps.</p>
           </div>
+          <!-- Connector 3→4 -->
+          <div class="process-connector hide-mobile">
+            <div class="process-connector-line"></div>
+            <div class="process-connector-arrow"></div>
+          </div>
           <!-- Step 4 -->
-          <div class="pop-card" tabindex="0" style="flex:1;min-width:200px;max-width:260px;text-align:center;">
+          <div class="pop-card stagger-child" tabindex="0" style="flex:1;min-width:200px;max-width:240px;text-align:center;margin:0 8px;">
             <div style="width:56px;height:56px;border-radius:16px;background:rgba(198,165,89,0.1);border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
               <span class="text-gold" style="font-weight:900;font-size:22px;">04</span>
             </div>
@@ -1115,9 +1311,59 @@
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
         </a>
       </div>
-      <p style="font-size:11px;color:rgba(232,232,237,0.25);margin-top:40px;font-weight:500;">&copy; 2026 Tester.io. All rights reserved.</p>
     </div>
   </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer id="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <img src="brand_assets/Tester Logo.png" alt="Tester.io" />
+          <span>Tester.io</span>
+        </div>
+        <p class="footer-desc">Human &amp; automated QA in one place. Ship faster, ship with confidence.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" aria-label="X">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Integrations</a>
+        <a href="#">Changelog</a>
+        <a href="#">Roadmap</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Community</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Security</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Tester.io. All rights reserved.</p>
+      <p>Built for teams who ship fast.</p>
+    </div>
+  </footer>
 
 </div><!-- /scroll-container -->
 
@@ -1323,6 +1569,86 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     submitBtn.textContent = mode === 'signup' ? 'SIGN UP' : 'LOGIN';
     submitBtn.disabled = false;
   }
+});
+
+// ===== Mobile Nav Toggle =====
+function toggleMobileNav() {
+  const hamburger = document.getElementById('nav-hamburger');
+  const links = document.getElementById('nav-links');
+  hamburger.classList.toggle('open');
+  links.classList.toggle('open');
+}
+
+// ===== Animated Number Counter =====
+function animateCounter(el, target, suffix, duration) {
+  const start = performance.now();
+  const isDecimal = target % 1 !== 0;
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const value = eased * target;
+    el.textContent = (isDecimal ? value.toFixed(1) : Math.floor(value)) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + suffix;
+  }
+  requestAnimationFrame(update);
+}
+
+// Observe stats for counter animation
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.counted) {
+      entry.target.dataset.counted = '1';
+      const el = entry.target;
+      const text = el.textContent.trim();
+      if (text.includes('2M+')) { el.textContent = '0+'; animateCounter(el, 2, 'M+', 1500); }
+      else if (text.includes('99.8%')) { el.textContent = '0%'; animateCounter(el, 99.8, '%', 1800); }
+      else if (text.includes('500+')) { el.textContent = '0+'; animateCounter(el, 500, '+', 1600); }
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.text-gold').forEach(el => {
+  if (/2M\+|99\.8%|500\+/.test(el.textContent)) statsObserver.observe(el);
+});
+
+// ===== Staggered Card Reveal =====
+const staggerObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const parent = entry.target;
+      const children = parent.querySelectorAll('.stagger-child');
+      children.forEach((child, i) => {
+        setTimeout(() => child.classList.add('revealed'), i * 100);
+      });
+      staggerObserver.unobserve(parent);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.services-grid, .process-steps, .testimonial-grid').forEach(el => {
+  staggerObserver.observe(el);
+});
+
+// ===== Also stagger testimonial and pricing cards on scroll =====
+const cardStaggerObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const cards = entry.target.querySelectorAll('.testimonial-card, .pricing-card');
+      cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(28px)';
+        card.style.transition = `opacity 0.5s ease ${i * 80}ms, transform 0.5s cubic-bezier(0.34,1.2,0.64,1) ${i * 80}ms`;
+        setTimeout(() => { card.style.opacity = ''; card.style.transform = ''; }, 50);
+      });
+      cardStaggerObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll('[data-scene="testimonials"], [data-scene="pricing"]').forEach(el => {
+  cardStaggerObserver.observe(el);
 });
 
 // Update navbar based on auth state
