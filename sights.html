@@ -370,7 +370,7 @@
     justify-content: center;
     overflow: hidden;
   }
-  .khalifa-real-wrap img {
+  .khalifa-real-wrap video {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -378,11 +378,11 @@
     object-fit: cover;
     object-position: center;
     opacity: 0;
-    transform: scale(1.08);
-    transition: opacity 1.5s ease, transform 2s ease;
+    transform: scale(1.06);
+    transition: opacity 2s ease, transform 3s ease;
   }
-  .khalifa-real-wrap img.visible {
-    opacity: 0.85;
+  .khalifa-real-wrap video.visible {
+    opacity: 0.9;
     transform: scale(1);
   }
   .khalifa-real-overlay {
@@ -808,11 +808,14 @@
 <!-- FRAME 3 — Khalifa Photorealistic -->
 <section class="transition-stage frame-khalifa-real" data-section="3">
   <div class="khalifa-real-wrap">
-    <img
+    <video
       id="khalifaRealImg"
-      src="https://tempfile.aiquickdraw.com/s/12b142e2de3b61d78ed3f8460c9524e2_0_1773864190_5437.png"
-      alt="Burj Khalifa at night — photorealistic"
-    />
+      src="3D Background.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+    ></video>
     <div class="khalifa-real-overlay"></div>
   </div>
   <div class="khalifa-real-content" id="khalifaRealContent">
@@ -862,7 +865,10 @@
 
         if (el.id === 'sagradaSvg') el.classList.add('visible');
         if (el.id === 'khalifaBlueprintImg') el.classList.add('visible');
-        if (el.id === 'khalifaRealImg') el.classList.add('visible');
+        if (el.id === 'khalifaRealImg') {
+          el.classList.add('visible');
+          el.play && el.play();
+        }
         if (el.id === 'khalifaRealContent') el.classList.add('visible');
         if (el.id === 'khalifaBlueprintHeader') el.classList.add('visible');
         if (el.id === 'flipReveal') el.classList.add('visible');
