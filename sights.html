@@ -4,21 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sights — Burj Khalifa</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --gold: #C6A559;
-  --gold-light: #E6B979;
-  --dark: #060608;
-  --wipe-duration: 1.6s;
-}
+:root { --gold: #C6A559; --gold-light: #E6B979; }
+
 html, body {
   width: 100%; height: 100%;
-  background: var(--dark);
+  background: #000;
   font-family: 'DM Sans', sans-serif;
   color: #fff;
-  overflow: hidden; /* full screen, no scroll */
+  overflow: hidden;
 }
 
 /* NAV */
@@ -26,122 +22,122 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   padding: 22px 48px;
   display: flex; align-items: center; justify-content: space-between;
-  background: linear-gradient(180deg, rgba(6,6,8,0.9) 0%, transparent 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
 }
 .nav-logo {
   font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   text-decoration: none;
 }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a {
-  text-decoration: none; color: rgba(255,255,255,0.5);
-  font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-  transition: color 0.3s;
+  text-decoration: none; color: rgba(255,255,255,0.45);
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s;
 }
 .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
-/* STAGE — fills whole screen */
+/* STAGE */
 #stage {
   position: fixed; inset: 0;
   width: 100%; height: 100%;
-  overflow: hidden;
 }
 
-/* ALL FRAME IMAGES stacked */
-.frame-img {
+/* FRAME — each image layer */
+.frame {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  will-change: opacity, filter;
+  transition: opacity 0s; /* JS controls this */
+}
+.frame img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
+  transform-origin: center center;
+  will-change: transform, filter;
 }
+
+/* FRAME 1 — Blueprint: cool blue grade */
 #f1 { z-index: 1; }
-#f2 { z-index: 2; clip-path: inset(0 0 100% 0); }
-#f3 { z-index: 3; clip-path: inset(0 0 100% 0); }
+#f1 img { filter: brightness(0.85) contrast(1.1) saturate(0.5) hue-rotate(200deg); }
 
-/* Wipe in animation (top-to-bottom reveal) */
-#f2.wipe { animation: wipeIn var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards; }
-#f3.wipe { animation: wipeIn var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards; }
-@keyframes wipeIn {
-  from { clip-path: inset(0 0 100% 0); }
-  to   { clip-path: inset(0 0 0% 0); }
+/* FRAME 2 — Redesign: warm golden grade */
+#f2 { z-index: 2; }
+#f2 img { filter: brightness(0.9) contrast(1.05) saturate(1.15); }
+
+/* FRAME 3 — Black building: dark high-contrast */
+#f3 { z-index: 3; }
+#f3 img { filter: brightness(0.75) contrast(1.3) saturate(0.15); }
+
+/* VIGNETTE */
+.vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 5;
+  background: radial-gradient(ellipse 85% 85% at 50% 50%,
+    transparent 40%, rgba(0,0,0,0.55) 100%);
 }
 
-/* DARK OVERLAY */
-#overlay {
-  position: absolute; inset: 0; z-index: 10; pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(6,6,8,0.45) 0%,
-    rgba(6,6,8,0) 25%,
-    rgba(6,6,8,0) 60%,
-    rgba(6,6,8,0.72) 100%
-  );
+/* BOTTOM GRADIENT */
+.btm-fade {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 45%; pointer-events: none; z-index: 5;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
 }
 
-/* SCAN LINE — the gold wipe edge */
-#scan {
-  position: absolute; left: 0; right: 0; z-index: 11;
-  height: 2px; bottom: 100%;
-  background: linear-gradient(90deg,
-    transparent 0%, var(--gold) 15%,
-    rgba(255,255,255,0.95) 50%,
-    var(--gold) 85%, transparent 100%);
-  box-shadow: 0 0 18px rgba(198,165,89,1), 0 0 50px rgba(198,165,89,0.4);
-  pointer-events: none;
+/* FLASH OVERLAY — cinematic overexposure */
+#flash {
+  position: absolute; inset: 0; z-index: 50; pointer-events: none;
+  background: #fff;
   opacity: 0;
 }
-#scan.run {
-  opacity: 1;
-  animation: scanRun var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards;
-}
-@keyframes scanRun {
-  from { bottom: 100%; }
-  to   { bottom: 0%; }
+
+/* FILM GRAIN */
+#grain {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
 }
 
-/* FRAME LABEL — top left */
+/* FRAME LABEL */
 #label {
-  position: absolute; top: 88px; left: 48px; z-index: 20;
-  pointer-events: none;
+  position: absolute; top: 88px; left: 48px; z-index: 20; pointer-events: none;
 }
 .lbl {
-  display: flex; align-items: center; gap: 12px;
   position: absolute; top: 0; left: 0; white-space: nowrap;
-  opacity: 0; transform: translateX(-12px);
-  transition: opacity 0.5s, transform 0.5s;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0; transform: translateY(-6px);
+  transition: opacity 0.8s, transform 0.8s;
 }
-.lbl.show { opacity: 1; transform: translateX(0); }
+.lbl.show { opacity: 1; transform: translateY(0); }
 .lbl-num { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); }
-.lbl-dash { width: 30px; height: 1px; background: var(--gold); opacity: 0.4; }
-.lbl-text { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+.lbl-dash { width: 28px; height: 1px; background: rgba(198,165,89,0.4); }
+.lbl-text { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
 
-/* TITLE — bottom left */
-#title {
-  position: absolute; bottom: 80px; left: 48px; z-index: 20;
-  pointer-events: none;
+/* TITLE */
+#title-wrap {
+  position: absolute; bottom: 76px; left: 48px; z-index: 20; pointer-events: none;
 }
 .ttl {
   position: absolute; bottom: 0; left: 0;
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.6s, transform 0.6s;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
 }
 .ttl.show { opacity: 1; transform: translateY(0); }
 .ttl h2 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(60px, 8.5vw, 112px);
+  font-size: clamp(56px, 8vw, 108px);
   letter-spacing: 2px; line-height: 0.92;
+  text-shadow: 0 4px 40px rgba(0,0,0,0.6);
 }
 .ttl p {
   margin-top: 14px; font-size: 14px; font-weight: 300;
-  color: rgba(255,255,255,0.42); max-width: 360px; line-height: 1.7;
+  color: rgba(255,255,255,0.42); max-width: 340px; line-height: 1.7;
 }
-#ttl1 h2 { color: rgba(185, 215, 255, 0.95); }
+#ttl1 h2 { color: rgba(190, 220, 255, 0.95); }
 #ttl2 h2 {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 55%, #fff6e0 100%);
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 55%, #fff8e0 100%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 #ttl3 h2 { color: #ffffff; }
 
@@ -152,36 +148,40 @@ nav {
 }
 .pdot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: background 0.4s, transform 0.4s;
+  background: rgba(255,255,255,0.2); transition: background 0.5s, transform 0.5s;
 }
 .pdot.on { background: var(--gold); transform: scale(1.7); }
-.pline { width: 1px; height: 22px; background: rgba(255,255,255,0.08); }
+.pline { width: 1px; height: 22px; background: rgba(255,255,255,0.07); }
 
-/* REPLAY BUTTON */
+/* REPLAY */
 #replay {
-  position: absolute; bottom: 80px; right: 48px; z-index: 20;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.6s;
-  cursor: pointer;
+  position: absolute; bottom: 76px; right: 48px; z-index: 20;
   display: flex; align-items: center; gap: 10px;
-  border: 1px solid rgba(198,165,89,0.35);
-  padding: 12px 24px;
-  background: rgba(6,6,8,0.6);
-  color: var(--gold); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-  text-decoration: none;
+  border: 1px solid rgba(198,165,89,0.3); padding: 12px 24px;
+  background: rgba(0,0,0,0.5); color: var(--gold);
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  cursor: pointer; text-decoration: none;
+  opacity: 0; pointer-events: none; transition: opacity 0.6s;
 }
 #replay:hover { background: rgba(198,165,89,0.1); border-color: var(--gold); }
-#replay svg { opacity: 0.7; }
 #replay.show { opacity: 1; pointer-events: all; }
 
-/* MOBILE */
+/* Ken Burns keyframes — each with slightly different direction */
+@keyframes kb1 { from { transform: scale(1.0) translate(0, 0); }   to { transform: scale(1.07) translate(-0.5%, -0.5%); } }
+@keyframes kb2 { from { transform: scale(1.04) translate(0.5%, 0); } to { transform: scale(1.0) translate(-0.3%, 0.3%); } }
+@keyframes kb3 { from { transform: scale(1.0) translate(0, 0.5%); } to { transform: scale(1.06) translate(0.3%, 0); } }
+
+.frame.playing img { animation-timing-function: linear; animation-fill-mode: forwards; }
+#f1.playing img { animation-name: kb1; }
+#f2.playing img { animation-name: kb2; }
+#f3.playing img { animation-name: kb3; }
+
 @media (max-width: 768px) {
   nav { padding: 16px 20px; }
   .nav-links { display: none; }
-  #label { left: 20px; top: 80px; }
-  #title { left: 20px; bottom: 56px; }
-  .prog-nav { right: 16px; }
+  #label { left: 20px; top: 78px; }
+  #title-wrap { left: 20px; bottom: 56px; }
+  .prog-nav { right: 14px; }
   #replay { right: 20px; bottom: 56px; }
 }
 </style>
@@ -200,53 +200,53 @@ nav {
 
 <div id="stage">
 
-  <!-- IMAGES -->
-  <img id="f1" class="frame-img"
-    src="https://tempfile.aiquickdraw.com/s/ccfdc8a4df23d8cc07bafb2f01f794c5_0_1773865443_8776.png"
-    alt="Burj Khalifa Blueprint">
-  <img id="f2" class="frame-img"
-    src="https://tempfile.aiquickdraw.com/s/771e8d7478de722085538f862d78925c_0_1773865646_8749.png"
-    alt="Burj Khalifa Redesign">
-  <img id="f3" class="frame-img"
-    src="https://tempfile.aiquickdraw.com/s/758e12fe9aca85e3c36b025e2ea218aa_0_1773865640_1622.png"
-    alt="Burj Khalifa Black">
+  <div class="frame" id="f1">
+    <img src="https://tempfile.aiquickdraw.com/s/ccfdc8a4df23d8cc07bafb2f01f794c5_0_1773865443_8776.png" alt="">
+  </div>
+  <div class="frame" id="f2">
+    <img src="https://tempfile.aiquickdraw.com/s/771e8d7478de722085538f862d78925c_0_1773865646_8749.png" alt="">
+  </div>
+  <div class="frame" id="f3">
+    <img src="https://tempfile.aiquickdraw.com/s/758e12fe9aca85e3c36b025e2ea218aa_0_1773865640_1622.png" alt="">
+  </div>
 
-  <div id="overlay"></div>
-  <div id="scan"></div>
+  <div class="vignette"></div>
+  <div class="btm-fade"></div>
+  <div id="grain"></div>
+  <div id="flash"></div>
 
   <!-- LABELS -->
   <div id="label">
-    <div class="lbl show" id="lbl1"><span class="lbl-num">01</span><span class="lbl-dash"></span><span class="lbl-text">Blueprint</span></div>
-    <div class="lbl"      id="lbl2"><span class="lbl-num">02</span><span class="lbl-dash"></span><span class="lbl-text">Reimagined</span></div>
-    <div class="lbl"      id="lbl3"><span class="lbl-num">03</span><span class="lbl-dash"></span><span class="lbl-text">Finished</span></div>
+    <div class="lbl" id="lbl1"><span class="lbl-num">01</span><span class="lbl-dash"></span><span class="lbl-text">Blueprint</span></div>
+    <div class="lbl" id="lbl2"><span class="lbl-num">02</span><span class="lbl-dash"></span><span class="lbl-text">Reimagined</span></div>
+    <div class="lbl" id="lbl3"><span class="lbl-num">03</span><span class="lbl-dash"></span><span class="lbl-text">Finished</span></div>
   </div>
 
   <!-- TITLES -->
-  <div id="title">
-    <div class="ttl show" id="ttl1">
+  <div id="title-wrap">
+    <div class="ttl" id="ttl1">
       <h2>The<br>Blueprint</h2>
       <p>Every line a decision. Every dimension a promise made before the first stone was placed.</p>
     </div>
     <div class="ttl" id="ttl2">
       <h2>The<br>Redesign</h2>
-      <p>The vision brought to life — golden light, organic form, and impossible ambition.</p>
+      <p>Golden light. Organic form. The vision brought to life with impossible ambition.</p>
     </div>
     <div class="ttl" id="ttl3">
       <h2>Pure<br>Black.</h2>
-      <p>The landmark as it was always meant to be. A monolith. Absolute. Finished in darkness.</p>
+      <p>A monolith against the sky. Absolute. The landmark finished in darkness.</p>
     </div>
   </div>
 
   <!-- PROGRESS DOTS -->
   <div class="prog-nav">
-    <div class="pdot on" id="pd1"></div>
+    <div class="pdot" id="pd1"></div>
     <div class="pline"></div>
     <div class="pdot" id="pd2"></div>
     <div class="pline"></div>
     <div class="pdot" id="pd3"></div>
   </div>
 
-  <!-- REPLAY -->
   <a id="replay" onclick="startSequence()">
     <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M1 4v6h6M23 20v-6h-6"/>
@@ -258,71 +258,131 @@ nav {
 </div>
 
 <script>
-  const frames   = { f1: document.getElementById('f1'), f2: document.getElementById('f2'), f3: document.getElementById('f3') };
-  const labels   = { l1: document.getElementById('lbl1'), l2: document.getElementById('lbl2'), l3: document.getElementById('lbl3') };
-  const titles   = { t1: document.getElementById('ttl1'), t2: document.getElementById('ttl2'), t3: document.getElementById('ttl3') };
-  const dots     = { d1: document.getElementById('pd1'), d2: document.getElementById('pd2'), d3: document.getElementById('pd3') };
-  const scan     = document.getElementById('scan');
-  const replay   = document.getElementById('replay');
+  const frames  = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
+  const lbls    = [document.getElementById('lbl1'), document.getElementById('lbl2'), document.getElementById('lbl3')];
+  const ttls    = [document.getElementById('ttl1'), document.getElementById('ttl2'), document.getElementById('ttl3')];
+  const dots    = [document.getElementById('pd1'), document.getElementById('pd2'), document.getElementById('pd3')];
+  const flash   = document.getElementById('flash');
+  const replay  = document.getElementById('replay');
 
-  // Timings (ms)
-  const HOLD1    = 2000;   // how long blueprint shows before first wipe
-  const WIPE_MS  = 1600;   // wipe animation duration (must match --wipe-duration)
-  const HOLD2    = 2000;   // hold redesign before second wipe
-  const HOLD3    = 600;    // small pause after scan reaches bottom before label swap
-
-  function setFrame(n) {
-    // Labels
-    Object.values(labels).forEach(l => l.classList.remove('show'));
-    Object.values(titles).forEach(t => t.classList.remove('show'));
-    Object.values(dots).forEach(d => d.classList.remove('on'));
-    labels['l'+n].classList.add('show');
-    titles['t'+n].classList.add('show');
-    dots['d'+n].classList.add('on');
+  /* ---------- helpers ---------- */
+  function fadeEl(el, targetOpacity, durationMs, easingFn) {
+    const start = performance.now();
+    const startOp = parseFloat(el.style.opacity) || 0;
+    function step(now) {
+      const t = Math.min((now - start) / durationMs, 1);
+      const e = easingFn ? easingFn(t) : t;
+      el.style.opacity = startOp + (targetOpacity - startOp) * e;
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   }
 
-  function runScan() {
-    scan.classList.remove('run');
-    // force reflow so animation restarts
-    void scan.offsetWidth;
-    scan.classList.add('run');
-    // hide after wipe done
-    setTimeout(() => scan.classList.remove('run'), WIPE_MS + 100);
+  // Ease functions
+  const easeOut  = t => 1 - Math.pow(1-t, 3);
+  const easeIn   = t => t * t * t;
+  const easeInOut = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+
+  function setUI(idx) {
+    lbls.forEach((l,i) => l.classList.toggle('show', i === idx));
+    ttls.forEach((t,i) => t.classList.toggle('show', i === idx));
+    dots.forEach((d,i) => d.classList.toggle('on',   i === idx));
   }
 
-  function startSequence() {
-    // Reset everything
+  function doFlash(peakOpacity, durationMs) {
+    // rises then falls — overexposure burst
+    return new Promise(resolve => {
+      const half = durationMs / 2;
+      const startTime = performance.now();
+      function step(now) {
+        const elapsed = now - startTime;
+        if (elapsed < half) {
+          flash.style.opacity = (elapsed / half) * peakOpacity;
+          requestAnimationFrame(step);
+        } else if (elapsed < durationMs) {
+          flash.style.opacity = peakOpacity * (1 - (elapsed - half) / half);
+          requestAnimationFrame(step);
+        } else {
+          flash.style.opacity = 0;
+          resolve();
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  function startKenBurns(frameEl, durationMs) {
+    const img = frameEl.querySelector('img');
+    img.style.animationDuration = durationMs + 'ms';
+    // reset then re-apply
+    img.style.animation = 'none';
+    void img.offsetWidth;
+    frameEl.classList.add('playing');
+    img.style.animationDuration = durationMs + 'ms';
+  }
+
+  /* ---------- main sequence ---------- */
+  async function startSequence() {
     replay.classList.remove('show');
-    frames.f2.classList.remove('wipe');
-    frames.f3.classList.remove('wipe');
-    frames.f2.style.clipPath = 'inset(0 0 100% 0)';
-    frames.f3.style.clipPath = 'inset(0 0 100% 0)';
-    scan.classList.remove('run');
-    setFrame(1);
 
-    // After holding on blueprint → wipe in redesign
-    setTimeout(() => {
-      runScan();
-      frames.f2.classList.add('wipe');
-      setTimeout(() => setFrame(2), HOLD3);
-    }, HOLD1);
+    // Reset all frames
+    frames.forEach(f => {
+      f.style.opacity = '0';
+      f.style.transition = '';
+      f.classList.remove('playing');
+      f.querySelector('img').style.animation = 'none';
+    });
+    flash.style.opacity = '0';
+    setUI(-1); // hide all
 
-    // After holding on redesign → wipe in black
-    setTimeout(() => {
-      runScan();
-      frames.f3.classList.add('wipe');
-      setTimeout(() => setFrame(3), HOLD3);
-    }, HOLD1 + WIPE_MS + HOLD2);
+    await new Promise(r => setTimeout(r, 100));
 
-    // Show replay after sequence finishes
-    setTimeout(() => {
-      replay.classList.add('show');
-    }, HOLD1 + WIPE_MS + HOLD2 + WIPE_MS + 800);
+    // ── FRAME 1: Blueprint ──────────────────────────────
+    // Fade in from black (cinematic open)
+    startKenBurns(frames[0], 6000);
+    fadeEl(frames[0], 1, 1200, easeOut);
+    await new Promise(r => setTimeout(r, 600));
+    setUI(0); // show blueprint label/title
+
+    // Hold on blueprint
+    await new Promise(r => setTimeout(r, 2800));
+
+    // ── TRANSITION 1→2: Flash + crossfade ───────────────
+    // Start fading in frame 2 underneath the flash
+    startKenBurns(frames[1], 6000);
+    frames[1].style.opacity = '0';
+
+    // Flash burst while crossfading
+    const flashPromise = doFlash(0.7, 600);
+    // Start f2 fade-in slightly before flash peaks
+    setTimeout(() => fadeEl(frames[1], 1, 1000, easeOut), 200);
+    // Fade out f1 after flash
+    setTimeout(() => fadeEl(frames[0], 0, 900, easeIn), 400);
+    await flashPromise;
+    await new Promise(r => setTimeout(r, 300));
+    setUI(1); // swap to redesign label/title
+
+    // Hold on redesign
+    await new Promise(r => setTimeout(r, 2800));
+
+    // ── TRANSITION 2→3: Flash + crossfade ───────────────
+    startKenBurns(frames[2], 7000);
+    frames[2].style.opacity = '0';
+
+    const flashPromise2 = doFlash(0.85, 700);
+    setTimeout(() => fadeEl(frames[2], 1, 1100, easeOut), 250);
+    setTimeout(() => fadeEl(frames[1], 0, 1000, easeIn), 450);
+    await flashPromise2;
+    await new Promise(r => setTimeout(r, 350));
+    setUI(2); // swap to black label/title
+
+    // Hold, then show replay
+    await new Promise(r => setTimeout(r, 2500));
+    replay.classList.add('show');
   }
 
-  // Auto-start on load
   window.addEventListener('load', () => {
-    setTimeout(startSequence, 400);
+    setTimeout(startSequence, 500);
   });
 </script>
 </body>
