@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>TesterTech — The Future, Worn & Heard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:    #060608;
+      --bg2:   #0d0d10;
+      --bg3:   #111116;
+      --gold:  #C6A559;
+      --glt:   #E6B979;
+      --text:  #F0F0F4;
+      --muted: rgba(240,240,244,.45);
+      --bdr:   rgba(198,165,89,.14);
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; overflow-x:hidden; }
+    body {
+      background:var(--bg); color:var(--text);
+      font-family:'DM Sans', sans-serif;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:2px; }
+
+    /* ── NAV ── */
+    #nav {
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      height:64px; padding:0 48px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(6,6,8,.92);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--bdr);
+    }
+    .nav-logo { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:.12em; color:var(--text); text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-links { display:flex; align-items:center; gap:6px; }
+    .nav-links a { font-size:12px; font-weight:500; color:var(--muted); text-decoration:none; padding:7px 16px; border-radius:6px; letter-spacing:.05em; transition:color .2s, background .2s; }
+    .nav-links a:hover { color:var(--text); background:rgba(255,255,255,.05); }
+    .nav-links .back { background:rgba(198,165,89,.08); border:1px solid var(--bdr); color:var(--glt); }
+    .nav-links .back:hover { background:rgba(198,165,89,.16); }
+    .nav-links .cta { background:linear-gradient(135deg,var(--gold),var(--glt)); color:#060608 !important; font-weight:700 !important; }
+    #nav-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
+    #nav-toggle span { display:block; width:22px; height:1.5px; background:var(--text); transition:.3s; }
+    #mobile-nav { display:none; position:fixed; top:64px; left:0; right:0; z-index:199; background:rgba(6,6,8,.97); border-bottom:1px solid var(--bdr); flex-direction:column; padding:16px 24px 24px; }
+    #mobile-nav.open { display:flex; }
+    #mobile-nav a { font-size:14px; font-weight:500; color:var(--muted); text-decoration:none; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.05); transition:color .2s; }
+    #mobile-nav a:hover { color:var(--glt); }
+
+    /* ── BUTTONS ── */
+    .btn-gold {
+      display:inline-flex; align-items:center; gap:10px;
+      background:linear-gradient(135deg,var(--gold),var(--glt));
+      color:#060608; font-weight:700; font-size:12px;
+      letter-spacing:.1em; text-transform:uppercase;
+      padding:13px 28px; border-radius:6px; text-decoration:none;
+      border:none; cursor:pointer; font-family:'DM Sans',sans-serif;
+      transition:box-shadow .25s, transform .2s;
+    }
+    .btn-gold:hover { box-shadow:0 8px 32px rgba(198,165,89,.45); transform:translateY(-2px); }
+    .btn-ghost {
+      display:inline-flex; align-items:center; gap:10px;
+      background:transparent; border:1px solid rgba(198,165,89,.3);
+      color:rgba(240,240,244,.7); font-size:12px; font-weight:500;
+      letter-spacing:.06em; text-transform:uppercase;
+      padding:13px 28px; border-radius:6px; text-decoration:none;
+      transition:border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color:var(--gold); color:var(--glt); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100vh; padding:120px 8vw 80px;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      position:relative; overflow:hidden;
+      background:radial-gradient(ellipse at 70% 40%, rgba(198,165,89,.07) 0%, transparent 60%), var(--bg);
+    }
+    .hero-grid-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(198,165,89,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(198,165,89,.04) 1px, transparent 1px);
+      background-size:60px 60px;
+      mask-image:radial-gradient(ellipse at center, black 20%, transparent 75%);
+    }
+    .hero-eyebrow {
+      font-family:'DM Mono',monospace; font-size:11px;
+      letter-spacing:.25em; text-transform:uppercase; color:var(--gold);
+      margin-bottom:20px; display:flex; align-items:center; gap:14px;
+      animation:fadeUp .7s .2s ease both;
+    }
+    .hero-eyebrow::before { content:''; width:28px; height:1px; background:var(--gold); }
+    .hero-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(72px,13vw,180px);
+      line-height:.88; letter-spacing:.02em; margin-bottom:28px;
+      animation:fadeUp .8s .35s ease both;
+    }
+    .hero-title .gold {
+      background:linear-gradient(90deg,var(--gold),var(--glt));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .hero-sub {
+      font-size:clamp(15px,1.4vw,18px); font-weight:300; color:var(--muted);
+      max-width:520px; line-height:1.8; margin-bottom:40px;
+      animation:fadeUp .7s .5s ease both;
+    }
+    .hero-btns { display:flex; gap:14px; flex-wrap:wrap; animation:fadeUp .7s .65s ease both; }
+    .hero-stats {
+      display:flex; gap:48px; margin-top:72px; padding-top:40px;
+      border-top:1px solid rgba(198,165,89,.1);
+      animation:fadeUp .7s .8s ease both;
+    }
+    .hero-stat-num {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,4vw,52px);
+      background:linear-gradient(135deg,var(--gold),var(--glt));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .hero-stat-lbl { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-top:4px; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── MARQUEE ── */
+    .marquee-band { overflow:hidden; padding:14px 0; background:linear-gradient(135deg,var(--gold),var(--glt)); }
+    .marquee-inner { display:inline-flex; white-space:nowrap; animation:marquee 28s linear infinite; }
+    .m-item { font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,3vw,36px); letter-spacing:.06em; padding:0 28px; color:#060608; opacity:.85; }
+    .m-item em { opacity:1; font-style:normal; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ── SECTION CHROME ── */
+    .section-label {
+      font-family:'DM Mono',monospace; font-size:11px;
+      letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+      display:flex; align-items:center; gap:14px; margin-bottom:16px;
+    }
+    .section-label::after { content:''; flex:1; max-width:48px; height:1px; background:var(--gold); opacity:.5; }
+    .section-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(44px,6vw,80px);
+      line-height:.93; letter-spacing:.02em; margin-bottom:16px;
+    }
+    .section-title .gold { color:var(--gold); }
+    .section-sub { font-size:15px; font-weight:300; color:var(--muted); line-height:1.8; max-width:520px; }
+
+    /* ── PRODUCT SECTIONS ── */
+    .product-section { padding:120px 8vw; position:relative; }
+    .product-section:nth-child(even) { background:var(--bg2); }
+
+    .product-layout {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:80px; align-items:center; margin-top:72px;
+    }
+    .product-layout.reverse { direction:rtl; }
+    .product-layout.reverse > * { direction:ltr; }
+
+    /* ── PRODUCT IMAGE ── */
+    .product-img-wrap {
+      position:relative; border-radius:24px; overflow:hidden;
+      border:1px solid rgba(198,165,89,.15);
+      box-shadow:0 40px 100px rgba(0,0,0,.7), 0 0 80px rgba(198,165,89,.06);
+      aspect-ratio:3/4;
+    }
+    .product-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+    .product-img-wrap::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(180deg, transparent 50%, rgba(6,6,8,.6) 100%);
+      pointer-events:none;
+    }
+    /* CSS placeholder visuals for products without images */
+    .product-placeholder {
+      width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    .pp-glasses {
+      background:radial-gradient(ellipse at 30% 60%, rgba(100,160,255,.12) 0%, transparent 55%),
+                 radial-gradient(ellipse at 70% 40%, rgba(198,165,89,.1) 0%, transparent 55%),
+                 linear-gradient(160deg, #0a0a12, #0d1018);
+    }
+    .pp-assistant {
+      background:radial-gradient(ellipse at 50% 60%, rgba(198,165,89,.15) 0%, transparent 55%),
+                 radial-gradient(ellipse at 20% 30%, rgba(120,80,200,.08) 0%, transparent 50%),
+                 linear-gradient(160deg, #0a0a10, #0e0e14);
+    }
+    .pp-devices {
+      background:radial-gradient(ellipse at 60% 50%, rgba(198,165,89,.12) 0%, transparent 55%),
+                 radial-gradient(ellipse at 30% 70%, rgba(80,160,120,.08) 0%, transparent 50%),
+                 linear-gradient(160deg, #080c0a, #0c0e10);
+    }
+    .pp-icon {
+      position:absolute; width:100%; height:100%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .pp-icon svg { width:clamp(80px,12vw,130px); height:auto; opacity:.18; }
+    .pp-ring {
+      position:absolute; border-radius:50%;
+      border:1px solid rgba(198,165,89,.12);
+      animation:ppPulse 4s ease-in-out infinite;
+    }
+    @keyframes ppPulse { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(1.05);opacity:1} }
+    .product-badge {
+      position:absolute; top:20px; left:20px; z-index:2;
+      background:linear-gradient(135deg,var(--gold),var(--glt));
+      color:#060608; font-family:'DM Mono',monospace;
+      font-size:10px; font-weight:500; letter-spacing:.15em;
+      text-transform:uppercase; padding:6px 12px; border-radius:4px;
+    }
+    .product-badge.new { background:linear-gradient(135deg,#6060ff,#9090ff); color:#fff; }
+    .product-badge.soon { background:rgba(198,165,89,.15); border:1px solid var(--bdr); color:var(--glt); }
+
+    /* ── PRODUCT DETAILS ── */
+    .product-tag { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+    .product-name {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(48px,6vw,88px);
+      line-height:.92; letter-spacing:.02em; margin-bottom:20px;
+    }
+    .product-name .gold { color:var(--gold); }
+    .product-desc { font-size:15px; font-weight:300; color:var(--muted); line-height:1.85; margin-bottom:28px; max-width:440px; }
+    .product-price {
+      display:flex; align-items:baseline; gap:10px; margin-bottom:32px;
+    }
+    .price-amount {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,4vw,56px);
+      background:linear-gradient(135deg,var(--gold),var(--glt));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .price-note { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); }
+    .spec-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:36px; }
+    .spec-item {
+      background:rgba(255,255,255,.03); border:1px solid rgba(198,165,89,.1);
+      border-radius:10px; padding:14px 16px;
+      transition:border-color .2s, background .2s;
+    }
+    .spec-item:hover { border-color:rgba(198,165,89,.3); background:rgba(198,165,89,.04); }
+    .spec-label { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:5px; }
+    .spec-value { font-size:13px; font-weight:600; color:var(--text); }
+    .product-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+    /* ── PRODUCT GRID (category cards) ── */
+    #all-products { padding:80px 8vw 120px; background:var(--bg); }
+    .products-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:20px; margin-top:64px;
+    }
+    .product-card {
+      background:var(--bg3); border:1px solid rgba(198,165,89,.1);
+      border-radius:16px; overflow:hidden;
+      transition:border-color .3s, transform .3s, box-shadow .3s;
+      cursor:pointer; text-decoration:none; color:inherit;
+      display:block;
+    }
+    .product-card:hover {
+      border-color:rgba(198,165,89,.35); transform:translateY(-6px);
+      box-shadow:0 24px 60px rgba(0,0,0,.5), 0 0 40px rgba(198,165,89,.08);
+    }
+    .card-img {
+      aspect-ratio:3/4; width:100%; overflow:hidden; position:relative;
+    }
+    .card-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+    .product-card:hover .card-img img { transform:scale(1.04); }
+    .card-img .product-placeholder { aspect-ratio:3/4; }
+    .card-body { padding:20px; }
+    .card-cat { font-family:'DM Mono',monospace; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .card-name { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:.03em; margin-bottom:6px; }
+    .card-price { font-size:13px; font-weight:600; color:var(--muted); }
+    .card-price span { color:var(--glt); font-weight:700; }
+    .card-arrow {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-top:16px; padding-top:16px;
+      border-top:1px solid rgba(198,165,89,.08);
+    }
+    .card-arrow span { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); }
+    .card-arrow svg { color:var(--gold); transition:transform .2s; }
+    .product-card:hover .card-arrow svg { transform:translateX(4px); }
+
+    /* ── DIVIDER ── */
+    .gold-divider { width:100%; height:1px; background:linear-gradient(90deg, transparent, rgba(198,165,89,.3) 40%, rgba(198,165,89,.5) 50%, rgba(198,165,89,.3) 60%, transparent); }
+
+    /* ── CTA BANNER ── */
+    #cta-banner {
+      padding:120px 8vw; text-align:center;
+      background:radial-gradient(ellipse at 50% 50%, rgba(198,165,89,.08) 0%, transparent 65%), var(--bg2);
+      position:relative; overflow:hidden;
+    }
+    .cta-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(64px,10vw,140px); line-height:.88; letter-spacing:.02em; margin-bottom:28px; }
+    .cta-title .gold { background:linear-gradient(90deg,var(--gold),var(--glt)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .cta-sub { font-size:16px; font-weight:300; color:var(--muted); max-width:440px; margin:0 auto 48px; line-height:1.75; }
+    .cta-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .cta-note { margin-top:24px; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em; color:rgba(240,240,244,.2); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--bg2); border-top:1px solid var(--bdr); padding:40px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+    .f-brand { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.1em; }
+    .f-brand span { color:var(--gold); }
+    .f-copy { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.06em; color:rgba(240,240,244,.2); }
+    .f-links { display:flex; gap:22px; flex-wrap:wrap; }
+    .f-links a { font-size:12px; color:rgba(240,240,244,.3); text-decoration:none; transition:color .2s; }
+    .f-links a:hover { color:var(--glt); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(32px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal.d1 { transition-delay:.1s; }
+    .reveal.d2 { transition-delay:.2s; }
+    .reveal.d3 { transition-delay:.3s; }
+    .reveal.d4 { transition-delay:.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1024px) { .products-grid { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:768px) {
+      #nav { padding:0 20px; }
+      .nav-links { display:none; }
+      #nav-toggle { display:flex; }
+      .product-layout { grid-template-columns:1fr; gap:40px; margin-top:40px; }
+      .product-layout.reverse { direction:ltr; }
+      .product-section { padding:80px 6vw; }
+      #hero { padding:100px 6vw 60px; }
+      .hero-stats { gap:28px; flex-wrap:wrap; }
+      .products-grid { grid-template-columns:repeat(2,1fr); gap:14px; }
+      #all-products { padding:60px 6vw 80px; }
+      footer { padding:28px 20px; flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:480px) { .products-grid { grid-template-columns:1fr; } .spec-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<header id="nav">
+  <a href="index.html" class="nav-logo">Tester<span>Tech</span></a>
+  <nav class="nav-links">
+    <a href="#smartwatches">Watches</a>
+    <a href="#smartglasses">Glasses</a>
+    <a href="#assistants">Assistants</a>
+    <a href="#devices">Devices</a>
+    <a href="index.html" class="back">← Home</a>
+    <a href="#cta-banner" class="cta">Pre-Order</a>
+  </nav>
+  <div id="nav-toggle" onclick="document.getElementById('mobile-nav').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+<div id="mobile-nav">
+  <a href="#smartwatches" onclick="this.closest('#mobile-nav').classList.remove('open')">Smartwatches</a>
+  <a href="#smartglasses" onclick="this.closest('#mobile-nav').classList.remove('open')">Smart Glasses</a>
+  <a href="#assistants" onclick="this.closest('#mobile-nav').classList.remove('open')">Assistants</a>
+  <a href="#devices" onclick="this.closest('#mobile-nav').classList.remove('open')">Devices</a>
+  <a href="index.html">← Home</a>
+  <a href="#cta-banner" onclick="this.closest('#mobile-nav').classList.remove('open')" style="margin-top:12px;text-align:center;background:linear-gradient(135deg,var(--gold),var(--glt));color:#060608;font-weight:700;border-radius:6px;border:none;">Pre-Order</a>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-eyebrow">TesterTech · 2026 Collection</div>
+  <h1 class="hero-title">The Future,<br><span class="gold">Worn</span><br>&amp; Heard.</h1>
+  <p class="hero-sub">Four product lines. One ecosystem. Built for the way you live, work, and move — where every device works smarter, together.</p>
+  <div class="hero-btns">
+    <a href="#smartwatches" class="btn-gold">Shop All Products <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+    <a href="#cta-banner" class="btn-ghost">Pre-Order Now</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-lbl">Product Lines</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">18d</div>
+      <div class="hero-stat-lbl">Watch Battery</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">360°</div>
+      <div class="hero-stat-lbl">AI Awareness</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">1ms</div>
+      <div class="hero-stat-lbl">Response Time</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-band">
+  <div class="marquee-inner">
+    <span class="m-item">Smart Watch <em>Pro</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">Vision <em>Glass</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">Echo <em>Sphere</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">TesterTech <em>Hub</em> &nbsp;·&nbsp;</span>
+    <span class="m-item"><em>2026</em> Collection &nbsp;·&nbsp;</span>
+    <span class="m-item">Smart Watch <em>Pro</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">Vision <em>Glass</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">Echo <em>Sphere</em> &nbsp;·&nbsp;</span>
+    <span class="m-item">TesterTech <em>Hub</em> &nbsp;·&nbsp;</span>
+    <span class="m-item"><em>2026</em> Collection &nbsp;·&nbsp;</span>
+  </div>
+</div>
+
+<!-- ── ALL PRODUCTS GRID ── -->
+<section id="all-products">
+  <div class="reveal">
+    <div class="section-label">Full Lineup</div>
+    <h2 class="section-title">The Complete<br><span class="gold">Ecosystem.</span></h2>
+  </div>
+  <div class="products-grid">
+    <!-- Watch -->
+    <a href="#smartwatches" class="product-card reveal d1">
+      <div class="card-img">
+        <img src="https://tempfile.aiquickdraw.com/f/a154ee34-255c-4c09-83d1-c7731b4bb637_0.jpg" alt="Smart Watch Pro" loading="lazy" />
+        <div class="product-badge">In Stock</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Wearables</div>
+        <div class="card-name">Smart Watch Pro</div>
+        <div class="card-price">From <span>$349</span></div>
+        <div class="card-arrow">
+          <span>Explore</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg>
+        </div>
+      </div>
+    </a>
+    <!-- Glasses -->
+    <a href="#smartglasses" class="product-card reveal d2">
+      <div class="card-img">
+        <div class="product-placeholder pp-glasses">
+          <div class="pp-ring" style="width:60%;height:60%;top:20%;left:20%;"></div>
+          <div class="pp-ring" style="width:80%;height:80%;top:10%;left:10%;animation-delay:.8s;"></div>
+          <div class="pp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(198,165,89,1)" stroke-width="1">
+              <path d="M2 10s2-4 5-4 3 4 5 4 3-4 5-4 5 4 5 4" stroke-linecap="round"/>
+              <circle cx="7" cy="11" r="3"/>
+              <circle cx="17" cy="11" r="3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-badge new">New</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">AR Eyewear</div>
+        <div class="card-name">Vision Glass</div>
+        <div class="card-price">From <span>$499</span></div>
+        <div class="card-arrow">
+          <span>Explore</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg>
+        </div>
+      </div>
+    </a>
+    <!-- Assistant -->
+    <a href="#assistants" class="product-card reveal d3">
+      <div class="card-img">
+        <div class="product-placeholder pp-assistant">
+          <div class="pp-ring" style="width:55%;height:55%;top:22.5%;left:22.5%;"></div>
+          <div class="pp-ring" style="width:75%;height:75%;top:12.5%;left:12.5%;animation-delay:1s;"></div>
+          <div class="pp-ring" style="width:95%;height:95%;top:2.5%;left:2.5%;animation-delay:2s;"></div>
+          <div class="pp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(198,165,89,1)" stroke-width="1">
+              <rect x="9" y="2" width="6" height="11" rx="3"/>
+              <path d="M5 10a7 7 0 0014 0" stroke-linecap="round"/>
+              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round"/>
+              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-badge">In Stock</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">AI Assistant</div>
+        <div class="card-name">Echo Sphere</div>
+        <div class="card-price">From <span>$199</span></div>
+        <div class="card-arrow">
+          <span>Explore</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg>
+        </div>
+      </div>
+    </a>
+    <!-- Devices -->
+    <a href="#devices" class="product-card reveal d4">
+      <div class="card-img">
+        <div class="product-placeholder pp-devices">
+          <div class="pp-ring" style="width:50%;height:50%;top:25%;left:25%;"></div>
+          <div class="pp-ring" style="width:70%;height:70%;top:15%;left:15%;animation-delay:1.2s;"></div>
+          <div class="pp-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(198,165,89,1)" stroke-width="1">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+              <path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
+            </svg>
+          </div>
+        </div>
+        <div class="product-badge soon">Coming Soon</div>
+      </div>
+      <div class="card-body">
+        <div class="card-cat">Smart Home</div>
+        <div class="card-name">TesterTech Hub</div>
+        <div class="card-price">From <span>$129</span></div>
+        <div class="card-arrow">
+          <span>Explore</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── SMARTWATCHES ── -->
+<section id="smartwatches" class="product-section">
+  <div class="section-label reveal">001 / Wearables</div>
+  <h2 class="section-title reveal d1">Smart<br><span class="gold">Watches.</span></h2>
+  <p class="section-sub reveal d2">Medical-grade sensors, titanium build, 18-day battery. The watch that keeps up — no matter what the day demands.</p>
+
+  <div class="product-layout reveal">
+    <div class="product-img-wrap">
+      <img src="https://tempfile.aiquickdraw.com/f/a154ee34-255c-4c09-83d1-c7731b4bb637_0.jpg" alt="TesterTech Smart Watch Pro" />
+      <div class="product-badge">In Stock</div>
+    </div>
+    <div>
+      <div class="product-tag">Smart Watch Pro · Flagship</div>
+      <h3 class="product-name">Watch<br><span class="gold">Pro.</span></h3>
+      <p class="product-desc">Aerospace-grade titanium. Sapphire crystal. ECG, SpO2, HRV tracking, and multi-band GPS with sub-meter accuracy. The most capable watch TesterTech has ever built.</p>
+      <div class="product-price">
+        <div class="price-amount">$349</div>
+        <div class="price-note">Free worldwide shipping<br>30-day returns</div>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-label">Battery</div><div class="spec-value">18 Days</div></div>
+        <div class="spec-item"><div class="spec-label">Display</div><div class="spec-value">1.4" AMOLED 2000nit</div></div>
+        <div class="spec-item"><div class="spec-label">GPS</div><div class="spec-value">L1 + L5 Dual-Band</div></div>
+        <div class="spec-item"><div class="spec-label">Water</div><div class="spec-value">5ATM Rated</div></div>
+        <div class="spec-item"><div class="spec-label">Case</div><div class="spec-value">Titanium Grade-5</div></div>
+        <div class="spec-item"><div class="spec-label">Weight</div><div class="spec-value">31g Only</div></div>
+      </div>
+      <div class="product-btns">
+        <a href="#cta-banner" class="btn-gold">Pre-Order — $349 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+        <a href="#" class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── SMART GLASSES ── -->
+<section id="smartglasses" class="product-section">
+  <div class="section-label reveal">002 / AR Eyewear</div>
+  <h2 class="section-title reveal d1">Smart<br><span class="gold">Glasses.</span></h2>
+  <p class="section-sub reveal d2">The world overlaid with intelligence. Ultra-thin AR lenses, ambient AI, and all-day battery — invisible tech, visible results.</p>
+
+  <div class="product-layout reverse reveal">
+    <div class="product-img-wrap">
+      <div class="product-placeholder pp-glasses">
+        <div class="pp-ring" style="width:65%;height:65%;top:17.5%;left:17.5%;"></div>
+        <div class="pp-ring" style="width:85%;height:85%;top:7.5%;left:7.5%;animation-delay:.9s;"></div>
+        <div class="pp-icon">
+          <svg viewBox="0 0 48 24" fill="none" stroke="rgba(198,165,89,.9)" stroke-width="1">
+            <path d="M2 12s4-8 10-8 6 8 10 8 6-8 10-8 10 8 10 8" stroke-linecap="round"/>
+            <circle cx="12" cy="14" r="6" stroke-width="1.2"/>
+            <circle cx="36" cy="14" r="6" stroke-width="1.2"/>
+            <path d="M18 14h12" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+      <div class="product-badge new">New · 2026</div>
+    </div>
+    <div>
+      <div class="product-tag">Vision Glass · Gen 1</div>
+      <h3 class="product-name">Vision<br><span class="gold">Glass.</span></h3>
+      <p class="product-desc">Ultra-thin titanium frames with embedded micro-displays. Real-time navigation, notifications, and AI context overlaid into your field of view — without the bulk.</p>
+      <div class="product-price">
+        <div class="price-amount">$499</div>
+        <div class="price-note">Pre-order now<br>Ships Q4 2026</div>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-label">Display</div><div class="spec-value">Micro-OLED AR</div></div>
+        <div class="spec-item"><div class="spec-label">Battery</div><div class="spec-value">12 Hours</div></div>
+        <div class="spec-item"><div class="spec-label">Frame</div><div class="spec-value">Titanium / TR90</div></div>
+        <div class="spec-item"><div class="spec-label">Weight</div><div class="spec-value">38g</div></div>
+        <div class="spec-item"><div class="spec-label">AI</div><div class="spec-value">On-Device LLM</div></div>
+        <div class="spec-item"><div class="spec-label">Connect</div><div class="spec-value">BT 5.4 + Wi-Fi 6</div></div>
+      </div>
+      <div class="product-btns">
+        <a href="#cta-banner" class="btn-gold">Pre-Order — $499 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+        <a href="#" class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── SMART ASSISTANTS ── -->
+<section id="assistants" class="product-section">
+  <div class="section-label reveal">003 / AI Assistant</div>
+  <h2 class="section-title reveal d1">Smart<br><span class="gold">Assistants.</span></h2>
+  <p class="section-sub reveal d2">Always listening, always ready. The Echo Sphere hears everything, understands context, and acts — before you even finish asking.</p>
+
+  <div class="product-layout reveal">
+    <div class="product-img-wrap">
+      <div class="product-placeholder pp-assistant">
+        <div class="pp-ring" style="width:50%;height:50%;top:25%;left:25%;"></div>
+        <div class="pp-ring" style="width:70%;height:70%;top:15%;left:15%;animation-delay:1s;"></div>
+        <div class="pp-ring" style="width:90%;height:90%;top:5%;left:5%;animation-delay:2s;"></div>
+        <div class="pp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(198,165,89,.9)" stroke-width="1.2">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0014 0" stroke-linecap="round"/>
+            <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round"/>
+            <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="product-badge">In Stock</div>
+    </div>
+    <div>
+      <div class="product-tag">Echo Sphere · Gen 2</div>
+      <h3 class="product-name">Echo<br><span class="gold">Sphere.</span></h3>
+      <p class="product-desc">360° spatial audio with 8 microphones, on-device AI processing, and deep integration with the TesterTech ecosystem. Control everything — from lights to your calendar — with natural speech.</p>
+      <div class="product-price">
+        <div class="price-amount">$199</div>
+        <div class="price-note">Available now<br>Free delivery</div>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-label">Audio</div><div class="spec-value">360° Spatial</div></div>
+        <div class="spec-item"><div class="spec-label">Mics</div><div class="spec-value">8-Array Beamform</div></div>
+        <div class="spec-item"><div class="spec-label">AI</div><div class="spec-value">On-Device + Cloud</div></div>
+        <div class="spec-item"><div class="spec-label">Connect</div><div class="spec-value">Wi-Fi 6 + BT 5.4</div></div>
+        <div class="spec-item"><div class="spec-label">Integrations</div><div class="spec-value">10,000+ Apps</div></div>
+        <div class="spec-item"><div class="spec-label">Privacy</div><div class="spec-value">Local Processing</div></div>
+      </div>
+      <div class="product-btns">
+        <a href="#cta-banner" class="btn-gold">Order Now — $199 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+        <a href="#" class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── CONNECTED DEVICES ── -->
+<section id="devices" class="product-section">
+  <div class="section-label reveal">004 / Smart Home</div>
+  <h2 class="section-title reveal d1">Connected<br><span class="gold">Devices.</span></h2>
+  <p class="section-sub reveal d2">The intelligent backbone of your home. Sensors, locks, plugs, and hubs — all speaking the same language, all under your control.</p>
+
+  <div class="product-layout reverse reveal">
+    <div class="product-img-wrap">
+      <div class="product-placeholder pp-devices">
+        <div class="pp-ring" style="width:55%;height:55%;top:22.5%;left:22.5%;"></div>
+        <div class="pp-ring" style="width:75%;height:75%;top:12.5%;left:12.5%;animation-delay:1.1s;"></div>
+        <div class="pp-ring" style="width:95%;height:95%;top:2.5%;left:2.5%;animation-delay:2.2s;"></div>
+        <div class="pp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="rgba(198,165,89,.9)" stroke-width="1.2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+            <path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
+          </svg>
+        </div>
+      </div>
+      <div class="product-badge soon">Coming Soon</div>
+    </div>
+    <div>
+      <div class="product-tag">TesterTech Hub · Starter Kit</div>
+      <h3 class="product-name">Smart<br><span class="gold">Hub.</span></h3>
+      <p class="product-desc">The TesterTech Hub connects every device in your home into one unified network. Smart locks, motion sensors, plugs, and cameras — all managed from a single app or with your voice.</p>
+      <div class="product-price">
+        <div class="price-amount">$129</div>
+        <div class="price-note">Starter kit · Q1 2027<br>Register interest</div>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-label">Protocol</div><div class="spec-value">Matter + Thread</div></div>
+        <div class="spec-item"><div class="spec-label">Range</div><div class="spec-value">Up to 300m</div></div>
+        <div class="spec-item"><div class="spec-label">Devices</div><div class="spec-value">256 Connected</div></div>
+        <div class="spec-item"><div class="spec-label">Setup</div><div class="spec-value">Under 5 Min</div></div>
+        <div class="spec-item"><div class="spec-label">Security</div><div class="spec-value">AES-256 E2E</div></div>
+        <div class="spec-item"><div class="spec-label">Power</div><div class="spec-value">USB-C + PoE</div></div>
+      </div>
+      <div class="product-btns">
+        <a href="#cta-banner" class="btn-gold">Register Interest <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+        <a href="#" class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<!-- ── CTA BANNER ── -->
+<section id="cta-banner">
+  <div class="reveal">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Available Q3 2026</div>
+    <h2 class="cta-title">Own the<br><span class="gold">Future.</span></h2>
+    <p class="cta-sub">Pre-order any TesterTech product today. Free worldwide shipping. 30-day returns. 2-year warranty on all devices.</p>
+    <div class="cta-btns">
+      <a href="#smartwatches" class="btn-gold">Pre-Order Smart Watch — $349 <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg></a>
+      <a href="index.html" class="btn-ghost">Back to Tester.io</a>
+    </div>
+    <p class="cta-note">Free worldwide shipping &nbsp;·&nbsp; 30-day returns &nbsp;·&nbsp; 2-year warranty</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <div class="f-brand">Tester<span>Tech</span></div>
+    <div class="f-copy" style="margin-top:6px;">© 2026 TesterTech — A Tester.io Product</div>
+  </div>
+  <div class="f-links">
+    <a href="index.html">Tester.io</a>
+    <a href="product.html">Products</a>
+    <a href="creative.html">Creative</a>
+    <a href="#">Privacy</a>
+    <a href="#">Support</a>
+  </div>
+</footer>
+
+<script>
+  // Intersection observer reveals
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Nav scroll style
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.boxShadow = window.scrollY > 40 ? '0 4px 32px rgba(0,0,0,.4)' : 'none';
+  }, { passive: true });
+</script>
+</body>
+</html>
