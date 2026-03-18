@@ -370,7 +370,7 @@
     justify-content: center;
     overflow: hidden;
   }
-  .khalifa-real-wrap video {
+  .khalifa-real-wrap img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -381,7 +381,7 @@
     transform: scale(1.06);
     transition: opacity 2s ease, transform 3s ease;
   }
-  .khalifa-real-wrap video.visible {
+  .khalifa-real-wrap img.visible {
     opacity: 0.9;
     transform: scale(1);
   }
@@ -788,7 +788,7 @@
   <div class="khalifa-img-wrap">
     <img
       id="khalifaBlueprintImg"
-      src="https://tempfile.aiquickdraw.com/s/9195d3f25f938e92c7ca5b2b677bcdd7_0_1773864200_7153.png"
+      src="https://tempfile.aiquickdraw.com/s/ccfdc8a4df23d8cc07bafb2f01f794c5_0_1773865443_8776.png"
       alt="Burj Khalifa architectural blueprint"
     />
     <div class="blueprint-label">Burj Khalifa — Dubai, UAE</div>
@@ -808,14 +808,11 @@
 <!-- FRAME 3 — Khalifa Photorealistic -->
 <section class="transition-stage frame-khalifa-real" data-section="3">
   <div class="khalifa-real-wrap">
-    <video
+    <img
       id="khalifaRealImg"
-      src="3D Background.mp4"
-      autoplay
-      loop
-      muted
-      playsinline
-    ></video>
+      src="https://tempfile.aiquickdraw.com/s/9f8cd92e49bbde3fefe4840a246106ba_0_1773865478_7982.png"
+      alt="Burj Khalifa at night — photorealistic"
+    />
     <div class="khalifa-real-overlay"></div>
   </div>
   <div class="khalifa-real-content" id="khalifaRealContent">
@@ -865,10 +862,7 @@
 
         if (el.id === 'sagradaSvg') el.classList.add('visible');
         if (el.id === 'khalifaBlueprintImg') el.classList.add('visible');
-        if (el.id === 'khalifaRealImg') {
-          el.classList.add('visible');
-          el.play && el.play();
-        }
+        if (el.id === 'khalifaRealImg') el.classList.add('visible');
         if (el.id === 'khalifaRealContent') el.classList.add('visible');
         if (el.id === 'khalifaBlueprintHeader') el.classList.add('visible');
         if (el.id === 'flipReveal') el.classList.add('visible');
