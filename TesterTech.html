@@ -21,7 +21,7 @@
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior:smooth; overflow-x:hidden; }
     body {
-      background:var(--bg); color:var(--text);
+      background:var(--bg); color:var(--text); position:relative; z-index:2;
       font-family:'DM Sans', sans-serif;
       -webkit-font-smoothing:antialiased;
       overflow-x:hidden;
@@ -79,16 +79,18 @@
       min-height:100vh; padding:120px 8vw 80px;
       display:flex; flex-direction:column; justify-content:flex-end;
       position:relative; overflow:hidden;
-      background:var(--bg);
+      background:transparent;
     }
     #hero-video {
-      position:absolute; inset:0; width:100%; height:100%;
+      position:fixed; inset:0; width:100%; height:100%;
       object-fit:cover; z-index:0;
-      opacity:.45;
+      opacity:.18;
+      pointer-events:none;
     }
     .hero-video-overlay {
-      position:absolute; inset:0; z-index:1;
-      background:linear-gradient(to top, rgba(6,6,8,.95) 0%, rgba(6,6,8,.5) 45%, rgba(6,6,8,.25) 100%);
+      position:fixed; inset:0; z-index:1;
+      background:rgba(6,6,8,.55);
+      pointer-events:none;
     }
     .hero-grid-bg {
       position:absolute; inset:0; pointer-events:none; z-index:2;
@@ -254,7 +256,7 @@
     .product-btns { display:flex; gap:12px; flex-wrap:wrap; }
 
     /* ── PRODUCT GRID (category cards) ── */
-    #all-products { padding:80px 8vw 120px; background:var(--bg); }
+    #all-products { padding:80px 8vw 120px; background:transparent; }
     .products-grid {
       display:grid; grid-template-columns:repeat(4,1fr);
       gap:20px; margin-top:64px;
@@ -342,6 +344,12 @@
 </head>
 <body>
 
+<!-- ── SCROLL VIDEO BACKGROUND ── -->
+<video id="hero-video" autoplay muted loop playsinline preload="auto">
+  <source src="Smart Watch Dissection.mp4" type="video/mp4" />
+</video>
+<div class="hero-video-overlay"></div>
+
 <!-- ── NAV ── -->
 <header id="nav">
   <a href="index.html" class="nav-logo">Tester<span>Tech</span></a>
@@ -368,10 +376,6 @@
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <video id="hero-video" autoplay muted loop playsinline preload="auto">
-    <source src="Smart Watch Dissection.mp4" type="video/mp4" />
-  </video>
-  <div class="hero-video-overlay"></div>
   <div class="hero-grid-bg"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">TesterTech · 2026 Collection</div>
