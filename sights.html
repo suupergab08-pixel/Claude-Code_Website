@@ -4,200 +4,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sights — Burj Khalifa</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --gold: #C6A559;
-    --gold-light: #E6B979;
-    --dark: #060608;
-  }
-  html, body {
-    width: 100%; height: 100%;
-    background: var(--dark);
-    font-family: 'DM Sans', sans-serif;
-    color: #fff;
-    overflow-x: hidden;
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --gold: #C6A559;
+  --gold-light: #E6B979;
+  --dark: #060608;
+  --wipe-duration: 1.6s;
+}
+html, body {
+  width: 100%; height: 100%;
+  background: var(--dark);
+  font-family: 'DM Sans', sans-serif;
+  color: #fff;
+  overflow: hidden; /* full screen, no scroll */
+}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    padding: 22px 48px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(180deg, rgba(6,6,8,0.85) 0%, transparent 100%);
-  }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a {
-    text-decoration: none; color: rgba(255,255,255,0.5);
-    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 22px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, rgba(6,6,8,0.9) 0%, transparent 100%);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: rgba(255,255,255,0.5);
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  transition: color 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
-  /* SCROLL CONTAINER — 3 sections × 100vh = 300vh total scroll */
-  #scroll-container { height: 300vh; }
+/* STAGE — fills whole screen */
+#stage {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
 
-  /* STICKY STAGE — fills viewport, stays fixed while scrolling */
-  #stage {
-    position: sticky; top: 0;
-    width: 100%; height: 100vh;
-    overflow: hidden;
-  }
+/* ALL FRAME IMAGES stacked */
+.frame-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+}
+#f1 { z-index: 1; }
+#f2 { z-index: 2; clip-path: inset(0 0 100% 0); }
+#f3 { z-index: 3; clip-path: inset(0 0 100% 0); }
 
-  /* ALL THREE IMAGES stacked, full cover */
-  .frame-img {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    transition: none;
-    will-change: opacity, clip-path;
-  }
+/* Wipe in animation (top-to-bottom reveal) */
+#f2.wipe { animation: wipeIn var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards; }
+#f3.wipe { animation: wipeIn var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards; }
+@keyframes wipeIn {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0% 0); }
+}
 
-  /* BLUEPRINT — always base layer */
-  #frame-blueprint {
-    z-index: 1;
-    filter: brightness(0.9);
-  }
+/* DARK OVERLAY */
+#overlay {
+  position: absolute; inset: 0; z-index: 10; pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(6,6,8,0.45) 0%,
+    rgba(6,6,8,0) 25%,
+    rgba(6,6,8,0) 60%,
+    rgba(6,6,8,0.72) 100%
+  );
+}
 
-  /* REDESIGN — revealed by clip-path wipe downward */
-  #frame-redesign {
-    z-index: 2;
-    clip-path: inset(100% 0 0 0); /* starts hidden from bottom */
-  }
+/* SCAN LINE — the gold wipe edge */
+#scan {
+  position: absolute; left: 0; right: 0; z-index: 11;
+  height: 2px; bottom: 100%;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--gold) 15%,
+    rgba(255,255,255,0.95) 50%,
+    var(--gold) 85%, transparent 100%);
+  box-shadow: 0 0 18px rgba(198,165,89,1), 0 0 50px rgba(198,165,89,0.4);
+  pointer-events: none;
+  opacity: 0;
+}
+#scan.run {
+  opacity: 1;
+  animation: scanRun var(--wipe-duration) cubic-bezier(0.76,0,0.24,1) forwards;
+}
+@keyframes scanRun {
+  from { bottom: 100%; }
+  to   { bottom: 0%; }
+}
 
-  /* BLACK BUILDING — revealed on top last */
-  #frame-black {
-    z-index: 3;
-    clip-path: inset(100% 0 0 0);
-  }
+/* FRAME LABEL — top left */
+#label {
+  position: absolute; top: 88px; left: 48px; z-index: 20;
+  pointer-events: none;
+}
+.lbl {
+  display: flex; align-items: center; gap: 12px;
+  position: absolute; top: 0; left: 0; white-space: nowrap;
+  opacity: 0; transform: translateX(-12px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+.lbl.show { opacity: 1; transform: translateX(0); }
+.lbl-num { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); }
+.lbl-dash { width: 30px; height: 1px; background: var(--gold); opacity: 0.4; }
+.lbl-text { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.45); }
 
-  /* DARK OVERLAY on each frame */
-  .frame-overlay {
-    position: absolute; inset: 0; z-index: 10; pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(6,6,8,0.45) 0%,
-      rgba(6,6,8,0.05) 35%,
-      rgba(6,6,8,0.05) 65%,
-      rgba(6,6,8,0.7) 100%
-    );
-  }
+/* TITLE — bottom left */
+#title {
+  position: absolute; bottom: 80px; left: 48px; z-index: 20;
+  pointer-events: none;
+}
+.ttl {
+  position: absolute; bottom: 0; left: 0;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.ttl.show { opacity: 1; transform: translateY(0); }
+.ttl h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 8.5vw, 112px);
+  letter-spacing: 2px; line-height: 0.92;
+}
+.ttl p {
+  margin-top: 14px; font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.42); max-width: 360px; line-height: 1.7;
+}
+#ttl1 h2 { color: rgba(185, 215, 255, 0.95); }
+#ttl2 h2 {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 55%, #fff6e0 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#ttl3 h2 { color: #ffffff; }
 
-  /* SCAN LINE — the wipe indicator */
-  #scan-line {
-    position: absolute; left: 0; right: 0; z-index: 20;
-    height: 2px;
-    background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, rgba(255,255,255,0.8) 50%, var(--gold) 80%, transparent 100%);
-    box-shadow: 0 0 12px rgba(198,165,89,0.8), 0 0 30px rgba(198,165,89,0.3);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-    top: 0;
-  }
-  #scan-line.active { opacity: 1; }
+/* PROGRESS DOTS */
+.prog-nav {
+  position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+  z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.pdot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: background 0.4s, transform 0.4s;
+}
+.pdot.on { background: var(--gold); transform: scale(1.7); }
+.pline { width: 1px; height: 22px; background: rgba(255,255,255,0.08); }
 
-  /* FRAME LABELS — top left */
-  #frame-label {
-    position: absolute; top: 88px; left: 48px; z-index: 30;
-    pointer-events: none;
-  }
-  .label-item {
-    display: flex; align-items: center; gap: 12px;
-    opacity: 0; transform: translateX(-16px);
-    transition: opacity 0.6s, transform 0.6s;
-    position: absolute; top: 0; left: 0;
-    white-space: nowrap;
-  }
-  .label-item.visible { opacity: 1; transform: translateX(0); }
-  .label-num {
-    font-family: 'Bebas Neue', sans-serif; font-size: 11px;
-    letter-spacing: 3px; color: var(--gold); opacity: 0.8;
-  }
-  .label-line { width: 32px; height: 1px; background: var(--gold); opacity: 0.4; }
-  .label-text {
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-  }
+/* REPLAY BUTTON */
+#replay {
+  position: absolute; bottom: 80px; right: 48px; z-index: 20;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.6s;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(198,165,89,0.35);
+  padding: 12px 24px;
+  background: rgba(6,6,8,0.6);
+  color: var(--gold); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  text-decoration: none;
+}
+#replay:hover { background: rgba(198,165,89,0.1); border-color: var(--gold); }
+#replay svg { opacity: 0.7; }
+#replay.show { opacity: 1; pointer-events: all; }
 
-  /* MAIN TITLE — bottom left of each frame */
-  #frame-title {
-    position: absolute; bottom: 80px; left: 48px; z-index: 30;
-    pointer-events: none; max-width: 560px;
-  }
-  .title-item {
-    position: absolute; bottom: 0; left: 0;
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
-  .title-item.visible { opacity: 1; transform: translateY(0); }
-  .title-item h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(52px, 7vw, 96px);
-    letter-spacing: 3px; line-height: 0.95;
-  }
-  .title-item h2 span {
-    display: block;
-  }
-  .title-blueprint h2 { color: rgba(200,220,255,0.9); }
-  .title-redesign h2 {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 60%, #fff8e8 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .title-black h2 { color: rgba(255,255,255,0.95); }
-  .title-item p {
-    margin-top: 14px; font-size: 14px; font-weight: 300;
-    line-height: 1.7; color: rgba(255,255,255,0.45);
-    max-width: 380px;
-  }
-
-  /* PROGRESS DOTS — right edge */
-  #progress-dots {
-    position: absolute; right: 36px; top: 50%; transform: translateY(-50%);
-    z-index: 30; display: flex; flex-direction: column; gap: 10px;
-    pointer-events: none;
-  }
-  .p-dot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    transition: background 0.4s, transform 0.4s;
-  }
-  .p-dot.active { background: var(--gold); transform: scale(1.6); }
-
-  /* SCROLL HINT */
-  #scroll-hint {
-    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-    z-index: 30; display: flex; flex-direction: column; align-items: center; gap: 8px;
-    opacity: 1; transition: opacity 0.5s;
-  }
-  #scroll-hint.hidden { opacity: 0; }
-  #scroll-hint span {
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-  }
-  .scroll-arrow {
-    width: 1px; height: 40px;
-    background: linear-gradient(180deg, var(--gold), transparent);
-    animation: arrowPulse 1.8s ease-in-out infinite;
-  }
-  @keyframes arrowPulse {
-    0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    #frame-label { left: 20px; top: 80px; }
-    #frame-title { left: 20px; bottom: 60px; }
-    #progress-dots { right: 16px; }
-  }
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  #label { left: 20px; top: 80px; }
+  #title { left: 20px; bottom: 56px; }
+  .prog-nav { right: 16px; }
+  #replay { right: 20px; bottom: 56px; }
+}
 </style>
 </head>
 <body>
@@ -212,156 +198,131 @@
   </ul>
 </nav>
 
-<div id="scroll-container">
-  <div id="stage">
+<div id="stage">
 
-    <!-- FRAME IMAGES -->
-    <img id="frame-blueprint" class="frame-img"
-      src="https://tempfile.aiquickdraw.com/s/ccfdc8a4df23d8cc07bafb2f01f794c5_0_1773865443_8776.png"
-      alt="Burj Khalifa blueprint">
+  <!-- IMAGES -->
+  <img id="f1" class="frame-img"
+    src="https://tempfile.aiquickdraw.com/s/ccfdc8a4df23d8cc07bafb2f01f794c5_0_1773865443_8776.png"
+    alt="Burj Khalifa Blueprint">
+  <img id="f2" class="frame-img"
+    src="https://tempfile.aiquickdraw.com/s/771e8d7478de722085538f862d78925c_0_1773865646_8749.png"
+    alt="Burj Khalifa Redesign">
+  <img id="f3" class="frame-img"
+    src="https://tempfile.aiquickdraw.com/s/758e12fe9aca85e3c36b025e2ea218aa_0_1773865640_1622.png"
+    alt="Burj Khalifa Black">
 
-    <img id="frame-redesign" class="frame-img"
-      src="https://tempfile.aiquickdraw.com/s/771e8d7478de722085538f862d78925c_0_1773865646_8749.png"
-      alt="Burj Khalifa imaginative redesign">
+  <div id="overlay"></div>
+  <div id="scan"></div>
 
-    <img id="frame-black" class="frame-img"
-      src="https://tempfile.aiquickdraw.com/s/758e12fe9aca85e3c36b025e2ea218aa_0_1773865640_1622.png"
-      alt="Burj Khalifa black building">
-
-    <!-- OVERLAY -->
-    <div class="frame-overlay"></div>
-
-    <!-- SCAN LINE -->
-    <div id="scan-line"></div>
-
-    <!-- FRAME LABELS -->
-    <div id="frame-label">
-      <div class="label-item visible" id="lbl-1">
-        <span class="label-num">01</span>
-        <span class="label-line"></span>
-        <span class="label-text">Blueprint</span>
-      </div>
-      <div class="label-item" id="lbl-2">
-        <span class="label-num">02</span>
-        <span class="label-line"></span>
-        <span class="label-text">Reimagined</span>
-      </div>
-      <div class="label-item" id="lbl-3">
-        <span class="label-num">03</span>
-        <span class="label-line"></span>
-        <span class="label-text">Finished</span>
-      </div>
-    </div>
-
-    <!-- FRAME TITLES -->
-    <div id="frame-title">
-      <div class="title-item title-blueprint visible" id="ttl-1">
-        <h2><span>Burj Khalifa</span><span>Blueprint</span></h2>
-        <p>The architectural vision. Every line a decision. Every dimension a promise made in ink.</p>
-      </div>
-      <div class="title-item title-redesign" id="ttl-2">
-        <h2><span>Burj Khalifa</span><span>Reimagined</span></h2>
-        <p>The vision brought to life — reimagined with golden light, organic form, and impossible ambition.</p>
-      </div>
-      <div class="title-item title-black" id="ttl-3">
-        <h2><span>Burj Khalifa</span><span>Finished.</span></h2>
-        <p>Pure. Black. Absolute. The landmark as it was always meant to be — a monolith against the sky.</p>
-      </div>
-    </div>
-
-    <!-- PROGRESS DOTS -->
-    <div id="progress-dots">
-      <div class="p-dot active" id="dot-1"></div>
-      <div class="p-dot" id="dot-2"></div>
-      <div class="p-dot" id="dot-3"></div>
-    </div>
-
-    <!-- SCROLL HINT -->
-    <div id="scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-arrow"></div>
-    </div>
-
+  <!-- LABELS -->
+  <div id="label">
+    <div class="lbl show" id="lbl1"><span class="lbl-num">01</span><span class="lbl-dash"></span><span class="lbl-text">Blueprint</span></div>
+    <div class="lbl"      id="lbl2"><span class="lbl-num">02</span><span class="lbl-dash"></span><span class="lbl-text">Reimagined</span></div>
+    <div class="lbl"      id="lbl3"><span class="lbl-num">03</span><span class="lbl-dash"></span><span class="lbl-text">Finished</span></div>
   </div>
+
+  <!-- TITLES -->
+  <div id="title">
+    <div class="ttl show" id="ttl1">
+      <h2>The<br>Blueprint</h2>
+      <p>Every line a decision. Every dimension a promise made before the first stone was placed.</p>
+    </div>
+    <div class="ttl" id="ttl2">
+      <h2>The<br>Redesign</h2>
+      <p>The vision brought to life — golden light, organic form, and impossible ambition.</p>
+    </div>
+    <div class="ttl" id="ttl3">
+      <h2>Pure<br>Black.</h2>
+      <p>The landmark as it was always meant to be. A monolith. Absolute. Finished in darkness.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS DOTS -->
+  <div class="prog-nav">
+    <div class="pdot on" id="pd1"></div>
+    <div class="pline"></div>
+    <div class="pdot" id="pd2"></div>
+    <div class="pline"></div>
+    <div class="pdot" id="pd3"></div>
+  </div>
+
+  <!-- REPLAY -->
+  <a id="replay" onclick="startSequence()">
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M1 4v6h6M23 20v-6h-6"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+    </svg>
+    Replay
+  </a>
+
 </div>
 
 <script>
-  const redesignImg  = document.getElementById('frame-redesign');
-  const blackImg     = document.getElementById('frame-black');
-  const scanLine     = document.getElementById('scan-line');
-  const scrollHint   = document.getElementById('scroll-hint');
+  const frames   = { f1: document.getElementById('f1'), f2: document.getElementById('f2'), f3: document.getElementById('f3') };
+  const labels   = { l1: document.getElementById('lbl1'), l2: document.getElementById('lbl2'), l3: document.getElementById('lbl3') };
+  const titles   = { t1: document.getElementById('ttl1'), t2: document.getElementById('ttl2'), t3: document.getElementById('ttl3') };
+  const dots     = { d1: document.getElementById('pd1'), d2: document.getElementById('pd2'), d3: document.getElementById('pd3') };
+  const scan     = document.getElementById('scan');
+  const replay   = document.getElementById('replay');
 
-  const labels = [
-    document.getElementById('lbl-1'),
-    document.getElementById('lbl-2'),
-    document.getElementById('lbl-3'),
-  ];
-  const titles = [
-    document.getElementById('ttl-1'),
-    document.getElementById('ttl-2'),
-    document.getElementById('ttl-3'),
-  ];
-  const dots = [
-    document.getElementById('dot-1'),
-    document.getElementById('dot-2'),
-    document.getElementById('dot-3'),
-  ];
+  // Timings (ms)
+  const HOLD1    = 2000;   // how long blueprint shows before first wipe
+  const WIPE_MS  = 1600;   // wipe animation duration (must match --wipe-duration)
+  const HOLD2    = 2000;   // hold redesign before second wipe
+  const HOLD3    = 600;    // small pause after scan reaches bottom before label swap
 
-  function setFrame(index) {
-    labels.forEach((l, i) => l.classList.toggle('visible', i === index));
-    titles.forEach((t, i) => t.classList.toggle('visible', i === index));
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  function setFrame(n) {
+    // Labels
+    Object.values(labels).forEach(l => l.classList.remove('show'));
+    Object.values(titles).forEach(t => t.classList.remove('show'));
+    Object.values(dots).forEach(d => d.classList.remove('on'));
+    labels['l'+n].classList.add('show');
+    titles['t'+n].classList.add('show');
+    dots['d'+n].classList.add('on');
   }
 
-  let currentFrame = 0;
+  function runScan() {
+    scan.classList.remove('run');
+    // force reflow so animation restarts
+    void scan.offsetWidth;
+    scan.classList.add('run');
+    // hide after wipe done
+    setTimeout(() => scan.classList.remove('run'), WIPE_MS + 100);
+  }
 
-  window.addEventListener('scroll', () => {
-    const scrollY    = window.scrollY;
-    const totalH     = document.getElementById('scroll-container').offsetHeight - window.innerHeight;
-    const progress   = Math.min(Math.max(scrollY / totalH, 0), 1); // 0 → 1
+  function startSequence() {
+    // Reset everything
+    replay.classList.remove('show');
+    frames.f2.classList.remove('wipe');
+    frames.f3.classList.remove('wipe');
+    frames.f2.style.clipPath = 'inset(0 0 100% 0)';
+    frames.f3.style.clipPath = 'inset(0 0 100% 0)';
+    scan.classList.remove('run');
+    setFrame(1);
 
-    // Hide scroll hint after first scroll
-    if (scrollY > 50) scrollHint.classList.add('hidden');
-    else scrollHint.classList.remove('hidden');
+    // After holding on blueprint → wipe in redesign
+    setTimeout(() => {
+      runScan();
+      frames.f2.classList.add('wipe');
+      setTimeout(() => setFrame(2), HOLD3);
+    }, HOLD1);
 
-    // Split into two transition zones: 0–0.5 (blueprint→redesign) and 0.5–1 (redesign→black)
-    const zone1 = Math.min(Math.max(progress / 0.5, 0), 1);   // 0→1 during first half
-    const zone2 = Math.min(Math.max((progress - 0.5) / 0.5, 0), 1); // 0→1 during second half
+    // After holding on redesign → wipe in black
+    setTimeout(() => {
+      runScan();
+      frames.f3.classList.add('wipe');
+      setTimeout(() => setFrame(3), HOLD3);
+    }, HOLD1 + WIPE_MS + HOLD2);
 
-    // ZONE 1: wipe redesign image downward (clip-path inset from top shrinks)
-    if (zone1 < 1) {
-      const pct = (1 - zone1) * 100;
-      redesignImg.style.clipPath = `inset(${pct}% 0 0 0)`;
-      blackImg.style.clipPath = `inset(100% 0 0 0)`;
-    }
+    // Show replay after sequence finishes
+    setTimeout(() => {
+      replay.classList.add('show');
+    }, HOLD1 + WIPE_MS + HOLD2 + WIPE_MS + 800);
+  }
 
-    // ZONE 2: wipe black image
-    if (zone1 >= 1) {
-      redesignImg.style.clipPath = `inset(0% 0 0 0)`;
-      const pct2 = (1 - zone2) * 100;
-      blackImg.style.clipPath = `inset(${pct2}% 0 0 0)`;
-    }
-
-    // SCAN LINE — active & positioned during transitions
-    const isTransitioning = (zone1 > 0 && zone1 < 1) || (zone2 > 0 && zone2 < 1);
-    scanLine.classList.toggle('active', isTransitioning);
-
-    if (zone1 > 0 && zone1 < 1) {
-      // line sits at the wipe boundary for zone1
-      scanLine.style.top = `${(1 - zone1) * 100}%`;
-    } else if (zone2 > 0 && zone2 < 1) {
-      scanLine.style.top = `${(1 - zone2) * 100}%`;
-    }
-
-    // Frame label / title switching
-    let frame = 0;
-    if (zone2 > 0.5) frame = 2;
-    else if (zone1 > 0.5) frame = 1;
-
-    if (frame !== currentFrame) {
-      currentFrame = frame;
-      setFrame(frame);
-    }
+  // Auto-start on load
+  window.addEventListener('load', () => {
+    setTimeout(startSequence, 400);
   });
 </script>
 </body>
