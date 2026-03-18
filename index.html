@@ -64,11 +64,13 @@
 
     /* ===== SCENE / SECTION BASE ===== */
     .scene {
-      position: relative; width: 100%; min-height: 100vh;
+      position: relative; width: 100%;
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
-      padding: 100px 0;
+      padding: 96px 0;
     }
+    /* Hero stays full viewport */
+    .scene-hero { min-height: 100vh; padding: 120px 0 80px; }
 
     /* ===== PARALLAX LAYERS ===== */
     .parallax-layer {
@@ -497,6 +499,16 @@
     #nav-logo-wrap img { width: 28px; height: 28px; object-fit: contain; }
     #nav-logo-wrap span { font-weight: 800; font-size: 15px; color: #E6B979; letter-spacing: -0.01em; }
     #nav-links { display: flex; align-items: center; gap: 4px; }
+
+    /* ===== SECTION DIVIDERS ===== */
+    .scene:not(.scene-hero) + .scene::before,
+    #integrations-strip + .scene::before {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(198,165,89,0.12), transparent);
+      pointer-events: none;
+    }
 
     /* ===== SECTION LABEL STYLE ===== */
     .section-eyebrow {
@@ -940,7 +952,7 @@
 
     <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
       <div class="scene-content">
-        <div style="text-align:center;margin-bottom:56px;">
+        <div style="text-align:center;margin-bottom:40px;">
           <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:12px;">How It Works</span>
           <h2 style="font-weight:900;font-size:clamp(28px,3.5vw,52px);letter-spacing:-0.03em;">Start Testing in <span class="text-gold">Minutes</span></h2>
         </div>
