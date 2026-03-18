@@ -215,11 +215,6 @@ nav {
   <div id="grain"></div>
   <div id="flash"></div>
 
-  <!-- 3D TRANSITION VIDEO OVERLAY -->
-  <video id="tx-video" muted playsinline preload="auto"
-    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:40;opacity:0;pointer-events:none;transition:opacity 0.3s ease;">
-    <source src="3D Background.mp4" type="video/mp4">
-  </video>
 
   <!-- LABELS -->
   <div id="label">
@@ -269,7 +264,6 @@ nav {
   const ttls    = [document.getElementById('ttl1'), document.getElementById('ttl2'), document.getElementById('ttl3')];
   const dots    = [document.getElementById('pd1'), document.getElementById('pd2'), document.getElementById('pd3')];
   const flash   = document.getElementById('flash');
-  const txVideo = document.getElementById('tx-video');
   const replay  = document.getElementById('replay');
 
   /* ---------- helpers ---------- */
@@ -296,27 +290,11 @@ nav {
     dots.forEach((d,i) => d.classList.toggle('on',   i === idx));
   }
 
-  // Play 3D Background.mp4 as transition overlay, swap frame underneath, then hide
   function doTransition(showFrame, hideFrame, durationMs) {
     return new Promise(resolve => {
-      // Fade video in
-      txVideo.currentTime = 0;
-      txVideo.play();
-      txVideo.style.transition = 'opacity 0.25s ease';
-      txVideo.style.opacity = '1';
-
-      // Swap frames at midpoint while video covers everything
-      setTimeout(() => {
-        fadeEl(showFrame, 1, 400, easeOut);
-        fadeEl(hideFrame, 0, 400, easeIn);
-      }, durationMs * 0.45);
-
-      // Fade video out
-      setTimeout(() => {
-        txVideo.style.transition = 'opacity 0.5s ease';
-        txVideo.style.opacity = '0';
-        setTimeout(() => { txVideo.pause(); resolve(); }, 550);
-      }, durationMs - 500);
+      fadeEl(showFrame, 1, durationMs * 0.8, easeOut);
+      fadeEl(hideFrame, 0, durationMs * 0.7, easeIn);
+      setTimeout(resolve, durationMs);
     });
   }
 
