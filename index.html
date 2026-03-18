@@ -565,6 +565,9 @@
     }
     @media (max-width: 768px) {
       .scene { width: 100vw; }
+      [data-scene="testertech"] .parallax-layer[data-depth="0.04"] { padding: 0 24px !important; }
+      [data-scene="testertech"] [style*="grid-template-columns:1fr 1fr;gap:80px"] { grid-template-columns: 1fr !important; gap: 40px !important; }
+      [data-scene="testertech"] [style*="grid-template-columns:1fr 1fr;gap:14px"] { grid-template-columns: 1fr 1fr !important; }
       .pop-card { padding: 28px; }
       .scene-content h1 { font-size: 36px !important; }
       .scene-content h2 { font-size: 28px !important; }
@@ -617,6 +620,7 @@
     <span>Tester.io</span>
   </a>
   <div id="nav-links">
+    <a href="product.html">Product</a>
     <a href="#about">Community</a>
     <a href="#about">About</a>
     <a href="#" id="nav-login" class="nav-btn" onclick="openAuthModal(event,'login')">Login</a>
@@ -1286,7 +1290,82 @@
     </div>
   </section>
 
-  <!-- ==================== SCENE 7: CTA ==================== -->
+  <!-- ==================== SCENE 7: TESTERTECH ==================== -->
+  <section class="scene" data-scene="testertech" style="background:linear-gradient(160deg,#0d0d10 0%,#121419 60%,#0e1014 100%);">
+    <!-- Sparkles -->
+    <div class="sparkle-field">
+      <div class="sparkle sparkle-lg" style="top:10%;left:10%;animation-delay:0.3s;"></div>
+      <div class="sparkle" style="top:25%;right:12%;animation-delay:1.5s;"></div>
+      <div class="sparkle sparkle-lg" style="bottom:18%;left:20%;animation-delay:1.0s;"></div>
+      <div class="sparkle" style="bottom:28%;right:25%;animation-delay:2.1s;"></div>
+    </div>
+    <!-- Decoratives -->
+    <div class="parallax-layer" data-depth="0.02">
+      <div class="deco-ring float-slow" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5;"></div>
+      <div class="deco-diamond float-med" style="top:12%;right:8%;"></div>
+      <div class="deco-diamond float-fast" style="bottom:15%;left:6%;"></div>
+    </div>
+
+    <div class="parallax-layer" data-depth="0.04" style="position:relative;z-index:10;padding:0 80px;width:100%;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;">
+
+        <!-- Left: Text -->
+        <div>
+          <span style="font-weight:700;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#C6A559;display:block;margin-bottom:16px;">Introducing</span>
+          <h2 style="font-weight:900;font-size:clamp(36px,5vw,72px);letter-spacing:-0.03em;line-height:0.95;margin-bottom:24px;">Tester<span class="text-gold">Tech</span><br>Smart Watch</h2>
+          <p style="font-size:15px;font-weight:400;color:rgba(232,232,237,0.5);line-height:1.8;margin-bottom:16px;">
+            Precision-engineered for peak performance. ECG, multi-band GPS, 18-day battery life, and aerospace-grade titanium — all from one iconic wrist device.
+          </p>
+          <p style="font-size:14px;font-weight:500;color:rgba(232,232,237,0.35);line-height:1.7;margin-bottom:36px;">
+            Built for those who demand more. From the team behind Tester.io.
+          </p>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+            <a href="TesterTech.html" class="btn-gold">
+              Explore TesterTech
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5m5-5H6"/></svg>
+            </a>
+            <a href="TesterTech.html#cta" class="btn-outline">Pre-Order — $349</a>
+          </div>
+        </div>
+
+        <!-- Right: Feature chips -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div style="background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.14);border-radius:14px;padding:22px 20px;">
+              <div style="font-size:24px;margin-bottom:10px;">⌚</div>
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">18-Day Battery</div>
+              <div style="font-size:12px;color:rgba(232,232,237,0.4);line-height:1.6;">500 mAh with fast-charge in 60 min</div>
+            </div>
+            <div style="background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.14);border-radius:14px;padding:22px 20px;">
+              <div style="font-size:24px;margin-bottom:10px;">📡</div>
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Multi-Band GPS</div>
+              <div style="font-size:12px;color:rgba(232,232,237,0.4);line-height:1.6;">L1+L5 dual frequency, sub-meter accuracy</div>
+            </div>
+            <div style="background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.14);border-radius:14px;padding:22px 20px;">
+              <div style="font-size:24px;margin-bottom:10px;">❤️</div>
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">ECG + SpO2</div>
+              <div style="font-size:12px;color:rgba(232,232,237,0.4);line-height:1.6;">Medical-grade health sensors, all day</div>
+            </div>
+            <div style="background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.14);border-radius:14px;padding:22px 20px;">
+              <div style="font-size:24px;margin-bottom:10px;">🛡️</div>
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">MIL-STD-810H</div>
+              <div style="font-size:12px;color:rgba(232,232,237,0.4);line-height:1.6;">Titanium case, sapphire glass, 5ATM</div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(198,165,89,0.1),rgba(230,185,121,0.06));border:1px solid rgba(198,165,89,0.2);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+            <div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#C6A559;margin-bottom:4px;">Available Q3 2026</div>
+              <div style="font-size:22px;font-weight:900;letter-spacing:-0.02em;">Starting at <span class="text-gold">$349</span></div>
+            </div>
+            <svg width="40" height="40" fill="none" stroke="rgba(198,165,89,0.4)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><path stroke-linecap="round" d="M7 7V5a5 5 0 0110 0v2"/><circle cx="12" cy="14.5" r="1.5" fill="rgba(198,165,89,0.4)" stroke="none"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SCENE 8: CTA ==================== -->
   <section class="scene scene-cta" data-scene="cta">
     <!-- Sparkles -->
     <div class="sparkle-field">
