@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Tester.io</title>
+  <meta name="description" content="Learn about Tester.io — the platform unifying human expertise and automated testing for teams who ship quality software." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+    /* NAV */
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
+    #nav-logo-wrap img{width:30px;height:30px;object-fit:contain}
+    #nav-logo-wrap span{font-weight:800;font-size:15px;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    #nav-links{display:flex;align-items:center;gap:4px}
+    #nav-links a{font-size:13px;font-weight:500;color:rgba(232,232,237,0.6);text-decoration:none;padding:7px 14px;border-radius:8px;transition:color .2s,background .2s}
+    #nav-links a:hover{color:#E6B979;background:rgba(198,165,89,0.08)}
+    .nav-btn{border:1px solid rgba(198,165,89,0.25)!important;color:rgba(232,232,237,0.7)!important}
+    .nav-btn:hover{border-color:#C6A559!important}
+    .nav-btn-gold{background:linear-gradient(135deg,#C6A559,#E6B979)!important;color:#0A0A0F!important;font-weight:700!important}
+    /* LAYOUT */
+    .page{padding:120px 40px 80px;max-width:1100px;margin:0 auto}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
+    h1{font-size:clamp(36px,5vw,60px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:24px}
+    .gold{background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .lead{font-size:18px;color:rgba(232,232,237,0.55);line-height:1.75;max-width:640px;margin-bottom:72px}
+    /* MISSION SPLIT */
+    .mission{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:96px}
+    @media(max-width:720px){.mission{grid-template-columns:1fr;gap:40px}}
+    .mission-badge{background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.15);border-radius:20px;padding:48px;text-align:center}
+    .mission-badge-num{font-size:64px;font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .mission-badge-label{font-size:13px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:6px}
+    .mission-content h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;line-height:1.2}
+    .mission-content p{font-size:14px;color:rgba(232,232,237,0.5);line-height:1.8;margin-bottom:16px}
+    .check-list{display:flex;flex-direction:column;gap:14px;margin-top:28px}
+    .check-item{display:flex;align-items:center;gap:14px}
+    .check-icon{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .check-item span{font-size:14px;font-weight:600;color:#E8E8ED}
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:96px}
+    @media(max-width:800px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:440px){.stats-row{grid-template-columns:1fr}}
+    .stat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.12);border-radius:16px;padding:32px 24px;text-align:center}
+    .stat-num{font-size:40px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .stat-label{font-size:12px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:8px}
+    /* VALUES */
+    .section-title{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:40px}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:96px}
+    @media(max-width:720px){.values-grid{grid-template-columns:1fr}}
+    .value-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:32px;transition:border-color .2s,background .2s}
+    .value-card:hover{border-color:rgba(198,165,89,0.3);background:rgba(198,165,89,0.03)}
+    .value-num{font-size:48px;font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,rgba(198,165,89,0.15),rgba(230,183,121,0.08));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
+    .value-card h3{font-size:16px;font-weight:700;margin-bottom:10px;color:#E8E8ED}
+    .value-card p{font-size:13px;color:rgba(232,232,237,0.45);line-height:1.7}
+    /* TEAM */
+    .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:96px}
+    @media(max-width:720px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:440px){.team-grid{grid-template-columns:1fr}}
+    .team-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:28px;text-align:center}
+    .team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;font-weight:800;color:#0A0A0F}
+    .team-name{font-size:15px;font-weight:700;margin-bottom:4px}
+    .team-role{font-size:12px;color:rgba(232,232,237,0.4);font-weight:500}
+    /* CTA */
+    .cta-band{background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.15);border-radius:20px;padding:56px 48px;text-align:center;margin-bottom:80px}
+    .cta-band h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
+    .cta-band p{font-size:15px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
+    .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#C6A559,#E6B979);color:#0A0A0F;font-weight:700;font-size:13px;letter-spacing:.04em;padding:13px 28px;border-radius:10px;transition:opacity .2s,transform .2s}
+    .btn-gold:hover{opacity:.85;transform:translateY(-1px);text-decoration:none}
+    .btn-outline{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(198,165,89,0.3);color:rgba(232,232,237,0.7);font-weight:600;font-size:13px;padding:13px 28px;border-radius:10px;transition:border-color .2s,color .2s}
+    .btn-outline:hover{border-color:#C6A559;color:#E6B979;text-decoration:none}
+    /* FOOTER */
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08)}
+    .gold-divider{height:1px;background:linear-gradient(to right,transparent,rgba(198,165,89,0.2),transparent);margin:0 auto 80px;max-width:800px}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" id="nav-logo-wrap">
+    <img src="brand_assets/Tester Logo.png" alt="Tester.io" />
+    <span>Tester.io</span>
+  </a>
+  <div id="nav-links">
+    <a href="product.html">Product</a>
+    <a href="TesterTech.html">TesterTech</a>
+    <a href="creative.html">Creative</a>
+    <a href="about.html">About</a>
+    <a href="index.html" class="nav-btn">Login</a>
+    <a href="index.html" class="nav-btn-gold">Sign Up</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="eyebrow">Our Story</div>
+  <h1>Built for teams who <span class="gold">refuse to ship bugs</span></h1>
+  <p class="lead">Tester.io was founded on a simple belief — quality is not a phase at the end of a sprint. It's a culture, a workflow, and a standard that every team deserves to reach.</p>
+
+  <div class="gold-divider"></div>
+
+  <!-- MISSION -->
+  <div class="mission">
+    <div class="mission-badge">
+      <div class="mission-badge-num">24/7</div>
+      <div class="mission-badge-label">Testing Coverage</div>
+    </div>
+    <div class="mission-content">
+      <h2>One Platform, <span class="gold">Zero Bugs</span></h2>
+      <p>Tester.io unifies human expertise and automated testing into a single platform. No more juggling tools — manage manual testers, automation scripts, and bug reports all in one place.</p>
+      <p>Backed by 500+ certified QA professionals and battle-tested automation frameworks, we help teams ship faster without sacrificing quality.</p>
+      <div class="check-list">
+        <div class="check-item">
+          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Human + Automated in One Workflow</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>CI/CD Pipeline Integration</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span>Real-Time Bug Tracking &amp; Reports</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num">2M+</div><div class="stat-label">Tests Executed</div></div>
+    <div class="stat-card"><div class="stat-num">99.8%</div><div class="stat-label">Bug Detection Rate</div></div>
+    <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Teams Worldwide</div></div>
+    <div class="stat-card"><div class="stat-num">3×</div><div class="stat-label">Faster Release Cycles</div></div>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <!-- VALUES -->
+  <h2 class="section-title">What we stand for</h2>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-num">01</div>
+      <h3>Quality is non-negotiable</h3>
+      <p>We believe every line of code deserves to be tested. Cutting corners on quality creates debt that compounds — we help teams break that cycle.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">02</div>
+      <h3>Humans and machines together</h3>
+      <p>Automation is fast. Humans are perceptive. The best QA is both — and we're the platform that makes that combination effortless.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">03</div>
+      <h3>Speed without sacrifice</h3>
+      <p>Shipping fast and shipping well aren't opposites. With the right tooling and workflow, teams can have both — and that's what we build for.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">04</div>
+      <h3>Transparency by default</h3>
+      <p>Bug reports, test coverage, team performance — everything visible, nothing hidden. Teams that see clearly, ship confidently.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">05</div>
+      <h3>Built for builders</h3>
+      <p>Our platform is designed by engineers who've felt the pain of bad QA tooling. Every feature solves a real problem from the field.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">06</div>
+      <h3>Customer obsessed</h3>
+      <p>We measure our success by yours. Every product decision starts with a single question — does this make our customers ship better?</p>
+    </div>
+  </div>
+
+  <div class="gold-divider"></div>
+
+  <!-- TEAM -->
+  <h2 class="section-title">The team</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">G</div>
+      <div class="team-name">Gab Baldovino</div>
+      <div class="team-role">Founder & CEO</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">A</div>
+      <div class="team-name">Alex Rivera</div>
+      <div class="team-role">Head of Engineering</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">M</div>
+      <div class="team-name">Maya Chen</div>
+      <div class="team-role">Head of Product</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">J</div>
+      <div class="team-name">Jordan Lee</div>
+      <div class="team-role">Lead QA Architect</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">S</div>
+      <div class="team-name">Sara Okafor</div>
+      <div class="team-role">Design Lead</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">+</div>
+      <div class="team-name">We're Hiring</div>
+      <div class="team-role"><a href="careers.html">View open roles →</a></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <h2>Ready to ship with <span class="gold">confidence?</span></h2>
+    <p>Join 500+ teams who use Tester.io to catch bugs before they reach production.</p>
+    <div class="btn-row">
+      <a href="index.html" class="btn-gold">Start Free Trial</a>
+      <a href="support.html" class="btn-outline">Talk to Us</a>
+    </div>
+  </div>
+
+</div>
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+</body>
+</html>
