@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     }
 
     // Also send to Google Sheets via GET (POST redirects lose body in serverless)
-    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw_I5NLSjPX3y_hPEcmNN7wZkYsWdcYec5UD4amsQ0DBOnGbxLrR_KWF1dGFkBL7L0skA/exec';
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwn0YfNgCni0yasMd9V9En9xzkc_7sOx_n1zahg992HADg1KMOuQtH0crbN4SEJPSRW2w/exec';
     const params = new URLSearchParams({ name, email, message });
     fetch(`${GOOGLE_SHEET_URL}?${params}`).catch(() => console.log('Google Sheets sync skipped'));
 

@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>Tester.io — Product Overview</title>
+  <title>Tester.io — Human + Automated QA Platform | Ship Better Software Faster</title>
+  <meta name="description" content="Tester.io combines human testers and automated QA in one platform. Ship faster, reduce bugs, and build with confidence. Start your free trial today." />
+  <meta property="og:title" content="Tester.io — Human + Automated QA Platform" />
+  <meta property="og:description" content="Human and automated QA in one place. Ship better software, faster." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tester.io — Human + Automated QA Platform" />
+  <meta name="twitter:description" content="Human and automated QA in one place. Ship better software, faster." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
@@ -279,8 +286,14 @@
     }
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 580px) {
+      .products-grid { grid-template-columns: 1fr; }
     }
     .product-card {
       background: rgba(255,255,255,0.03);
@@ -458,11 +471,12 @@
     <span>Tester.io</span>
   </a>
   <div id="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
     <a href="creative.html">Creative</a>
-    <a href="#">Community</a>
-    <a href="#">About</a>
-    <a href="#" class="nav-btn">Login</a>
-    <a href="#" class="nav-btn-gold">Sign Up</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html" class="nav-btn">Login</a>
+    <a href="index.html" class="nav-btn-gold">Sign Up</a>
   </div>
 </nav>
 
@@ -491,7 +505,7 @@
         </p>
 
         <div class="hero-actions anim-fade-up delay-3">
-          <a href="#" class="btn-gold">
+          <a href="index.html" class="btn-gold">
             Start Free Trial
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
@@ -707,9 +721,28 @@
             </div>
           </div>
           <h3 class="product-name">Creative Studio</h3>
-          <p class="product-desc">Our manifesto on quality — the beliefs that drive every feature, every test, every release. A statement of what it means to build with craft and intention.</p>
+          <p class="product-desc">Design and generate test scenarios visually — no code required. Create, preview, and share test flows across your team with a drag-and-drop canvas built for QA.</p>
           <a href="creative.html" class="product-link">
-            Read the Manifesto
+            Explore Creative Studio
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-top">
+            <div class="product-icon">
+              <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+            <span class="product-badge" style="background:rgba(100,160,255,0.12);color:#6aa0ff;border-color:rgba(100,160,255,0.2);">Coming Soon</span>
+          </div>
+          <h3 class="product-name">Tester Analytics</h3>
+          <p class="product-desc">Real-time dashboards for test coverage, defect trends, and release readiness. Surface the insights your team needs to ship with confidence — before QA becomes a bottleneck.</p>
+          <a href="#" class="product-link" style="opacity:0.45;pointer-events:none;">
+            Notify Me
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
@@ -723,7 +756,7 @@
   <div class="gold-divider"></div>
 
   <!-- ===== INTEGRATIONS ===== -->
-  <section class="scene">
+  <section class="scene" id="integrations">
     <div class="container">
       <div class="integrations-header">
         <span class="section-label">Integrations</span>
@@ -796,7 +829,7 @@
   <div class="gold-divider"></div>
 
   <!-- ===== CTA ===== -->
-  <section class="scene cta-scene">
+  <section class="scene cta-scene" id="pricing">
     <div class="container">
       <div class="cta-inner">
         <span class="section-label">Get Started</span>
@@ -808,13 +841,13 @@
           Join 500+ teams who use Tester.io to ship better software, faster. Start your free trial — no credit card required.
         </p>
         <div class="cta-actions">
-          <a href="#" class="btn-gold">
+          <a href="index.html" class="btn-gold">
             Start Free Trial
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
           </a>
-          <a href="#" class="btn-outline">Book a Demo</a>
+          <a href="index.html#contact" class="btn-outline">Book a Demo</a>
         </div>
       </div>
     </div>
@@ -843,26 +876,26 @@
       </div>
       <div class="footer-col">
         <h4>Product</h4>
-        <a href="#">Features</a>
-        <a href="#">Pricing</a>
-        <a href="#">Integrations</a>
-        <a href="#">Changelog</a>
-        <a href="#">Roadmap</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#integrations">Integrations</a>
+        <a href="changelog.html">Changelog</a>
+        <a href="roadmap.html">Roadmap</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="#">About</a>
-        <a href="#">Blog</a>
-        <a href="#">Careers</a>
-        <a href="#">Community</a>
-        <a href="#">Contact</a>
+        <a href="index.html#about">About</a>
+        <a href="blog.html">Blog</a>
+        <a href="careers.html">Careers</a>
+        <a href="community.html">Community</a>
+        <a href="index.html#contact">Contact</a>
       </div>
       <div class="footer-col">
         <h4>Legal</h4>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Security</a>
-        <a href="#">Cookies</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="security.html">Security</a>
+        <a href="cookies.html">Cookies</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -874,23 +907,28 @@
 </div><!-- /page-wrap -->
 
 <script>
-  // Scroll-triggered fade-in for sections below hero
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+  // Scroll-triggered fade-in — with fallback if IntersectionObserver is unavailable
+  const animEls = document.querySelectorAll('.feature-card, .how-step, .integration-badge');
 
-  document.querySelectorAll('.feature-card, .how-step, .integration-badge').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    animEls.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  }
+  // If IntersectionObserver not available, elements stay visible at default opacity
 
   // Stagger feature cards
   document.querySelectorAll('.feature-card').forEach((card, i) => {

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security — Tester.io</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E8E8ED;font-weight:800;font-size:15px}
+    #nav-logo img{width:30px;height:30px;object-fit:contain}
+    #nav-back{font-size:13px;font-weight:500;color:rgba(232,232,237,0.5);border:1px solid rgba(198,165,89,0.15);padding:7px 16px;border-radius:8px;transition:color .2s,border-color .2s}
+    #nav-back:hover{color:#E6B979;border-color:rgba(198,165,89,0.4);text-decoration:none}
+    .page{padding:120px 40px 80px;max-width:720px;margin:0 auto}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
+    h1{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:12px}
+    .updated{font-size:12px;color:rgba(232,232,237,0.3);margin-bottom:48px}
+    h2{font-size:16px;font-weight:700;margin:36px 0 12px;color:#E8E8ED}
+    p{font-size:14px;color:rgba(232,232,237,0.55);line-height:1.8;margin-bottom:14px}
+    ul{margin:0 0 14px 20px;font-size:14px;color:rgba(232,232,237,0.55);line-height:1.8}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08);margin-top:60px}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" id="nav-logo"><img src="brand_assets/Tester Logo.png" alt="Tester.io" />Tester.io</a>
+  <a href="product.html" id="nav-back">← Back to Product</a>
+</nav>
+<div class="page">
+  <div class="eyebrow">Trust & Safety</div>
+  <h1>Security</h1>
+  <p class="updated">Last updated: March 2026</p>
+  <h2>Data Encryption</h2>
+  <p>All data transmitted to and from Tester.io is encrypted in transit using TLS 1.2+. Data at rest is encrypted using AES-256 via our infrastructure provider.</p>
+  <h2>Authentication</h2>
+  <p>User passwords are hashed using bcrypt with a unique salt per account. We support JWT-based session tokens with configurable expiry.</p>
+  <h2>Infrastructure</h2>
+  <p>Tester.io runs on Supabase-backed infrastructure with automated backups, access controls, and audit logging. Our database is never exposed to the public internet.</p>
+  <h2>Access Controls</h2>
+  <p>Internal access to production systems is restricted to authorised team members only, via role-based permissions and multi-factor authentication.</p>
+  <h2>Responsible Disclosure</h2>
+  <p>If you discover a security vulnerability, please report it responsibly via <a href="index.html#contact">our contact page</a>. We will respond within 48 hours and credit researchers who help us improve.</p>
+  <h2>Compliance</h2>
+  <p>We are committed to GDPR compliance for users in the EU. See our <a href="privacy.html">Privacy Policy</a> for details on data processing.</p>
+</div>
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+</body>
+</html>

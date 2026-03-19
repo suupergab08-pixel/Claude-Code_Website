@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Tester.io</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E8E8ED;font-weight:800;font-size:15px}
+    #nav-logo img{width:30px;height:30px;object-fit:contain}
+    #nav-back{font-size:13px;font-weight:500;color:rgba(232,232,237,0.5);border:1px solid rgba(198,165,89,0.15);padding:7px 16px;border-radius:8px;transition:color .2s,border-color .2s}
+    #nav-back:hover{color:#E6B979;border-color:rgba(198,165,89,0.4);text-decoration:none}
+    .page{padding:120px 40px 80px;max-width:960px;margin:0 auto}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
+    h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:20px}
+    .subtitle{font-size:16px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:56px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+    .card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:28px;transition:border-color .2s,background .2s}
+    .card:hover{border-color:rgba(198,165,89,0.3);background:rgba(198,165,89,0.03)}
+    .card-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C6A559;margin-bottom:14px}
+    .card h3{font-size:17px;font-weight:700;line-height:1.4;margin-bottom:10px;color:#E8E8ED}
+    .card p{font-size:13px;color:rgba(232,232,237,0.45);line-height:1.7;margin-bottom:18px}
+    .card-meta{font-size:11px;color:rgba(232,232,237,0.25);font-weight:500}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08);margin-top:60px}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" id="nav-logo"><img src="brand_assets/Tester Logo.png" alt="Tester.io" />Tester.io</a>
+  <a href="product.html" id="nav-back">← Back to Product</a>
+</nav>
+<div class="page">
+  <div class="eyebrow">Insights & Updates</div>
+  <h1>Blog</h1>
+  <p class="subtitle">Engineering deep-dives, QA best practices, and product thinking from the Tester.io team.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="card-tag">QA Strategy</div>
+      <h3>Why human testers still beat automation for exploratory testing</h3>
+      <p>Automated test suites are fast and consistent — but they can only check what you tell them to. Here's where humans still win.</p>
+      <div class="card-meta">March 2026 · 6 min read</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Engineering</div>
+      <h3>How we built scroll-driven video on TesterTech.html with vanilla JS</h3>
+      <p>No GSAP, no Lenis — just canvas, requestAnimationFrame, and careful scroll math. A deep-dive into how we built the watch dissection experience.</p>
+      <div class="card-meta">February 2026 · 8 min read</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Product</div>
+      <h3>The true cost of shipping bugs to production</h3>
+      <p>Beyond the hotfix — how escaped defects affect customer trust, team morale, and your next release cycle.</p>
+      <div class="card-meta">February 2026 · 5 min read</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Best Practices</div>
+      <h3>Building a test plan that actually gets used</h3>
+      <p>Most test plans get written and ignored. Here's a lightweight framework that keeps QA aligned with your sprint cadence.</p>
+      <div class="card-meta">January 2026 · 7 min read</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Integrations</div>
+      <h3>Connecting Tester.io to your CI/CD pipeline</h3>
+      <p>A step-by-step walkthrough for triggering test runs on every pull request using GitHub Actions.</p>
+      <div class="card-meta">January 2026 · 10 min read</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Culture</div>
+      <h3>Quality is a team sport — not just QA's job</h3>
+      <p>When quality is siloed in one team, it becomes a bottleneck. Here's how to make everyone responsible for what ships.</p>
+      <div class="card-meta">December 2025 · 4 min read</div>
+    </div>
+  </div>
+</div>
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+</body>
+</html>

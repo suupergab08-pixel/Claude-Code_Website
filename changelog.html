@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Changelog — Tester.io</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E8E8ED;font-weight:800;font-size:15px}
+    #nav-logo img{width:30px;height:30px;object-fit:contain}
+    #nav-back{font-size:13px;font-weight:500;color:rgba(232,232,237,0.5);border:1px solid rgba(198,165,89,0.15);padding:7px 16px;border-radius:8px;transition:color .2s,border-color .2s}
+    #nav-back:hover{color:#E6B979;border-color:rgba(198,165,89,0.4);text-decoration:none}
+    .page{padding:120px 40px 80px;max-width:760px;margin:0 auto}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
+    h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:20px}
+    .subtitle{font-size:16px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:56px}
+    .entry{border-left:2px solid rgba(198,165,89,0.2);padding:0 0 40px 28px;margin-bottom:8px;position:relative}
+    .entry::before{content:'';position:absolute;left:-5px;top:6px;width:8px;height:8px;border-radius:50%;background:#C6A559}
+    .entry-meta{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .entry-date{font-size:12px;font-weight:600;color:rgba(232,232,237,0.35);letter-spacing:.05em}
+    .entry-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+    .tag-new{background:rgba(198,165,89,0.12);color:#C6A559;border:1px solid rgba(198,165,89,0.2)}
+    .tag-fix{background:rgba(80,200,120,0.1);color:#50c878;border:1px solid rgba(80,200,120,0.2)}
+    .tag-improvement{background:rgba(100,160,255,0.1);color:#6aa0ff;border:1px solid rgba(100,160,255,0.2)}
+    .entry h3{font-size:17px;font-weight:700;margin-bottom:8px;color:#E8E8ED}
+    .entry p{font-size:14px;color:rgba(232,232,237,0.5);line-height:1.7}
+    .entry ul{margin:8px 0 0 16px;font-size:14px;color:rgba(232,232,237,0.5);line-height:1.8}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08)}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" id="nav-logo"><img src="brand_assets/Tester Logo.png" alt="Tester.io" />Tester.io</a>
+  <a href="product.html" id="nav-back">← Back to Product</a>
+</nav>
+<div class="page">
+  <div class="eyebrow">What's New</div>
+  <h1>Changelog</h1>
+  <p class="subtitle">Product updates, improvements, and bug fixes — shipped regularly by the Tester.io team.</p>
+
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">March 2026</span><span class="entry-tag tag-new">New</span></div>
+    <h3>TesterTech Smart Watch Pro — Launch</h3>
+    <p>Introducing the Tester Smart Watch Pro — QA metrics, test alerts, and productivity tracking on your wrist. Available now in the Products section.</p>
+  </div>
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">February 2026</span><span class="entry-tag tag-improvement">Improvement</span></div>
+    <h3>Two-panel Auth — Login & Signup on one screen</h3>
+    <p>Returning users and new signups now land on the same page. Reduced navigation friction and improved conversion on the signup flow.</p>
+  </div>
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">February 2026</span><span class="entry-tag tag-new">New</span></div>
+    <h3>Creative Studio — Visual Test Canvas</h3>
+    <p>Design and generate test scenarios visually with no code required. Drag-and-drop canvas built for QA teams who move fast.</p>
+  </div>
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">January 2026</span><span class="entry-tag tag-fix">Fix</span></div>
+    <h3>Google Sheets contact form sync</h3>
+    <p>Fixed a deployment issue where form submissions were not syncing to the connected Google Sheet. All submissions now append in real-time.</p>
+  </div>
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">January 2026</span><span class="entry-tag tag-improvement">Improvement</span></div>
+    <h3>Mobile nav & responsive improvements</h3>
+    <ul><li>Hamburger menu now closes on outside tap</li><li>Footer links reorganised into columns on mobile</li><li>Hero section spacing tightened on small screens</li></ul>
+  </div>
+  <div class="entry">
+    <div class="entry-meta"><span class="entry-date">December 2025</span><span class="entry-tag tag-new">New</span></div>
+    <h3>Product overview page launched</h3>
+    <p>A dedicated product page with features, how it works, integrations, and product suite — accessible from the main nav.</p>
+  </div>
+</div>
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+</body>
+</html>

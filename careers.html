@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Careers — Tester.io</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E8E8ED;font-weight:800;font-size:15px}
+    #nav-logo img{width:30px;height:30px;object-fit:contain}
+    #nav-back{font-size:13px;font-weight:500;color:rgba(232,232,237,0.5);border:1px solid rgba(198,165,89,0.15);padding:7px 16px;border-radius:8px;transition:color .2s,border-color .2s}
+    #nav-back:hover{color:#E6B979;border-color:rgba(198,165,89,0.4);text-decoration:none}
+    .page{padding:120px 40px 80px;max-width:760px;margin:0 auto}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
+    h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:20px}
+    .subtitle{font-size:16px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:56px}
+    .values{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:56px}
+    @media(max-width:560px){.values{grid-template-columns:1fr}}
+    .val{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:12px;padding:20px 22px}
+    .val h4{font-size:14px;font-weight:700;margin-bottom:6px;color:#E8E8ED}
+    .val p{font-size:12px;color:rgba(232,232,237,0.45);line-height:1.6}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(232,232,237,0.3);margin-bottom:24px;display:block}
+    .job{border:1px solid rgba(198,165,89,0.12);border-radius:14px;padding:24px 28px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s,background .2s}
+    .job:hover{border-color:rgba(198,165,89,0.3);background:rgba(198,165,89,0.03)}
+    .job-info h4{font-size:15px;font-weight:700;margin-bottom:4px}
+    .job-info span{font-size:12px;color:rgba(232,232,237,0.4);font-weight:500}
+    .job-apply{font-size:12px;font-weight:700;color:#C6A559;border:1px solid rgba(198,165,89,0.25);padding:8px 16px;border-radius:8px;white-space:nowrap;transition:background .2s,color .2s}
+    .job-apply:hover{background:rgba(198,165,89,0.12);text-decoration:none}
+    .open-app{margin-top:48px;background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:32px;text-align:center}
+    .open-app h3{font-size:18px;font-weight:700;margin-bottom:10px}
+    .open-app p{font-size:14px;color:rgba(232,232,237,0.45);margin-bottom:20px;line-height:1.7}
+    .btn{display:inline-block;background:linear-gradient(135deg,#C6A559,#E6B979);color:#0A0A0F;font-weight:700;font-size:12px;letter-spacing:.06em;padding:12px 24px;border-radius:10px;transition:opacity .2s}
+    .btn:hover{opacity:.85;text-decoration:none}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08);margin-top:60px}
+  </style>
+</head>
+<body>
+<nav id="navbar">
+  <a href="index.html" id="nav-logo"><img src="brand_assets/Tester Logo.png" alt="Tester.io" />Tester.io</a>
+  <a href="product.html" id="nav-back">← Back to Product</a>
+</nav>
+<div class="page">
+  <div class="eyebrow">Join the Team</div>
+  <h1>Careers</h1>
+  <p class="subtitle">We're building the platform that makes shipping quality software the default — not the exception. Come build it with us.</p>
+  <div class="values">
+    <div class="val"><h4>Remote-first</h4><p>Work from anywhere. We're async-friendly and timezone-aware.</p></div>
+    <div class="val"><h4>Ship with craft</h4><p>We care deeply about the work. Quality in the product, quality in the process.</p></div>
+    <div class="val"><h4>Small team, big impact</h4><p>Everyone owns their work end-to-end. No waiting in line for decisions.</p></div>
+    <div class="val"><h4>Transparent by default</h4><p>Roadmap, metrics, and strategy are shared openly with the whole team.</p></div>
+  </div>
+  <span class="section-label">Open Roles</span>
+  <div class="job">
+    <div class="job-info"><h4>Senior Full-Stack Engineer</h4><span>Engineering · Remote · Full-time</span></div>
+    <a href="index.html#contact" class="job-apply">Apply</a>
+  </div>
+  <div class="job">
+    <div class="job-info"><h4>QA Automation Engineer</h4><span>Engineering · Remote · Full-time</span></div>
+    <a href="index.html#contact" class="job-apply">Apply</a>
+  </div>
+  <div class="job">
+    <div class="job-info"><h4>Product Designer</h4><span>Design · Remote · Full-time</span></div>
+    <a href="index.html#contact" class="job-apply">Apply</a>
+  </div>
+  <div class="job">
+    <div class="job-info"><h4>Customer Success Manager</h4><span>Go-to-Market · Remote · Full-time</span></div>
+    <a href="index.html#contact" class="job-apply">Apply</a>
+  </div>
+  <div class="open-app">
+    <h3>Don't see your role?</h3>
+    <p>We hire for talent and drive over specific titles. If you're excited about what we're building, send us a note.</p>
+    <a href="index.html#contact" class="btn">Send an Open Application</a>
+  </div>
+</div>
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+</body>
+</html>
