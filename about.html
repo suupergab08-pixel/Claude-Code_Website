@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Tester.io</title>
-  <meta name="description" content="Learn about Tester.io — the platform unifying human expertise and automated testing for teams who ship quality software." />
+  <title>About — Gabriel G. Baldovino</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    html,body{font-family:'Montserrat',sans-serif;background:#121419;color:#E8E8ED;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    html{scroll-behavior:smooth}
+    body{font-family:'Montserrat',sans-serif;background:#0e0d11;color:#E8E8ED;-webkit-font-smoothing:antialiased}
     a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+
     /* NAV */
     #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
     #nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -18,66 +19,124 @@
     #nav-links{display:flex;align-items:center;gap:4px}
     #nav-links a{font-size:13px;font-weight:500;color:rgba(232,232,237,0.6);text-decoration:none;padding:7px 14px;border-radius:8px;transition:color .2s,background .2s}
     #nav-links a:hover{color:#E6B979;background:rgba(198,165,89,0.08)}
+    #nav-links a.nav-active{color:#E6B979;background:rgba(198,165,89,0.1)}
     .nav-btn{border:1px solid rgba(198,165,89,0.25)!important;color:rgba(232,232,237,0.7)!important}
     .nav-btn:hover{border-color:#C6A559!important}
     .nav-btn-gold{background:linear-gradient(135deg,#C6A559,#E6B979)!important;color:#0A0A0F!important;font-weight:700!important}
-    /* LAYOUT */
-    .page{padding:120px 40px 80px;max-width:1100px;margin:0 auto}
-    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#C6A559;margin-bottom:16px}
-    h1{font-size:clamp(36px,5vw,60px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:24px}
+
+    /* SHARED */
+    .page{max-width:1100px;margin:0 auto;padding:0 40px}
     .gold{background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .lead{font-size:18px;color:rgba(232,232,237,0.55);line-height:1.75;max-width:640px;margin-bottom:72px}
-    /* MISSION SPLIT */
-    .mission{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:96px}
-    @media(max-width:720px){.mission{grid-template-columns:1fr;gap:40px}}
-    .mission-badge{background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.15);border-radius:20px;padding:48px;text-align:center}
-    .mission-badge-num{font-size:64px;font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .mission-badge-label{font-size:13px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:6px}
-    .mission-content h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:20px;line-height:1.2}
-    .mission-content p{font-size:14px;color:rgba(232,232,237,0.5);line-height:1.8;margin-bottom:16px}
-    .check-list{display:flex;flex-direction:column;gap:14px;margin-top:28px}
-    .check-item{display:flex;align-items:center;gap:14px}
-    .check-icon{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .check-item span{font-size:14px;font-weight:600;color:#E8E8ED}
-    /* STATS */
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:96px}
-    @media(max-width:800px){.stats-row{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:440px){.stats-row{grid-template-columns:1fr}}
-    .stat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.12);border-radius:16px;padding:32px 24px;text-align:center}
-    .stat-num{font-size:40px;font-weight:900;letter-spacing:-.03em;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .stat-label{font-size:12px;color:rgba(232,232,237,0.4);font-weight:500;margin-top:8px}
-    /* VALUES */
-    .section-title{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:40px}
-    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:96px}
-    @media(max-width:720px){.values-grid{grid-template-columns:1fr}}
-    .value-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:32px;transition:border-color .2s,background .2s}
-    .value-card:hover{border-color:rgba(198,165,89,0.3);background:rgba(198,165,89,0.03)}
-    .value-num{font-size:48px;font-weight:900;letter-spacing:-.04em;background:linear-gradient(135deg,rgba(198,165,89,0.15),rgba(230,183,121,0.08));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px}
-    .value-card h3{font-size:16px;font-weight:700;margin-bottom:10px;color:#E8E8ED}
-    .value-card p{font-size:13px;color:rgba(232,232,237,0.45);line-height:1.7}
-    /* TEAM */
-    .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:96px}
-    @media(max-width:720px){.team-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:440px){.team-grid{grid-template-columns:1fr}}
-    .team-card{background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:28px;text-align:center}
-    .team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;font-weight:800;color:#0A0A0F}
-    .team-name{font-size:15px;font-weight:700;margin-bottom:4px}
-    .team-role{font-size:12px;color:rgba(232,232,237,0.4);font-weight:500}
-    /* CTA */
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C6A559;margin-bottom:14px}
+    .section-title{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:40px;line-height:1.15}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(198,165,89,0.18),transparent);margin:80px auto;max-width:800px}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08)}
+
+    /* ===== 1. HERO ===== */
+    .hero{display:flex;align-items:center;gap:56px;padding:140px 40px 0;max-width:1100px;margin:0 auto}
+    .hero-photo{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:900;color:#0e0d11;flex-shrink:0;box-shadow:0 0 0 4px rgba(198,165,89,.15),0 20px 60px rgba(0,0,0,.5)}
+    .hero-info h1{font-size:clamp(32px,4.5vw,52px);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin-bottom:6px}
+    .hero-info .title{font-size:16px;color:#C6A559;font-weight:600;margin-bottom:16px}
+    .hero-info .bio{font-size:14px;color:rgba(232,232,237,0.5);line-height:1.8;max-width:520px;margin-bottom:24px}
+    .stat-chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;background:rgba(198,165,89,0.08);border:1px solid rgba(198,165,89,0.15);color:#E6B979}
+    @media(max-width:720px){
+      .hero{flex-direction:column;text-align:center;gap:32px;padding-top:110px}
+      .hero-photo{width:140px;height:140px;font-size:52px}
+      .hero-info .bio{margin-left:auto;margin-right:auto}
+      .stat-chips{justify-content:center}
+    }
+
+    /* ===== 2. SKILLS ===== */
+    .skills-section{padding-top:80px}
+    .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    @media(max-width:720px){.skills-grid{grid-template-columns:1fr}}
+    .skill-card{background:rgba(255,255,255,0.025);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:28px;transition:border-color .3s,background .3s}
+    .skill-card:hover{border-color:rgba(198,165,89,0.3);background:rgba(198,165,89,0.03)}
+    .skill-card h3{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .skill-card h3 .icon{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .skill-card h3 .icon svg{width:14px;height:14px}
+    .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+    .skill-tag{padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.1);color:rgba(232,232,237,0.6);transition:color .2s,border-color .2s}
+    .skill-card:hover .skill-tag{border-color:rgba(198,165,89,0.2);color:rgba(232,232,237,0.8)}
+
+    /* ===== 3. EXPERIENCE ===== */
+    .exp-section{padding-top:0}
+    .exp-timeline{display:flex;flex-direction:column;gap:20px}
+    .exp-card{background:rgba(255,255,255,0.025);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:border-color .3s}
+    .exp-card:hover{border-color:rgba(198,165,89,0.25)}
+    .exp-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#C6A559,transparent);border-radius:3px}
+    .exp-card .exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+    .exp-card h3{font-size:17px;font-weight:800}
+    .exp-card .company{font-size:14px;color:#C6A559;font-weight:600}
+    .exp-card .dates{font-size:12px;color:rgba(232,232,237,0.35);font-weight:500;white-space:nowrap}
+    .exp-card ul{list-style:none;margin-top:8px}
+    .exp-card li{font-size:13px;color:rgba(232,232,237,0.5);line-height:1.7;padding-left:18px;position:relative;margin-bottom:6px}
+    .exp-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#C6A559}
+    .exp-current{border-color:rgba(198,165,89,0.2);background:rgba(198,165,89,0.03)}
+
+    /* ===== 4. PROJECTS ===== */
+    .projects-section{padding-top:0}
+    .reel-wrap{margin-bottom:32px;border-radius:14px;overflow:hidden;border:1px solid rgba(198,165,89,0.1);background:#000}
+    .reel-wrap video{width:100%;display:block}
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+    .proj-card{position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(198,165,89,0.08);background:#17161b;transition:border-color .3s,transform .3s}
+    .proj-card:hover{border-color:rgba(198,165,89,0.25);transform:translateY(-3px)}
+    .proj-card img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top;display:block}
+    .proj-card .proj-info{padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+    .proj-card .proj-label{font-size:13px;font-weight:600}
+    .proj-card .proj-badge{font-size:10px;padding:3px 10px;border-radius:10px;background:rgba(198,165,89,0.1);color:#C6A559;font-weight:600}
+    .proj-card a{position:absolute;inset:0;z-index:1}
+
+    /* ===== 5. EDUCATION ===== */
+    .edu-section{padding-top:0}
+    .edu-card{background:rgba(255,255,255,0.025);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:32px;display:flex;align-items:center;gap:24px}
+    .edu-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#C6A559,#E6B979);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .edu-icon svg{width:26px;height:26px}
+    .edu-card h3{font-size:17px;font-weight:800;margin-bottom:4px}
+    .edu-card .school{font-size:14px;color:#C6A559;font-weight:600}
+    .edu-card .year{font-size:12px;color:rgba(232,232,237,0.35);margin-top:4px}
+    @media(max-width:500px){.edu-card{flex-direction:column;text-align:center}}
+
+    /* ===== 6. CTA ===== */
     .cta-band{background:rgba(198,165,89,0.06);border:1px solid rgba(198,165,89,0.15);border-radius:20px;padding:56px 48px;text-align:center;margin-bottom:80px}
-    .cta-band h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:16px}
-    .cta-band p{font-size:15px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
-    .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .cta-band h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+    .cta-band p{font-size:15px;color:rgba(232,232,237,0.5);line-height:1.7;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+    .cta-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     .btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#C6A559,#E6B979);color:#0A0A0F;font-weight:700;font-size:13px;letter-spacing:.04em;padding:13px 28px;border-radius:10px;transition:opacity .2s,transform .2s}
     .btn-gold:hover{opacity:.85;transform:translateY(-1px);text-decoration:none}
     .btn-outline{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(198,165,89,0.3);color:rgba(232,232,237,0.7);font-weight:600;font-size:13px;padding:13px 28px;border-radius:10px;transition:border-color .2s,color .2s}
     .btn-outline:hover{border-color:#C6A559;color:#E6B979;text-decoration:none}
-    /* FOOTER */
-    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08)}
-    .gold-divider{height:1px;background:linear-gradient(to right,transparent,rgba(198,165,89,0.2),transparent);margin:0 auto 80px;max-width:800px}
+    .social-row{display:flex;gap:16px;justify-content:center;margin-top:20px}
+    .social-row a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(198,165,89,0.2);display:flex;align-items:center;justify-content:center;transition:border-color .3s,background .3s}
+    .social-row a:hover{border-color:#C6A559;background:rgba(198,165,89,0.08)}
+    .social-row svg{width:18px;height:18px;fill:#E6B979}
+
+    /* Hero photo with image support */
+    .hero-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+    /* Scroll reveal animation */
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.1s}
+    .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s}
+
+    /* Mobile nav */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+    .hamburger svg{width:24px;height:24px;stroke:#C6A559;stroke-width:2}
+    @media(max-width:768px){
+      .page{padding:0 16px}
+      #navbar{padding:0 16px}
+      #nav-links{display:none}
+      .hamburger{display:block}
+      .proj-grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav id="navbar">
   <a href="index.html" id="nav-logo-wrap">
     <img src="brand_assets/Tester Logo.png" alt="Tester.io" />
@@ -87,141 +146,302 @@
     <a href="product.html">Product</a>
     <a href="TesterTech.html">TesterTech</a>
     <a href="creative.html">Creative</a>
-    <a href="about.html">About</a>
+    <a href="trend-finder.html">Trend Finder</a>
+    <a href="about.html" class="nav-active">About</a>
     <a href="index.html" class="nav-btn">Login</a>
     <a href="index.html" class="nav-btn-gold">Sign Up</a>
   </div>
+  <button class="hamburger" onclick="document.getElementById('nav-links').style.display=document.getElementById('nav-links').style.display==='flex'?'none':'flex'">
+    <svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
 </nav>
+
+<!-- ===== 1. HERO ===== -->
+<section class="hero reveal">
+  <div class="hero-photo"><img src="brand_assets/profile.png" alt="Gabriel Baldovino"></div>
+  <div class="hero-info">
+    <div class="eyebrow">Portfolio</div>
+    <h1>Gabriel G. <span class="gold">Baldovino</span></h1>
+    <div class="title">Operations &amp; Partnerships | Full-Stack Developer</div>
+    <p class="bio">Operations and Partnerships professional with 8+ years of experience supporting U.S.-based teams in fast-scaling environments. Currently pursuing a Juris Doctor degree. Known for reducing friction, improving visibility, and creating systems that allow teams to move faster. Also building Tester.io — a platform unifying human expertise and automated testing.</p>
+    <div class="stat-chips">
+      <span class="chip">8+ Years Experience</span>
+<span class="chip">19 Live Pages Built</span>
+      <span class="chip">San Mateo, Isabela, PH</span>
+    </div>
+  </div>
+</section>
 
 <div class="page">
 
-  <!-- HERO -->
-  <div class="eyebrow">Our Story</div>
-  <h1>Built for teams who <span class="gold">refuse to ship bugs</span></h1>
-  <p class="lead">Tester.io was founded on a simple belief — quality is not a phase at the end of a sprint. It's a culture, a workflow, and a standard that every team deserves to reach.</p>
+<div class="divider"></div>
 
-  <div class="gold-divider"></div>
-
-  <!-- MISSION -->
-  <div class="mission">
-    <div class="mission-badge">
-      <div class="mission-badge-num">24/7</div>
-      <div class="mission-badge-label">Testing Coverage</div>
+<!-- ===== 2. SKILLS ===== -->
+<section class="skills-section reveal">
+  <div class="eyebrow">Technical Skills</div>
+  <h2 class="section-title">What I work with</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0e0d11" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        Frontend &amp; Design
+      </h3>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Scroll Animations</span>
+        <span class="skill-tag">Responsive Design</span>
+        <span class="skill-tag">Canvas API</span>
+        <span class="skill-tag">Video Backgrounds</span>
+      </div>
     </div>
-    <div class="mission-content">
-      <h2>One Platform, <span class="gold">Zero Bugs</span></h2>
-      <p>Tester.io unifies human expertise and automated testing into a single platform. No more juggling tools — manage manual testers, automation scripts, and bug reports all in one place.</p>
-      <p>Backed by 500+ certified QA professionals and battle-tested automation frameworks, we help teams ship faster without sacrificing quality.</p>
-      <div class="check-list">
-        <div class="check-item">
-          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-          <span>Human + Automated in One Workflow</span>
-        </div>
-        <div class="check-item">
-          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-          <span>CI/CD Pipeline Integration</span>
-        </div>
-        <div class="check-item">
-          <div class="check-icon"><svg width="14" height="14" fill="none" stroke="#0A0A0F" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
-          <span>Real-Time Bug Tracking &amp; Reports</span>
-        </div>
+    <div class="skill-card">
+      <h3>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0e0d11" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+        Backend &amp; Data
+      </h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Express.js</span>
+        <span class="skill-tag">Supabase / PostgreSQL</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">JWT Auth</span>
+        <span class="skill-tag">Resend Email</span>
+        <span class="skill-tag">Google Apps Script</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#0e0d11" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></span>
+        Tools &amp; Operations
+      </h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Jira</span>
+        <span class="skill-tag">CRM / Salesforce</span>
+        <span class="skill-tag">Git / GitHub</span>
+        <span class="skill-tag">Vercel</span>
+        <span class="skill-tag">Playwright</span>
+        <span class="skill-tag">KPI Tracking</span>
+        <span class="skill-tag">AI Tools (ChatGPT, Claude)</span>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-card"><div class="stat-num">2M+</div><div class="stat-label">Tests Executed</div></div>
-    <div class="stat-card"><div class="stat-num">99.8%</div><div class="stat-label">Bug Detection Rate</div></div>
-    <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Teams Worldwide</div></div>
-    <div class="stat-card"><div class="stat-num">3×</div><div class="stat-label">Faster Release Cycles</div></div>
-  </div>
+<div class="divider"></div>
 
-  <div class="gold-divider"></div>
-
-  <!-- VALUES -->
-  <h2 class="section-title">What we stand for</h2>
-  <div class="values-grid">
-    <div class="value-card">
-      <div class="value-num">01</div>
-      <h3>Quality is non-negotiable</h3>
-      <p>We believe every line of code deserves to be tested. Cutting corners on quality creates debt that compounds — we help teams break that cycle.</p>
+<!-- ===== 3. EXPERIENCE ===== -->
+<section class="exp-section reveal">
+  <div class="eyebrow">Experience</div>
+  <h2 class="section-title">Where I've built things</h2>
+  <div class="exp-timeline">
+    <div class="exp-card exp-current">
+      <div class="exp-header">
+        <div>
+          <h3>Partnership Operations Associate</h3>
+          <div class="company">Thumbtack Philippines</div>
+        </div>
+        <div class="dates">June 2025 — Present</div>
+      </div>
+      <ul>
+        <li>Established a structured Product Ops feedback loop, standardizing stakeholder submissions and improving issue visibility across product teams</li>
+        <li>Partnered with Support to design and implement a case transfer workflow, reducing handoff confusion and improving routing efficiency</li>
+        <li>Created Jira performance dashboards and reports to track volume, trends, and bottlenecks for leadership</li>
+        <li>Led a Jira Requests Handling revamp, updating ticket templates which reduced incomplete submissions</li>
+        <li>Owned key documentation initiatives (Dev Portal access, Scorpion, Sophie onboarding), improving self-service adoption</li>
+        <li>Took ownership of supply integrations work, ensuring continuity while maintaining quality</li>
+        <li>Explored AI tools (ChatGPT) to support automation and developer enablement initiatives</li>
+      </ul>
     </div>
-    <div class="value-card">
-      <div class="value-num">02</div>
-      <h3>Humans and machines together</h3>
-      <p>Automation is fast. Humans are perceptive. The best QA is both — and we're the platform that makes that combination effortless.</p>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <h3>Advanced Service Advocate</h3>
+          <div class="company">Thumbtack Philippines</div>
+        </div>
+        <div class="dates">January 2024 — June 2025</div>
+      </div>
+      <ul>
+        <li>Conducted structured refund audits and case investigations to ensure compliance and documentation accuracy</li>
+        <li>Trained 43 team members on documentation standards and quality processes</li>
+        <li>Recognized as Top Performer (Q3 2024) for operational excellence</li>
+      </ul>
     </div>
-    <div class="value-card">
-      <div class="value-num">03</div>
-      <h3>Speed without sacrifice</h3>
-      <p>Shipping fast and shipping well aren't opposites. With the right tooling and workflow, teams can have both — and that's what we build for.</p>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <h3>Senior Premier Support Advocate</h3>
+          <div class="company">Thumbtack Philippines</div>
+        </div>
+        <div class="dates">April 2022 — January 2024</div>
+      </div>
+      <ul>
+        <li>Prepared daily KPI reports (CSAT, NPS, SLA) for senior leadership</li>
+        <li>Audited cases for compliance and improved documentation consistency</li>
+        <li>Served as escalation point of contact, ensuring accurate routing and resolution</li>
+      </ul>
     </div>
-    <div class="value-card">
-      <div class="value-num">04</div>
-      <h3>Transparency by default</h3>
-      <p>Bug reports, test coverage, team performance — everything visible, nothing hidden. Teams that see clearly, ship confidently.</p>
-    </div>
-    <div class="value-card">
-      <div class="value-num">05</div>
-      <h3>Built for builders</h3>
-      <p>Our platform is designed by engineers who've felt the pain of bad QA tooling. Every feature solves a real problem from the field.</p>
-    </div>
-    <div class="value-card">
-      <div class="value-num">06</div>
-      <h3>Customer obsessed</h3>
-      <p>We measure our success by yours. Every product decision starts with a single question — does this make our customers ship better?</p>
-    </div>
-  </div>
-
-  <div class="gold-divider"></div>
-
-  <!-- TEAM -->
-  <h2 class="section-title">The team</h2>
-  <div class="team-grid">
-    <div class="team-card">
-      <div class="team-avatar">G</div>
-      <div class="team-name">Gab Baldovino</div>
-      <div class="team-role">Founder & CEO</div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">A</div>
-      <div class="team-name">Alex Rivera</div>
-      <div class="team-role">Head of Engineering</div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">M</div>
-      <div class="team-name">Maya Chen</div>
-      <div class="team-role">Head of Product</div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">J</div>
-      <div class="team-name">Jordan Lee</div>
-      <div class="team-role">Lead QA Architect</div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">S</div>
-      <div class="team-name">Sara Okafor</div>
-      <div class="team-role">Design Lead</div>
-    </div>
-    <div class="team-card">
-      <div class="team-avatar">+</div>
-      <div class="team-name">We're Hiring</div>
-      <div class="team-role"><a href="careers.html">View open roles →</a></div>
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <h3>Citiphone Officer</h3>
+          <div class="company">Citigroup Business Process Solutions</div>
+        </div>
+        <div class="dates">October 2017 — December 2019</div>
+      </div>
+      <ul>
+        <li>Managed billing inquiries and account investigations while maintaining strict regulatory compliance and documentation accuracy</li>
+      </ul>
     </div>
   </div>
+</section>
 
-  <!-- CTA -->
+<div class="divider"></div>
+
+<!-- ===== 4. PROJECT HIGHLIGHTS ===== -->
+<section class="projects-section reveal">
+  <div class="eyebrow">Project Highlights</div>
+  <h2 class="section-title">Built with <span class="gold">Tester.io</span></h2>
+
+  <!-- Video Reel -->
+  <div class="reel-wrap">
+    <video autoplay loop muted playsinline>
+      <source src="portfolio-screenshots/reel.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Screenshot Grid — only pages with real content -->
+  <div class="proj-grid">
+    <div class="proj-card">
+      <a href="index.html"></a>
+      <img src="portfolio-screenshots/index.png" alt="Landing Page" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Landing Page</span><span class="proj-badge">Main</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="dashboard.html"></a>
+      <img src="portfolio-screenshots/dashboard.png" alt="Dashboard" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Admin Dashboard</span><span class="proj-badge">Admin</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="moodboard.html"></a>
+      <img src="portfolio-screenshots/moodboard.png" alt="Moodboard" loading="lazy">
+      <div class="proj-info"><span class="proj-label">AI Moodboard</span><span class="proj-badge">Tool</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="sights.html"></a>
+      <img src="portfolio-screenshots/sights.png" alt="Sights" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Sights</span><span class="proj-badge">Feature</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="product.html"></a>
+      <img src="portfolio-screenshots/product.png" alt="Product" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Product</span><span class="proj-badge">Feature</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="TesterTech.html"></a>
+      <img src="portfolio-screenshots/TesterTech.png" alt="TesterTech" loading="lazy">
+      <div class="proj-info"><span class="proj-label">TesterTech</span><span class="proj-badge">Feature</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="creative.html"></a>
+      <img src="portfolio-screenshots/creative.png" alt="Creative" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Creative</span><span class="proj-badge">Feature</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="community.html"></a>
+      <img src="portfolio-screenshots/community.png" alt="Community" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Community</span><span class="proj-badge">Info</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="blog.html"></a>
+      <img src="portfolio-screenshots/blog.png" alt="Blog" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Blog</span><span class="proj-badge">Content</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="careers.html"></a>
+      <img src="portfolio-screenshots/careers.png" alt="Careers" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Careers</span><span class="proj-badge">Info</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="support.html"></a>
+      <img src="portfolio-screenshots/support.png" alt="Support" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Support</span><span class="proj-badge">Info</span></div>
+    </div>
+    <div class="proj-card">
+      <a href="thank-you.html"></a>
+      <img src="portfolio-screenshots/thank-you.png" alt="Thank You" loading="lazy">
+      <div class="proj-info"><span class="proj-label">Thank You</span><span class="proj-badge">Flow</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 5. EDUCATION ===== -->
+<section class="edu-section reveal">
+  <div class="eyebrow">Education</div>
+  <h2 class="section-title">Background</h2>
+  <div class="edu-card">
+    <div class="edu-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0e0d11" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+    </div>
+    <div>
+      <h3>Bachelor of Science in Business Administration</h3>
+      <div class="school">Major in Management Accounting</div>
+      <div class="year">Class of 2016</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== 6. CONTACT / CTA ===== -->
+<section class="reveal">
   <div class="cta-band">
-    <h2>Ready to ship with <span class="gold">confidence?</span></h2>
-    <p>Join 500+ teams who use Tester.io to catch bugs before they reach production.</p>
-    <div class="btn-row">
-      <a href="index.html" class="btn-gold">Start Free Trial</a>
-      <a href="support.html" class="btn-outline">Talk to Us</a>
+    <h2>Let's <span class="gold">work together</span></h2>
+    <p>Have a project in mind or looking for a developer? I'd love to hear from you.</p>
+    <div class="cta-links">
+      <a href="mailto:baldovinogabriel@icloud.com" class="btn-gold">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        baldovinogabriel@icloud.com
+      </a>
+      <a href="index.html" class="btn-outline">View Tester.io</a>
+      <a href="moodboard.html" class="btn-outline">Moodboard</a>
+    </div>
+    <div class="social-row">
+      <a href="https://github.com/suupergab08-pixel" target="_blank" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+      <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://x.com/" target="_blank" title="X">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
     </div>
   </div>
+</section>
 
 </div>
-<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+
+<footer>&copy; 2026 Gabriel G. Baldovino. All rights reserved.</footer>
+
+<script>
+// Scroll reveal observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>

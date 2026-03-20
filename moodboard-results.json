@@ -1,0 +1,151 @@
+{
+  "generated": "2026-03-20",
+  "brand": "Tester.io — Human & Automated QA in One Place",
+  "palette": { "gold": "#C6A559", "gold_light": "#E6B979", "charcoal": "#1a181e", "black": "#111014" },
+  "designs": [
+    {
+      "id": 1,
+      "name": "Serene Gold",
+      "category": "Minimalist",
+      "description": "Clean editorial layout, generous whitespace, Tester.io gold on matte charcoal. Single-line hero headline, floating UI card mockup.",
+      "front": {
+        "prompt": "Minimalist website landing page design for QA testing platform Tester.io. Clean editorial layout, generous whitespace, matte charcoal background. Single elegant headline in thin serif font, gold color. Floating frosted UI card mockup showing test dashboard. Subtle gold accent line. Navigation bar with logo top-left. Professional SaaS aesthetic, charcoal cream and gold palette. 4K web mockup, ultra clean typography",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/079bae85aa4269b179c967c9a3aa25a5_0_1774015868_9949.png",
+          "https://tempfile.aiquickdraw.com/s/079bae85aa4269b179c967c9a3aa25a5_1_1774015869_8831.png",
+          "https://tempfile.aiquickdraw.com/s/079bae85aa4269b179c967c9a3aa25a5_0_1774015869_9421.png",
+          "https://tempfile.aiquickdraw.com/s/079bae85aa4269b179c967c9a3aa25a5_1_1774015871_8679.png"
+        ]
+      },
+      "back": {
+        "prompt": "Minimalist website inner sections for QA platform. Matte charcoal background. Features section with 3 floating cards: Automated Testing, Human QA, Bug Tracking with thin gold icon outlines and cream text. Testimonials with large italic serif quote and gold quotation marks. Pricing table 4 columns thin gold borders. Ultra clean editorial, generous negative space, restrained gold accents. Web design mockup 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/c7b30276c092dda6787d901032399987_0_1774015887_7358.png",
+          "https://tempfile.aiquickdraw.com/s/c7b30276c092dda6787d901032399987_1_1774015888_9299.png",
+          "https://tempfile.aiquickdraw.com/s/c7b30276c092dda6787d901032399987_0_1774015909_7771.png",
+          "https://tempfile.aiquickdraw.com/s/c7b30276c092dda6787d901032399987_1_1774015910_6435.png"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Paper & Ink",
+      "category": "Minimalist",
+      "description": "Almost monochrome with gold accents only on CTAs. Magazine-inspired grid, thin serif headings, quiet confidence.",
+      "front": {
+        "prompt": "Minimalist monochrome website landing page. Deep black background with off-white text. Magazine-inspired asymmetric grid layout. Large serif headline Quality Redefined left-aligned with body text right. Only gold appears on two CTA buttons. Thin horizontal rules separating sections. Small logo top-left white. Paper-like texture overlay. Sophisticated ink-on-paper aesthetic. Web design mockup 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/019ce8cae37b70dacbbe9ffb770a478e_0_1774015888_8713.png",
+          "https://tempfile.aiquickdraw.com/s/019ce8cae37b70dacbbe9ffb770a478e_1_1774015890_9003.png",
+          "https://tempfile.aiquickdraw.com/s/019ce8cae37b70dacbbe9ffb770a478e_0_1774015923_9938.png",
+          "https://tempfile.aiquickdraw.com/s/019ce8cae37b70dacbbe9ffb770a478e_1_1774015924_9860.png"
+        ]
+      },
+      "back": {
+        "prompt": "Minimalist monochrome website inner sections. Deep black background. Process section 4 numbered steps horizontal: Submit Test Report Ship with thin line-art white icons. Team section circular photo placeholders serif names. FAQ accordion gold plus icons. Contact form gold-outlined submit button. Thin horizontal dividers. Massive whitespace, web design mockup 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/3709e5b383e604006ad13809355a2a0c_0_1774015932_4302.png",
+          "https://tempfile.aiquickdraw.com/s/3709e5b383e604006ad13809355a2a0c_1_1774015933_7272.png",
+          "https://tempfile.aiquickdraw.com/s/3709e5b383e604006ad13809355a2a0c_0_1774015934_9049.png",
+          "https://tempfile.aiquickdraw.com/s/3709e5b383e604006ad13809355a2a0c_1_1774015935_7698.png"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Glass Morph",
+      "category": "Contemporary",
+      "description": "Frosted glass cards, gradient mesh backgrounds, layered depth. Modern SaaS aesthetic with soft shadows.",
+      "front": {
+        "prompt": "Contemporary glassmorphism website landing page for QA platform. Dark gradient mesh background deep purple to charcoal to midnight blue. Hero section with large frosted glass card backdrop blur containing headline Test Smarter Ship Faster in bold Montserrat gold gradient text. Layered transparent glass panels showing dashboard UI mockups. Floating 3D abstract gold and purple shapes. Modern SaaS premium 4K mockup",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/ba87bdb0426acc7bb732271cb58e12e8_0_1774015985_5071.png",
+          "https://tempfile.aiquickdraw.com/s/ba87bdb0426acc7bb732271cb58e12e8_1_1774015986_9719.png",
+          "https://tempfile.aiquickdraw.com/s/ba87bdb0426acc7bb732271cb58e12e8_0_1774015986_2002.png",
+          "https://tempfile.aiquickdraw.com/s/ba87bdb0426acc7bb732271cb58e12e8_1_1774015992_2513.png"
+        ]
+      },
+      "back": {
+        "prompt": "Contemporary glassmorphism website inner sections. Dark gradient mesh purple to charcoal. Features 6 frosted glass cards 3x2 grid gold icons white titles grey descriptions. Integration logos on glass strip. Metrics counters 2M Tests 99.8% Detection 500+ Experts gold bold. Testimonial carousel glass card 5-star gold rating. CTA banner gradient gold button. Modern SaaS layered depth 4K web mockup",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/8b14cc13f8c9431646e39cc8fd9af05a_0_1774016000_9013.png",
+          "https://tempfile.aiquickdraw.com/s/8b14cc13f8c9431646e39cc8fd9af05a_1_1774016001_1446.png",
+          "https://tempfile.aiquickdraw.com/s/8b14cc13f8c9431646e39cc8fd9af05a_0_1774016013_4990.png",
+          "https://tempfile.aiquickdraw.com/s/8b14cc13f8c9431646e39cc8fd9af05a_1_1774016014_9953.png"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Neon Grid",
+      "category": "Contemporary",
+      "description": "Dark base with luminous gold grid lines, 3D isometric elements, contemporary tech feel.",
+      "front": {
+        "prompt": "Contemporary dark website landing page neon grid aesthetic. Pure black background with luminous gold grid lines creating perspective depth. Hero headline Zero Bugs Zero Doubt in massive condensed sans-serif white with gold glow. Isometric 3D interconnected testing nodes gold wireframe. Floating metrics badges 99.8% gold. Navigation bar gold underline. Tech-forward premium contemporary web design 4K mockup",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/b6e9f3fea52ce533d2c83e2cd233b34c_0_1774015990_6981.png",
+          "https://tempfile.aiquickdraw.com/s/b6e9f3fea52ce533d2c83e2cd233b34c_1_1774015991_7283.png",
+          "https://tempfile.aiquickdraw.com/s/b6e9f3fea52ce533d2c83e2cd233b34c_0_1774015992_7174.png",
+          "https://tempfile.aiquickdraw.com/s/b6e9f3fea52ce533d2c83e2cd233b34c_1_1774015993_9660.png"
+        ]
+      },
+      "back": {
+        "prompt": "Contemporary neon grid website inner sections black background. Gold luminous grid lines as design element. Features isometric 3D gold wireframe icons: magnifying glass shield rocket gear. Process timeline left to right gold connecting dots. Pricing cards gold neon borders dark fill white text gold Popular badge. Client logos gold monochrome. Dark tech aesthetic 4K web design mockup",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/513bc1e12a2afea255f40049a03f1483_0_1774016008_8035.png",
+          "https://tempfile.aiquickdraw.com/s/513bc1e12a2afea255f40049a03f1483_1_1774016009_5550.png",
+          "https://tempfile.aiquickdraw.com/s/513bc1e12a2afea255f40049a03f1483_0_1774016007_1208.png",
+          "https://tempfile.aiquickdraw.com/s/513bc1e12a2afea255f40049a03f1483_1_1774016011_8239.png"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Bold Contrast",
+      "category": "Dynamic",
+      "description": "Black and gold split screen, oversized typography, diagonal cuts. High energy, conference-stage presence.",
+      "front": {
+        "prompt": "Dynamic high-contrast website landing page bold striking. Pure black background dramatic diagonal gold slash cutting page in half. Left side massive oversized typography SHIP stacked vertically ultra-bold condensed white, WITHOUT FEAR in gold below. Right side dark UI dashboard mockup gold data visualizations charts. Strong geometric composition asymmetric balance. Gold CTA button. High energy conference-stage bold web design 4K mockup",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/57021d41bd3c7f2a60f878a183aa0649_0_1774016021_7571.png",
+          "https://tempfile.aiquickdraw.com/s/57021d41bd3c7f2a60f878a183aa0649_1_1774016023_3628.png",
+          "https://tempfile.aiquickdraw.com/s/57021d41bd3c7f2a60f878a183aa0649_0_1774016030_1375.png",
+          "https://tempfile.aiquickdraw.com/s/57021d41bd3c7f2a60f878a183aa0649_1_1774016031_9975.png"
+        ]
+      },
+      "back": {
+        "prompt": "Dynamic bold website inner sections black background. Diagonal gold slash motif continuing. Features 4 large cards staggered 2x2 grid oversized numbers 01 02 03 04 bold condensed font gold accent bar left edge white title grey text. Testimonials large gold quotation mark bold white quote diagonal gold line. Pricing black cards gold BEST VALUE stamp. Bold geometric high contrast dynamic web design 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/e9b41664ea2f7f45500ad80c73a024bf_0_1774016035_6059.png",
+          "https://tempfile.aiquickdraw.com/s/e9b41664ea2f7f45500ad80c73a024bf_1_1774016036_6070.png",
+          "https://tempfile.aiquickdraw.com/s/e9b41664ea2f7f45500ad80c73a024bf_0_1774016035_5604.png",
+          "https://tempfile.aiquickdraw.com/s/e9b41664ea2f7f45500ad80c73a024bf_1_1774016036_3576.png"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Kinetic Burst",
+      "category": "Dynamic",
+      "description": "Explosive radial composition, particle effects, metallic gold on deep black. Motion-implied design.",
+      "front": {
+        "prompt": "Dynamic explosive website landing page. Deep black background radial burst of gold metallic particles exploding from center. Massive headline TESTER.IO ultra-heavy expanded typeface white with gold metallic reflection. Tagline Human and Automated QA thin gold letters. Abstract gold particle trails circular orbits around text. Motion blur effects speed energy. Large gold button LAUNCH NOW. Cinematic theatrical visually explosive web design 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/16dbdd0a45ce6dae35e2f2f870514211_0_1774016051_3800.png",
+          "https://tempfile.aiquickdraw.com/s/16dbdd0a45ce6dae35e2f2f870514211_1_1774016053_2775.png",
+          "https://tempfile.aiquickdraw.com/s/16dbdd0a45ce6dae35e2f2f870514211_0_1774016054_6250.png",
+          "https://tempfile.aiquickdraw.com/s/16dbdd0a45ce6dae35e2f2f870514211_1_1774016055_5038.png"
+        ]
+      },
+      "back": {
+        "prompt": "Dynamic kinetic website inner sections deep black background. Gold metallic particles scattered throughout. Services radial layout central gold orb connected to 6 nodes by gold light trails: Testing Automation Security Performance CICD Reporting. Stats huge gold metallic numbers 2M plus 99.8 percent 500 plus with particle effects. Contact dark form fields gold-bordered inputs explosive gold submit button. Cinematic high energy web design 4K",
+        "images": [
+          "https://tempfile.aiquickdraw.com/s/fc57b62fd4c930605d09325549aa4aa8_0_1774016093_5762.png",
+          "https://tempfile.aiquickdraw.com/s/fc57b62fd4c930605d09325549aa4aa8_1_1774016095_2969.png",
+          "https://tempfile.aiquickdraw.com/s/fc57b62fd4c930605d09325549aa4aa8_0_1774016105_9507.png",
+          "https://tempfile.aiquickdraw.com/s/fc57b62fd4c930605d09325549aa4aa8_1_1774016106_7403.png"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "name": "index",
+    "label": "Landing Page",
+    "file": "index.png"
+  },
+  {
+    "name": "sights",
+    "label": "Sights",
+    "file": "sights.png"
+  },
+  {
+    "name": "moodboard",
+    "label": "Moodboard",
+    "file": "moodboard.png"
+  },
+  {
+    "name": "dashboard",
+    "label": "Dashboard",
+    "file": "dashboard.png"
+  },
+  {
+    "name": "about",
+    "label": "About",
+    "file": "about.png"
+  },
+  {
+    "name": "thank-you",
+    "label": "Thank You",
+    "file": "thank-you.png"
+  },
+  {
+    "name": "TesterTech",
+    "label": "TesterTech",
+    "file": "TesterTech.png"
+  },
+  {
+    "name": "product",
+    "label": "Product",
+    "file": "product.png"
+  },
+  {
+    "name": "creative",
+    "label": "Creative",
+    "file": "creative.png"
+  },
+  {
+    "name": "community",
+    "label": "Community",
+    "file": "community.png"
+  },
+  {
+    "name": "support",
+    "label": "Support",
+    "file": "support.png"
+  },
+  {
+    "name": "blog",
+    "label": "Blog",
+    "file": "blog.png"
+  },
+  {
+    "name": "careers",
+    "label": "Careers",
+    "file": "careers.png"
+  },
+  {
+    "name": "changelog",
+    "label": "Changelog",
+    "file": "changelog.png"
+  },
+  {
+    "name": "roadmap",
+    "label": "Roadmap",
+    "file": "roadmap.png"
+  },
+  {
+    "name": "privacy",
+    "label": "Privacy",
+    "file": "privacy.png"
+  },
+  {
+    "name": "terms",
+    "label": "Terms",
+    "file": "terms.png"
+  },
+  {
+    "name": "security",
+    "label": "Security",
+    "file": "security.png"
+  },
+  {
+    "name": "cookies",
+    "label": "Cookies",
+    "file": "cookies.png"
+  }
+]

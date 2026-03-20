@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trend Finder — Tester.io</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Montserrat',sans-serif;background:#0e0d11;color:#E8E8ED;-webkit-font-smoothing:antialiased}
+    a{color:#E6B979;text-decoration:none}a:hover{text-decoration:underline}
+
+    /* NAV */
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 40px;backdrop-filter:blur(20px);background:rgba(10,10,15,0.75);border-bottom:1px solid rgba(198,165,89,0.1)}
+    #nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
+    #nav-logo-wrap img{width:30px;height:30px;object-fit:contain}
+    #nav-logo-wrap span{font-weight:800;font-size:15px;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    #nav-links{display:flex;align-items:center;gap:4px}
+    #nav-links a{font-size:13px;font-weight:500;color:rgba(232,232,237,0.6);text-decoration:none;padding:7px 14px;border-radius:8px;transition:color .2s,background .2s}
+    #nav-links a:hover{color:#E6B979;background:rgba(198,165,89,0.08)}
+    #nav-links a.nav-active{color:#E6B979;background:rgba(198,165,89,0.1)}
+    .nav-btn{border:1px solid rgba(198,165,89,0.25)!important;color:rgba(232,232,237,0.7)!important}
+    .nav-btn:hover{border-color:#C6A559!important}
+    .nav-btn-gold{background:linear-gradient(135deg,#C6A559,#E6B979)!important;color:#0A0A0F!important;font-weight:700!important}
+
+    /* LAYOUT */
+    .page{max-width:1100px;margin:0 auto;padding:120px 40px 80px}
+    .gold{background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#C6A559;margin-bottom:14px}
+    .section-title{font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-.03em;margin-bottom:16px;line-height:1.1}
+    .lead{font-size:15px;color:rgba(232,232,237,0.5);line-height:1.8;max-width:600px;margin-bottom:48px}
+    .divider{height:1px;background:linear-gradient(to right,transparent,rgba(198,165,89,0.18),transparent);margin:48px auto;max-width:800px}
+    footer{text-align:center;padding:40px;font-size:12px;color:rgba(232,232,237,0.2);border-top:1px solid rgba(198,165,89,0.08)}
+
+    /* SEARCH */
+    .search-bar{display:flex;gap:12px;margin-bottom:40px;max-width:700px}
+    .search-bar input{flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(198,165,89,0.15);border-radius:12px;padding:16px 20px;color:#E8E8ED;font-family:'Montserrat',sans-serif;font-size:14px;outline:none;transition:border-color .3s,box-shadow .3s}
+    .search-bar input:focus{border-color:#C6A559;box-shadow:0 0 0 3px rgba(198,165,89,0.12)}
+    .search-bar input::placeholder{color:rgba(232,232,237,0.3)}
+    .btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#C6A559,#E6B979);color:#0A0A0F;font-weight:700;font-size:13px;letter-spacing:.04em;padding:16px 28px;border-radius:12px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:opacity .2s,transform .2s}
+    .btn-gold:hover{opacity:.85;transform:translateY(-1px)}
+    .btn-gold:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+    /* RESULT CARDS */
+    .results-count{font-size:13px;color:rgba(232,232,237,0.4);margin-bottom:20px;font-weight:500}
+    .results-grid{display:flex;flex-direction:column;gap:16px}
+    .result-card{display:flex;gap:20px;background:rgba(255,255,255,0.025);border:1px solid rgba(198,165,89,0.1);border-radius:16px;padding:20px;transition:border-color .3s,transform .3s,background .3s;align-items:center}
+    .result-card:hover{border-color:rgba(198,165,89,0.3);transform:translateY(-2px);background:rgba(198,165,89,0.02)}
+    .result-img{width:120px;height:120px;border-radius:12px;overflow:hidden;flex-shrink:0;background:rgba(198,165,89,0.05);display:flex;align-items:center;justify-content:center;border:1px solid rgba(198,165,89,0.08)}
+    .result-img img{width:100%;height:100%;object-fit:cover}
+    .result-img .no-img{font-size:32px;opacity:.15}
+    .result-body{flex:1;min-width:0}
+    .result-rank{font-size:11px;font-weight:800;color:#C6A559;letter-spacing:.1em;margin-bottom:6px}
+    .result-body h3{font-size:15px;font-weight:700;line-height:1.4;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .result-body .snippet{font-size:12px;color:rgba(232,232,237,0.4);line-height:1.6;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .result-footer{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .result-price{font-size:16px;font-weight:800;background:linear-gradient(135deg,#C6A559,#E6B979);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .result-source{font-size:11px;color:rgba(232,232,237,0.35);font-weight:500;padding:4px 10px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(198,165,89,0.08)}
+    .result-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#0e0d11;background:linear-gradient(135deg,#C6A559,#E6B979);padding:7px 16px;border-radius:8px;text-decoration:none;margin-left:auto;transition:opacity .2s}
+    .result-link:hover{opacity:.8;text-decoration:none}
+    .result-link svg{width:12px;height:12px}
+
+    /* LOADING / EMPTY */
+    .loading{text-align:center;padding:60px 20px;color:rgba(232,232,237,0.3)}
+    .spinner{width:32px;height:32px;border:3px solid rgba(198,165,89,0.15);border-top-color:#C6A559;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty{text-align:center;padding:80px 20px;color:rgba(232,232,237,0.25)}
+    .empty svg{width:48px;height:48px;margin-bottom:16px;opacity:.2}
+
+    /* SCROLL REVEAL */
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* MOBILE */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+    .hamburger svg{width:24px;height:24px;stroke:#C6A559;stroke-width:2}
+    @media(max-width:768px){
+      .page{padding:100px 16px 60px}
+      #navbar{padding:0 16px}
+      #nav-links{display:none}
+      .hamburger{display:block}
+      .search-bar{flex-direction:column}
+      .result-card{flex-direction:column;align-items:stretch}
+      .result-img{width:100%;height:180px}
+      .result-link{margin-left:0;width:fit-content}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" id="nav-logo-wrap">
+    <img src="brand_assets/Tester Logo.png" alt="Tester.io" />
+    <span>Tester.io</span>
+  </a>
+  <div id="nav-links">
+    <a href="product.html">Product</a>
+    <a href="TesterTech.html">TesterTech</a>
+    <a href="creative.html">Creative</a>
+    <a href="trend-finder.html" class="nav-active">Trend Finder</a>
+    <a href="about.html">About</a>
+    <a href="index.html" class="nav-btn">Login</a>
+    <a href="index.html" class="nav-btn-gold">Sign Up</a>
+  </div>
+  <button class="hamburger" onclick="document.getElementById('nav-links').style.display=document.getElementById('nav-links').style.display==='flex'?'none':'flex'">
+    <svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="reveal">
+    <div class="eyebrow">Trend Finder</div>
+    <h1 class="section-title">Find what's <span class="gold">trending now</span></h1>
+    <p class="lead">Search any topic, product, or niche — get the top 5 real trending results from across the web with prices, images, and direct links.</p>
+
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="e.g. wireless earbuds, AI tools, standing desk, mechanical keyboard..." onkeydown="if(event.key==='Enter')findTrends()">
+      <button class="btn-gold" id="searchBtn" onclick="findTrends()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Find Trends
+      </button>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- RESULTS -->
+  <section class="reveal" id="resultsSection">
+    <div id="resultsArea">
+      <div class="empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>Search any topic to discover what's trending</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>&copy; 2026 Tester.io. All rights reserved.</footer>
+
+<script>
+const PYTHON_API = 'http://localhost:5002';
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+async function findTrends() {
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) return;
+
+  const btn = document.getElementById('searchBtn');
+  const area = document.getElementById('resultsArea');
+  btn.disabled = true;
+  area.innerHTML = '<div class="loading"><div class="spinner"></div><p>Searching the web for trending "' + query + '"...</p></div>';
+
+  try {
+    const res = await fetch(`${PYTHON_API}/api/trends/live`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!res.ok) throw new Error('API returned ' + res.status);
+    const data = await res.json();
+    const results = data.results || [];
+
+    if (!results.length) {
+      area.innerHTML = '<div class="empty"><p>No results found for "' + query + '". Try a different search.</p></div>';
+      return;
+    }
+
+    area.innerHTML = `
+      <div class="results-count">Top ${results.length} trending results for "${query}"</div>
+      <div class="results-grid">
+        ${results.map((r, i) => `
+          <div class="result-card">
+            <div class="result-img">
+              ${r.image ? `<img src="${r.image}" alt="${escapeHtml(r.title)}" onerror="this.parentElement.innerHTML='<div class=no-img>&#9733;</div>'">`
+                        : '<div class="no-img">&#9733;</div>'}
+            </div>
+            <div class="result-body">
+              <div class="result-rank">#${i + 1} TRENDING</div>
+              <h3>${escapeHtml(r.title)}</h3>
+              ${r.snippet ? `<p class="snippet">${escapeHtml(r.snippet)}</p>` : ''}
+              <div class="result-footer">
+                ${r.price ? `<span class="result-price">${escapeHtml(r.price)}</span>` : ''}
+                ${r.source ? `<span class="result-source">${escapeHtml(r.source)}</span>` : ''}
+                ${r.link ? `<a href="${r.link}" target="_blank" rel="noopener" class="result-link">
+                  View
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch (err) {
+    area.innerHTML = `<div class="empty"><p>Error: ${err.message}. Make sure the Python server is running on port 5002.</p></div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>

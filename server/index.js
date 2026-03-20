@@ -14,6 +14,8 @@ app.use('/api/contact', require('./routes/contact'));
 app.use('/api/newsletter', require('./routes/newsletter'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/webhook', require('./routes/webhook'));
+app.use('/api/moodboard', require('./routes/moodboard'));
+app.use('/api/trends', require('./routes/trends'));
 
 // Interactions log
 app.get('/api/interactions', async (req, res) => {
