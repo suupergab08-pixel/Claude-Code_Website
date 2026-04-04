@@ -13,5 +13,32 @@
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "vercel": "^50.32.5"
-  }
+  },
+  "name": "arca-week-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "playwright.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node scripts/generate.js",
+    "batch": "node scripts/batch.js",
+    "carousel": "node scripts/carousel.js",
+    "option-a": "node scripts/option-a.js",
+    "option-c": "node scripts/option-c.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suupergab08-pixel/Claude-Code_Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/suupergab08-pixel/Claude-Code_Website/issues"
+  },
+  "homepage": "https://github.com/suupergab08-pixel/Claude-Code_Website#readme"
 }
